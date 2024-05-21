@@ -1,7 +1,11 @@
+import { DatePicker } from 'antd'
+
 function App() {
   return (
     <>
-      <div className='container text-center'>Xin chào</div>
+      <div className='container text-center'>
+        <DatePicker />
+      </div>
     </>
   )
 }

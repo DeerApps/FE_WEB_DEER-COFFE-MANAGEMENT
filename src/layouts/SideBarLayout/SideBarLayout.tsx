@@ -13,7 +13,11 @@ export default function SideBarLayout({ children }: Props) {
     <div className='grid grid-cols-12 h-[100vh]'>
       <div className='py-4 px-2 col-start-1 col-span-2 '>
         <div className='flex items-center ml-3'>
-          <img className='h-9 w-9' src={'src/public/deercoffee.jpg'} alt='DeerLogo' />
+          <img
+            className='h-9 w-9'
+            src={'https://lh3.google.com/u/0/d/1sfCMCqs5fGIfQvM4CJwWclx-d0jzaf13=w2548-h1850-iv1'}
+            alt='DeerLogo'
+          />
           <p className='ml-2 text-lg font-light'>DEER COFFEE</p>
         </div>
         <div className='mt-4'>

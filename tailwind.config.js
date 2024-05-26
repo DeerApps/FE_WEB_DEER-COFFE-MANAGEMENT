@@ -1,9 +1,11 @@
+import { nextui } from '@nextui-org/react'
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 const plugin = require('tailwindcss/plugin')
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}'],
   corePlugins: {
     container: false
   },
@@ -14,6 +16,7 @@ export default {
       }
     }
   },
+  darkMode: 'class',
   plugins: [
     plugin(function ({ addComponents, theme }) {
       addComponents({
@@ -25,6 +28,7 @@ export default {
           paddingRight: theme('spacing.4')
         }
       })
-    })
+    }),
+    nextui()
   ]
 }

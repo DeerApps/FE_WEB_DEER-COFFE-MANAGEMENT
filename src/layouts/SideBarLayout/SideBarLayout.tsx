@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import { Link, useLocation } from 'react-router-dom'
-import config from 'src/constant/config'
 import path from 'src/constant/path'
 
 interface Props {
@@ -14,7 +13,7 @@ export default function SideBarLayout({ children }: Props) {
     <div className='grid grid-cols-12 h-[100vh]'>
       <div className='py-4 px-2 col-start-1 col-span-2 '>
         <div className='flex items-center ml-3'>
-          <img className='h-9 w-9' src={config.avatarURL} alt='DeerLogo' />
+          <img className='h-9 w-9' src={'src/public/deercoffee.jpg'} alt='DeerLogo' />
           <p className='ml-2 text-lg font-light'>DEER COFFEE</p>
         </div>
         <div className='mt-4'>

@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import config from 'src/constant/config'
 import path from 'src/constant/path'

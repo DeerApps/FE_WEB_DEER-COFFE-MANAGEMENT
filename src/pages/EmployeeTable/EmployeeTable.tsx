@@ -1,16 +1,5 @@
 import React from 'react'
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  User,
-  Chip,
-  Tooltip,
-  getKeyValue
-} from '@nextui-org/react'
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Chip, Tooltip } from '@nextui-org/react'
 
 import { UserType, columns, users } from './data'
 import EyeIcon from 'src/pages/EmployeeTable/EyeIcon'

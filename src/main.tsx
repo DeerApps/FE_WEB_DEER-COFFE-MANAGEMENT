@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { AppProvider } from 'src/context/app.context.tsx'
 import ErrorBoundary from 'antd/es/alert/ErrorBoundary'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { NextUIProvider } from '@nextui-org/react'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,9 +23,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AppProvider>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
+          <NextUIProvider>
+            <ErrorBoundary>
+              <App />
+            </ErrorBoundary>
+          </NextUIProvider>
         </AppProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

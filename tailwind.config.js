@@ -30,5 +30,6 @@ export default {
       })
     }),
     nextui()
-  ]
+  ],
+  important: true
 }

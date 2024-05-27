@@ -96,7 +96,7 @@ export default function SideBarLayout({ children }: Props) {
         </div>
       </div>
       <div className='col-span-10 bg-sky-100'>
-        <div className='py-3 px-10 bg-white flex justify-start items-center flex-row-reverse'>
+        <div className='py-3 px-10 bg-stone-100 flex justify-start items-center flex-row-reverse'>
           <div className='w-9 h-9 mr-0 flex-shrink-0'>
             <img
               src={'https://picsum.photos/200/300'}
@@ -104,7 +104,7 @@ export default function SideBarLayout({ children }: Props) {
               className='w-full h-full object-cover rounded-full'
             />
           </div>
-          <div className='px-2 mr-2 text-lg'>Tran Dinh Thien Tan</div>
+          <div className='px-2 mr-2 text-lg font-medium text-zinc-600'>bentran1vn</div>
         </div>
         <div className='p-10'>{children}</div>
       </div>

@@ -8,6 +8,9 @@ import User from 'src/pages/User'
 // import Home from 'src/pages/Home'
 import SideBarLayout from 'src/layouts/SideBarLayout'
 import EmployeeTable from 'src/pages/EmployeeTable'
+import Dashboard from 'src/pages/Dashboard'
+import Approval from 'src/pages/Approval'
+import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -29,7 +32,7 @@ export default function useRouteElements() {
       element: (
         <SideBarLayout>
           <Suspense>
-            <EmployeeTable />
+            <Dashboard />
           </Suspense>
         </SideBarLayout>
       )
@@ -54,6 +57,26 @@ export default function useRouteElements() {
           </Suspense>
         </SideBarLayout>
       )
+    },
+    {
+      path: path.approval,
+      element: (
+        <SideBarLayout>
+          <Suspense>
+            <Approval />
+          </Suspense>
+        </SideBarLayout>
+      ),
+      children: [
+        {
+          path: path.approvalForm,
+          element: (
+            <Suspense>
+              <ApprovalForm />
+            </Suspense>
+          )
+        }
+      ]
     },
     {
       path: '',

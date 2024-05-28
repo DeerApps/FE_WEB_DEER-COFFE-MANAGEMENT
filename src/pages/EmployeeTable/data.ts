@@ -118,17 +118,7 @@ const users = [
     email: 'tony.reichert@example.com'
   },
   {
-    id: 11,
-    name: 'Tony Reichert',
-    role: 'CEO',
-    team: 'Management',
-    status: 'active',
-    age: '29',
-    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d',
-    email: 'tony.reichert@example.com'
-  },
-  {
-    id: 12,
+    id: 10,
     name: 'Tony Reichert',
     role: 'CEO',
     team: 'Management',

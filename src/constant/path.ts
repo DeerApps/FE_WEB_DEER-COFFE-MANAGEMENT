@@ -7,7 +7,8 @@ const path = {
   approvalForm: '/manager/approval/:formId',
   login: '/login',
   logout: '/logout',
-  user: '/user'
+  user: '/user',
+  profile:'/profile'
 } as const
 
 export default path

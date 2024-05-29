@@ -11,6 +11,7 @@ import EmployeeTable from 'src/pages/EmployeeTable'
 import Dashboard from 'src/pages/Dashboard'
 import Approval from 'src/pages/Approval'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
+import Schedule from 'src/pages/Schedule'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -49,11 +50,11 @@ export default function useRouteElements() {
       )
     },
     {
-      path: path.users,
+      path: path.schedule,
       element: (
         <SideBarLayout>
           <Suspense>
-            <User />
+            <Schedule />
           </Suspense>
         </SideBarLayout>
       )

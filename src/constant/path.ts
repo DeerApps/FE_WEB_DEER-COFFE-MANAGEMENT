@@ -1,9 +1,10 @@
 const path = {
   home: '/',
-  employees: '/employees',
+  employees: '/manager/employees',
   users: '/users',
-  approval: '/employees/approval',
-  approvalForm: '/employees/approval/:formId',
+  approval: '/manager/approval',
+  schedule: '/manager/schedule',
+  approvalForm: '/manager/approval/:formId',
   login: '/login',
   logout: '/logout',
   user: '/user'

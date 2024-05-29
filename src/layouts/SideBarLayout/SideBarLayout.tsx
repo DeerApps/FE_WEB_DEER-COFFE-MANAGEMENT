@@ -75,7 +75,7 @@ export default function SideBarLayout({ children }: Props) {
               Employee
             </div>
           </Link>
-          <Link to={path.users}>
+          <Link to={path.schedule}>
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -132,8 +132,8 @@ export default function SideBarLayout({ children }: Props) {
         </div>
       </div>
       <div className='col-span-10 bg-sky-100'>
-        <div className='grid grid-rows-12 gap-6 h-full'>
-          <div className='row-span-1 px-10 bg-stone-100 flex justify-start items-center flex-row-reverse'>
+        <div className='h-full'>
+          <div className='px-10 h-[7%] bg-stone-100 flex justify-start items-center flex-row-reverse'>
             <div className='w-9 h-9 mr-0 flex-shrink-0'>
               <img
                 src={'https://picsum.photos/200/300'}
@@ -143,7 +143,7 @@ export default function SideBarLayout({ children }: Props) {
             </div>
             <div className='px-2 mr-2 text-lg font-medium text-zinc-600'>bentran1vn</div>
           </div>
-          <div className='row-span-11 p-10'>{children}</div>
+          <div className='h-[93%] p-10'>{children}</div>
         </div>
       </div>
     </div>

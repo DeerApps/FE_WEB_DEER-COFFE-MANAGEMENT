@@ -13,6 +13,7 @@ import Approval from 'src/pages/Approval'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
 import Apply from 'src/pages/Apply'
+import Profile from 'src/pages/Profile'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -99,6 +100,16 @@ export default function useRouteElements() {
           )
         }
       ]
+    },
+    {
+      path: path.profile,
+      element: (
+        <SideBarLayout>
+          <Suspense>
+            <Profile />
+          </Suspense>
+        </SideBarLayout>
+      )
     },
     {
       path: '',

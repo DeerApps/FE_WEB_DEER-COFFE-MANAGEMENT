@@ -9,7 +9,7 @@ export default function Login() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center bg-cover bg-center" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1615715035868-fc94bd5ffdac?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}>
+    <div className="relative min-h-screen flex items-center justify-center">
       <div className="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md">
         <div className="text-center mb-4">
           <Title>Deer Coffee</Title>

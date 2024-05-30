@@ -80,8 +80,8 @@ export default function SideBarLayout({ children }: Props) {
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
                 {
-                  'bg-sky-300 text-white': path.users === pathName,
-                  'text-black hover:bg-slate-100': path.users !== pathName
+                  'bg-sky-300 text-white': path.schedule === pathName,
+                  'text-black hover:bg-slate-100': path.schedule !== pathName
                 }
               )}
             >

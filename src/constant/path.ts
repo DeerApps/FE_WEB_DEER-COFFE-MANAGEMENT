@@ -1,5 +1,5 @@
 const path = {
-  apply: '/employee',
+  apply: '/apply',
   home: '/manager',
   employees: '/manager/employees',
   users: '/users',
@@ -9,7 +9,7 @@ const path = {
   login: '/login',
   logout: '/logout',
   user: '/user',
-  profile:'/profile'
+  profile: '/profile'
 } as const
 
 export default path

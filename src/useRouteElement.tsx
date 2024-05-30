@@ -12,6 +12,7 @@ import Dashboard from 'src/pages/Dashboard'
 import Approval from 'src/pages/Approval'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
+import Apply from 'src/pages/Apply'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -28,6 +29,26 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
+    {
+      path: path.login,
+      element: (
+        <LoginLayout>
+          <Suspense>
+            <Login />
+          </Suspense>
+        </LoginLayout>
+      )
+    },
+    {
+      path: path.apply,
+      element: (
+        <LoginLayout>
+          <Suspense>
+            <Apply />
+          </Suspense>
+        </LoginLayout>
+      )
+    },
     {
       path: path.home,
       element: (

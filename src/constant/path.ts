@@ -1,5 +1,6 @@
 const path = {
-  home: '/',
+  apply: '/employee',
+  home: '/manager',
   employees: '/manager/employees',
   users: '/users',
   approval: '/manager/approval',

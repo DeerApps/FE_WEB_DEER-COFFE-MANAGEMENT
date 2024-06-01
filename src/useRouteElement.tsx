@@ -14,6 +14,7 @@ import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
 import Apply from 'src/pages/Apply'
 import Profile from 'src/pages/Profile'
+import AbsentForm from './pages/Apply/ApplyAbsentForm'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -50,6 +51,7 @@ export default function useRouteElements() {
           </Suspense>
         </LoginLayout>
       )
+      
     },
     {
       path: path.home,
@@ -109,6 +111,16 @@ export default function useRouteElements() {
             <Profile />
           </Suspense>
         </SideBarLayout>
+      )
+    },
+    {
+      path: path.absentForm,
+      element: (
+         <SideBarLayout>
+           <Suspense>
+            <AbsentForm/>
+          </Suspense>
+         </SideBarLayout>
       )
     },
     {

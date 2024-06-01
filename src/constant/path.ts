@@ -9,7 +9,8 @@ const path = {
   login: '/login',
   logout: '/logout',
   user: '/user',
-  profile: '/profile'
+  profile: '/profile',
+  absentForm:'/apply/absent'
 } as const
 
 export default path

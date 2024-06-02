@@ -1,4 +1,4 @@
-import { QueryConfig } from 'src/pages/Dashboard/EmployeeTable/EmployeeTable'
+import { QueryConfig } from 'src/pages/EmployeeTable/EmployeeTable'
 import useQueryParams from './useQueryParams'
 import { isUndefined, omitBy } from 'lodash'
 

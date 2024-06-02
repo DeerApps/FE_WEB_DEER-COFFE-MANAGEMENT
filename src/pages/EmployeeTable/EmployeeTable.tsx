@@ -5,6 +5,8 @@ import employeeApi from 'src/apis/employee.api'
 import classNames from 'classnames'
 import { Link, createSearchParams } from 'react-router-dom'
 import path from 'src/constant/path'
+import Popover from 'src/components/Popover'
+import { useState } from 'react'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -13,11 +15,12 @@ export type QueryConfig = {
 const RoleBackground = {
   Employee: 'bg-blue-100/60',
   Admin: 'bg-gray-300/60',
-  Manager: 'bg-[#C4C1D4]/40',
+  Manager: 'bg-[#C4C1D4]/70',
   SuperAdmin: 'bg-yellow-100/60'
 }
 
 export default function EmployeeTable() {
+  const [isOpen, setIsOpen] = useState(false)
   const queryConfig = useQueryConfig()
 
   const { data: employeesData } = useQuery({
@@ -58,19 +61,54 @@ export default function EmployeeTable() {
             Search
           </button>
         </form>
-        <button className='border text-gray-500 bg-gray-200 hover:bg-gray-300 px-4 mr-3 text-md font-medium rounded-lg flex justify-between items-center'>
-          Add New
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='size-10 pl-2'
+        <Popover
+          initialOpen={isOpen}
+          renderPopover={
+            <div className='w-[70%] h-[80%] bg-white p-6'>
+              <div className='flex justify-end'>
+                <button onClick={(_) => setIsOpen(false)} className='rounded-md py-2 px-10 bg-gray-200 text-gray-500'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    strokeWidth={1.5}
+                    stroke='currentColor'
+                    className='size-5'
+                  >
+                    <path strokeLinecap='round' strokeLinejoin='round' d='M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3' />
+                  </svg>
+                </button>
+              </div>
+              <div className='grid grid-cols-7 gap-4 py-4 h-[97%]'>
+                <div className='col-span-3 bg-slate-100'>haha</div>
+                <div className='col-span-4 bg-gray-100 h-[100%] p-4'>
+                  <div className='max-h-[94%] h-[94%]'>hihihi</div>
+                  <div className='flex justify-end items-center'>
+                    <button className='rounded-md py-2 px-10 bg-gray-300 mr-4 text-gray-500'>Accept</button>
+                    <button className='rounded-md py-2 px-10 bg-gray-300 text-gray-500'>Reject</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        >
+          <button
+            onClick={(_) => setIsOpen(true)}
+            className='border text-gray-500 bg-gray-200 hover:bg-gray-300 px-4 mr-3 text-md font-medium rounded-lg flex justify-between items-center'
           >
-            <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
-          </svg>
-        </button>
+            Add New
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='size-10 pl-2'
+            >
+              <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
+            </svg>
+          </button>
+        </Popover>
       </div>
       <div className='min-h-[700px]'>
         {employeeList && (

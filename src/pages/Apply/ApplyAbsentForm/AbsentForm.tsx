@@ -1,4 +1,4 @@
-import { Button, DateInput, Input, Textarea } from '@nextui-org/react'
+import { Button, DatePicker, Input, Textarea } from '@nextui-org/react'
 import { Typography } from 'antd'
 
 const { Title } = Typography
@@ -28,7 +28,7 @@ export default function AbsentForm() {
           </div>
           <div>
             <Title level={5}>Day of absence</Title>
-            <DateInput label='Date of birth' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <DatePicker radius='sm'  isRequired className='w-full mb-3' />
           </div>
           <div>
             <Title level={5}>Reason of absence</Title>

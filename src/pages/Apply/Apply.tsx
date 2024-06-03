@@ -1,4 +1,4 @@
-import { Button, DateInput, Input } from '@nextui-org/react'
+import { Button, DatePicker, Input } from '@nextui-org/react'
 import { Typography } from 'antd'
 
 const { Title } = Typography
@@ -9,9 +9,12 @@ export default function Apply() {
   }
   return (
     <div className='relative min-h-screen flex items-center justify-center'>
+      <div className='fixed left-40 top-1/2 transform -translate-y-1/2'>
+        <h1 className='text-7xl font-bold'>Wanna join us?</h1>
+      </div>
       <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md'>
         <div className='text-left mb-4'>
-          <Title className='mb-0.5'>Wanna join us ?</Title>
+          <Title level={3}>Apply form</Title>
           <Title level={5} disabled className='mt-0.5'>
             Fill in this form and we will contact you
           </Title>
@@ -31,7 +34,7 @@ export default function Apply() {
           </div>
           <div>
             <Title level={5}>Date of birth</Title>
-            <DateInput label='Date of birth' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <DatePicker radius='sm' isRequired className='w-full mb-3' />
           </div>
           <div>
             <Title level={5}>Phone number</Title>

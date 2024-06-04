@@ -2,7 +2,6 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import { AppContext } from './context/app.context'
 import { Suspense, lazy, useContext } from 'react'
 import path from 'src/constant/path'
-import LoginLayout from 'src/layouts/LoginLayout'
 import MainLayout from 'src/layouts/MainLayout/MainLayout'
 import User from 'src/pages/User'
 // import Home from 'src/pages/Home'
@@ -12,7 +11,6 @@ import Dashboard from 'src/pages/Dashboard'
 import Approval from 'src/pages/Approval'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
-import Apply from 'src/pages/Apply'
 import Profile from 'src/pages/Profile'
 import AbsentForm from './pages/Apply/ApplyAbsentForm'
 
@@ -28,6 +26,10 @@ function RejectedRoute() {
 
 const Login = lazy(() => import('./pages/Login'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Apply = lazy(() => import('./pages/Apply'))
+const LoginLayout = lazy(() => import('./layouts/LoginLayout'))
+
+
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -51,7 +53,6 @@ export default function useRouteElements() {
           </Suspense>
         </LoginLayout>
       )
-      
     },
     {
       path: path.home,
@@ -116,11 +117,11 @@ export default function useRouteElements() {
     {
       path: path.absentForm,
       element: (
-         <SideBarLayout>
-           <Suspense>
-            <AbsentForm/>
+        <SideBarLayout>
+          <Suspense>
+            <AbsentForm />
           </Suspense>
-         </SideBarLayout>
+        </SideBarLayout>
       )
     },
     {

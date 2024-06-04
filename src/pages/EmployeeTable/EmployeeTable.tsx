@@ -7,6 +7,8 @@ import { Link, createSearchParams } from 'react-router-dom'
 import path from 'src/constant/path'
 import Popover from 'src/components/Popover'
 import { useState } from 'react'
+import EmployeePopoverInfo from 'src/pages/EmployeeTable/EmployeePopoverInfo'
+import { handleRenderNo } from 'src/utils/utils'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -36,6 +38,10 @@ export default function EmployeeTable() {
 
   const employeeList = employeesData?.data.data as EmployeeList
 
+  const handleOpen = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <div className='bg-white h-full border border-gray-300 rounded-md'>
       <div className='pt-7 px-4 flex justify-between items-center'>
@@ -61,54 +67,6 @@ export default function EmployeeTable() {
             Search
           </button>
         </form>
-        <Popover
-          initialOpen={isOpen}
-          renderPopover={
-            <div className='w-[70%] h-[80%] bg-white p-6'>
-              <div className='flex justify-end'>
-                <button onClick={(_) => setIsOpen(false)} className='rounded-md py-2 px-10 bg-gray-200 text-gray-500'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='size-5'
-                  >
-                    <path strokeLinecap='round' strokeLinejoin='round' d='M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3' />
-                  </svg>
-                </button>
-              </div>
-              <div className='grid grid-cols-7 gap-4 py-4 h-[97%]'>
-                <div className='col-span-3 bg-slate-100'>haha</div>
-                <div className='col-span-4 bg-gray-100 h-[100%] p-4'>
-                  <div className='max-h-[94%] h-[94%]'>hihihi</div>
-                  <div className='flex justify-end items-center'>
-                    <button className='rounded-md py-2 px-10 bg-gray-300 mr-4 text-gray-500'>Accept</button>
-                    <button className='rounded-md py-2 px-10 bg-gray-300 text-gray-500'>Reject</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          }
-        >
-          <button
-            onClick={(_) => setIsOpen(true)}
-            className='border text-gray-500 bg-gray-200 hover:bg-gray-300 px-4 mr-3 text-md font-medium rounded-lg flex justify-between items-center'
-          >
-            Add New
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='size-10 pl-2'
-            >
-              <path strokeLinecap='round' strokeLinejoin='round' d='M12 4.5v15m7.5-7.5h-15' />
-            </svg>
-          </button>
-        </Popover>
       </div>
       <div className='min-h-[700px]'>
         {employeeList && (
@@ -126,7 +84,9 @@ export default function EmployeeTable() {
                 className='bg-gray-100/80 h-[46px] mb-3 px-4 grid grid-cols-12 text-center rounded-xl items-center'
                 key={item.id}
               >
-                <div className='col-span-1 text-left pl-4'>{index + 1}</div>
+                <div className='col-span-1 text-left pl-4'>
+                  {handleRenderNo(employeesData?.data.data.pageNumber, employeesData?.data.data.pageSize, index)}
+                </div>
                 <div className='col-span-3'>{item.fullName}</div>
                 <div className='col-span-2'>{item.phoneNumber}</div>
                 <div className='col-span-2 flex items-center justify-center'>
@@ -148,25 +108,37 @@ export default function EmployeeTable() {
                   </div>
                 </div>
                 <div className='col-span-2 flex justify-center'>
-                  <button>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      strokeWidth='1.5'
-                      stroke='currentColor'
-                      className='size-8'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        d='M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
-                      />
-                    </svg>
-                  </button>
+                  <Popover
+                    initialOpen={isOpen}
+                    renderPopover={<EmployeePopoverInfo employee={item} handleOpen={handleOpen} />}
+                  >
+                    <button onClick={handleOpen}>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        strokeWidth='1.5'
+                        stroke='currentColor'
+                        className='size-8'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          d='M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
+                        />
+                      </svg>
+                    </button>
+                  </Popover>
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {!employeeList && (
+          <div className='p-4 min-h-[625px]'>
+            <div className='text-lg font-normal leading-none  text-blue-800 bg-blue-200 animate-pulse dark:bg-blue-900 dark:text-blue-200 min-h-[600px] text-center flex justify-center items-center'>
+              loading...
+            </div>
           </div>
         )}
         <div className='flex justify-center'>

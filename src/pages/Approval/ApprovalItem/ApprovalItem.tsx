@@ -13,9 +13,9 @@ export default function ApprovalItem({ number, name, createAt, isDanger }: Props
   return (
     <Link to={`${path.approval}/1`}>
       <div
-        className={classNames('p-3 mb-4 shadow-sm rounded-md text-white grid grid-cols-8 transition hover:scale-105', {
-          'bg-red-400': isDanger,
-          'bg-sky-300': !isDanger
+        className={classNames('p-3 mb-2 shadow-sm rounded-md  grid grid-cols-8 transition hover:scale-105', {
+          'bg-red-400 text-white': isDanger,
+          'bg-gray-400/50 text-gray-600': !isDanger,
         })}
       >
         <div className='col-span-1 border-r-2'>{number}</div>

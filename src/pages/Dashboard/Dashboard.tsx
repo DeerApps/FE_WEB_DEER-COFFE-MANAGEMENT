@@ -73,7 +73,7 @@ export default function Dashboard() {
             onChange={setValue}
           />
         </div>
-        <div className='col-span-12 row-span-3 flex items-end'>
+        <div className='col-span-12 row-span-3'>
           <EmployeeDate />
         </div>
       </div>

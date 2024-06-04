@@ -58,18 +58,18 @@ export default function Popover({
                 width: '200px',
                 height: '500px',
                 transform: 'translate(-50%, -50%)',
-                backdropFilter: 'blur(3px)',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                // backdropFilter: 'blur(3px)',
+                backgroundColor: 'rgba(115, 111, 111, 0.3)',
                 zIndex: 999,
                 transformOrigin: `${middlewareData.arrow?.x}px top`
               }}
               className='top-0 left-0 w-full h-full flex justify-center items-center'
               ref={refs.setFloating}
               {...getFloatingProps()}
-              initial={{ opacity: 0, transform: 'scale(0)' }}
-              animate={{ opacity: 1, transform: 'scale(1)' }}
-              exit={{ opacity: 0, transform: 'scale(0)' }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, transform: 'translateY(-10px)' }}
+              animate={{ opacity: 1, transform: 'translateY(0)' }}
+              exit={{ opacity: 0, transform: 'translateY(-10px)' }}
+              transition={{ duration: 0.2 }}
             >
               {renderPopover}
             </motion.div>

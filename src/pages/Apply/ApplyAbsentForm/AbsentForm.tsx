@@ -9,7 +9,7 @@ export default function AbsentForm() {
 
   return (
     <div className=' flex items-center justify-center'>
-      <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-4xl'>
+      <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-2xl'>
         <div className='text-left mb-4'>
           <Title level={3} className='mb-0.5'>Absent Form</Title>
         </div>

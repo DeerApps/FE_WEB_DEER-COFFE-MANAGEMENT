@@ -21,13 +21,13 @@ export default function SideBarLayout({ children }: Props) {
           <p className='ml-2 text-lg font-light'>DEER COFFEE</p>
         </div>
         <div className='mt-4'>
-          <Link to={path.home}>
+          <Link to={path.dashboard}>
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
                 {
-                  'bg-sky-300 text-white': path.home === pathName,
-                  'text-black hover:bg-slate-100': path.home !== pathName
+                  'bg-sky-300 text-white': path.dashboard === pathName,
+                  'text-black hover:bg-slate-100': path.dashboard !== pathName
                 }
               )}
             >

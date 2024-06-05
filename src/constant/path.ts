@@ -1,16 +1,16 @@
 const path = {
   apply: '/',
-  home: '/manager',
-  employees: '/manager/employees',
+  dashboard: '/dashboard',
+  employees: '/employee',
   users: '/users',
-  approval: '/manager/approval',
-  schedule: '/manager/schedule',
-  approvalForm: '/manager/approval/:formId',
+  approval: '/approval',
+  schedule: '/schedule',
+  approvalForm: '/approval/:formId',
   login: '/login',
   logout: '/logout',
   user: '/user',
   profile: '/profile',
-  absentForm:'employee/application/absent'
+  absentForm: '/application/absent'
 } as const
 
 export default path

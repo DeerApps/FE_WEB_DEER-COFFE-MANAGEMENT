@@ -17,7 +17,7 @@ export interface Employee {
   dateJoined: Date
   address: string
   roleName: Role
-  isActive: Boolean
+  isActive: boolean
 }
 
 export interface EmployeeListConfig {

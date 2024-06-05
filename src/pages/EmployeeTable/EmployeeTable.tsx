@@ -1,4 +1,4 @@
-import { EmployeeList, EmployeeListConfig } from 'src/types/employee.type'
+import { Employee, EmployeeList, EmployeeListConfig } from 'src/types/employee.type'
 import useQueryConfig from 'src/hooks/useQueryConfig'
 import { useQuery } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
@@ -23,6 +23,7 @@ const RoleBackground = {
 
 export default function EmployeeTable() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isEdit, setIsEdit] = useState<Employee>()
   const queryConfig = useQueryConfig()
 
   const { data: employeesData } = useQuery({
@@ -38,7 +39,12 @@ export default function EmployeeTable() {
 
   const employeeList = employeesData?.data.data as EmployeeList
 
-  const handleOpen = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleOpen = (employeee: Employee) => (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsOpen(!isOpen)
+    setIsEdit(employeee)
+  }
+
+  const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsOpen(!isOpen)
   }
 
@@ -109,10 +115,11 @@ export default function EmployeeTable() {
                 </div>
                 <div className='col-span-2 flex justify-center'>
                   <Popover
+                    key={item.id}
                     initialOpen={isOpen}
-                    renderPopover={<EmployeePopoverInfo employee={item} handleOpen={handleOpen} />}
+                    renderPopover={isEdit && <EmployeePopoverInfo employee={isEdit} handleOpen={handleClose} />}
                   >
-                    <button onClick={handleOpen}>
+                    <button onClick={handleOpen(item)}>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'

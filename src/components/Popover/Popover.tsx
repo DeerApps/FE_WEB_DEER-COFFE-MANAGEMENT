@@ -37,8 +37,8 @@ export default function Popover({
     strategy: 'fixed'
   })
   const click = useClick(context, {
-    event: 'mousedown',
-    toggle: false
+    event: 'mousedown'
+    // toggle: false
   })
   const dismiss = useDismiss(context)
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss])

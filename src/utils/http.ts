@@ -41,8 +41,8 @@ class Http {
       (response) => {
         const { url } = response.config
         if (url === path.login) {
-          this.accessToken = (response.data as AuthResponse).data.access_token
-          this.refreshToken = (response.data as AuthResponse).data.refresh_token
+          this.accessToken = (response.data as AuthResponse).data.accessToken
+          this.refreshToken = (response.data as AuthResponse).data.refreshToken
           saveAccessTokenAndRefreshTokenToLS(this.accessToken, this.refreshToken)
         } else if (url === path.logout) {
           this.accessToken = ''

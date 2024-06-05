@@ -29,8 +29,6 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 const Apply = lazy(() => import('./pages/Apply'))
 const LoginLayout = lazy(() => import('./layouts/LoginLayout'))
 
-
-
 export default function useRouteElements() {
   const routeElements = useRoutes([
     {
@@ -55,7 +53,7 @@ export default function useRouteElements() {
       )
     },
     {
-      path: path.home,
+      path: path.dashboard,
       element: (
         <SideBarLayout>
           <Suspense>

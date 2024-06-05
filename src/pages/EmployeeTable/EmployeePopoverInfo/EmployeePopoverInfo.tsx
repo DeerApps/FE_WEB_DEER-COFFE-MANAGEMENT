@@ -10,6 +10,7 @@ import { Select, SelectItem } from '@nextui-org/react'
 interface Props {
   employee: Employee
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  handleDelete: (employeeID: string) => () => void
 }
 
 type FormData = Pick<
@@ -29,7 +30,7 @@ const schema = employeeSchema.pick([
   'dateOfBirth'
 ])
 
-export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
+export default function EmployeePopoverInfo({ employee, handleOpen, handleDelete }: Props) {
   const {
     register,
     handleSubmit,
@@ -230,7 +231,12 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
             <button type='submit' className='rounded-md py-3 px-4 w-[140px] bg-gray-300 mr-4 text-gray-500'>
               Edit
             </button>
-            <button className='rounded-md py-3 px-4 w-[140px] bg-gray-300 text-gray-500'>Delete</button>
+            <button
+              onClick={handleDelete(employee.employeeID.toString())}
+              className='rounded-md py-3 px-4 w-[140px] bg-gray-300 text-gray-500'
+            >
+              Delete
+            </button>
           </div>
         </form>
       </div>

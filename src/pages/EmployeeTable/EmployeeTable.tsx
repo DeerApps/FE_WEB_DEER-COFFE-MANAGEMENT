@@ -1,6 +1,6 @@
 import { Employee, EmployeeList, EmployeeListConfig } from 'src/types/employee.type'
 import useQueryConfig from 'src/hooks/useQueryConfig'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
 import classNames from 'classnames'
 import { Link, createSearchParams } from 'react-router-dom'
@@ -9,6 +9,7 @@ import Popover from 'src/components/Popover'
 import { useState } from 'react'
 import EmployeePopoverInfo from 'src/pages/EmployeeTable/EmployeePopoverInfo'
 import { handleRenderNo } from 'src/utils/utils'
+import { toast } from 'react-toastify'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -26,13 +27,22 @@ export default function EmployeeTable() {
   const [isEdit, setIsEdit] = useState<Employee>()
   const queryConfig = useQueryConfig()
 
-  const { data: employeesData } = useQuery({
+  const { data: employeesData, refetch } = useQuery({
     queryKey: ['employee', queryConfig],
     queryFn: () => {
       return employeeApi.getEmployees(queryConfig as EmployeeListConfig)
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
+  })
+
+  const deleteEmployeeMutation = useMutation({
+    mutationFn: employeeApi.deleteEmployee,
+    onSuccess: () => {
+      refetch()
+      toast('Delete Successfully', { autoClose: 1000 })
+      setIsOpen(!isOpen)
+    }
   })
 
   const page = Number(queryConfig.pageNumber)
@@ -46,6 +56,10 @@ export default function EmployeeTable() {
 
   const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsOpen(!isOpen)
+  }
+
+  const handleDelete = (employeeID: string) => () => {
+    deleteEmployeeMutation.mutate({ employeeID: employeeID })
   }
 
   return (
@@ -117,7 +131,11 @@ export default function EmployeeTable() {
                   <Popover
                     key={item.id}
                     initialOpen={isOpen}
-                    renderPopover={isEdit && <EmployeePopoverInfo employee={isEdit} handleOpen={handleClose} />}
+                    renderPopover={
+                      isEdit && (
+                        <EmployeePopoverInfo employee={isEdit} handleOpen={handleClose} handleDelete={handleDelete} />
+                      )
+                    }
                   >
                     <button onClick={handleOpen(item)}>
                       <svg

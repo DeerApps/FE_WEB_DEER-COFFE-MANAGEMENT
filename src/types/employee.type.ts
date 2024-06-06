@@ -1,5 +1,12 @@
 type Role = string & ('Employee' | 'Admin' | 'Manager' | 'SuperAdmin')
 
+export enum RoleId {
+  Admin = 1,
+  Manager = 2,
+  Employee = 3,
+  SuperAdmin = 4
+}
+
 export interface EmployeeList {
   data: Employee[]
   totalCount: number

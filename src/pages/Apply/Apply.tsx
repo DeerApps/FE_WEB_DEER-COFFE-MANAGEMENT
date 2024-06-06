@@ -14,7 +14,9 @@ export default function Apply() {
       <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md'>
         <div className='text-left mb-4'>
           <div className='flex justify-between items-end'>
-            <Title level={2} className='mb-0'>Application Form</Title>
+            <Title level={2} className='mb-0'>
+              Application Form
+            </Title>
             <Link className='text-small  underline  pb-1' to={path.login}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -45,16 +47,16 @@ export default function Apply() {
           </div>
           <div>
             <Title level={5}>Date of birth</Title>
-            <DatePicker radius='sm' isRequired className='w-full mb-3' />
+            <DatePicker aria-label='date_of_birth_date_picker' radius='sm' isRequired className='w-full mb-3' />
           </div>
           <div>
             <Title level={5}>Phone number</Title>
             <Input label='Phone number' radius='sm' size='sm' isRequired className='w-full mb-3' />
           </div>
           <Title level={5} className='mt-0.5 text-gray-500/60 text-sm'>
-          Fill in this form and we will contact you
-        </Title>
-          <Button type='submit' color='primary' className='w-full'>
+            Fill in this form and we will contact you
+          </Title>
+          <Button aria-label='button-submit-apply' type='submit' color='primary' className='w-full'>
             Submit
           </Button>
         </form>

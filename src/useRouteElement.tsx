@@ -13,6 +13,7 @@ import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
 import Profile from 'src/pages/Profile'
 import AbsentForm from './pages/Apply/ApplyAbsentForm'
+import Demo from 'src/pages/Demo'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -31,6 +32,10 @@ const LoginLayout = lazy(() => import('./layouts/LoginLayout'))
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
+    {
+      path: path.demo,
+      element: <Demo />
+    },
     {
       path: path.login,
       element: (

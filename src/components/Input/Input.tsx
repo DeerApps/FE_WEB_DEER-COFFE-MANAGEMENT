@@ -18,7 +18,7 @@ export default function Input({
   rules,
   className,
   classNameInput = 'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm',
-  classNameError = 'my-1 text-red-600 min-h-[1rem] text-sm',
+  classNameError = 'pl-2 my-1 text-red-600 min-h-[1rem] h-5 text-sm',
   classNameEye = 'absolute top-[8px] right-[5px] w-5 h-5 cursor-pointer',
   ...rest
 }: Props) {

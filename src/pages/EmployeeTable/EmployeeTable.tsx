@@ -10,6 +10,8 @@ import { useState } from 'react'
 import EmployeePopoverInfo from 'src/pages/EmployeeTable/EmployeePopoverInfo'
 import { handleRenderNo } from 'src/utils/utils'
 import { toast } from 'react-toastify'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { Key } from 'node_modules/@react-types/shared/src/key'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -41,7 +43,17 @@ export default function EmployeeTable() {
     onSuccess: () => {
       refetch()
       toast('Delete Successfully', { autoClose: 1000 })
-      setIsOpen(!isOpen)
+    }
+  })
+
+  const updateEmployeeMutation = useMutation({
+    mutationFn: employeeApi.updateEmployee,
+    onSuccess: () => {
+      refetch()
+      toast('Update Successfully', { autoClose: 1000 })
+    },
+    onError: (error) => {
+      console.log(error)
     }
   })
 
@@ -49,17 +61,21 @@ export default function EmployeeTable() {
 
   const employeeList = employeesData?.data.data as EmployeeList
 
-  const handleOpen = (employeee: Employee) => (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsOpen(!isOpen)
-    setIsEdit(employeee)
-  }
-
   const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsOpen(!isOpen)
   }
 
-  const handleDelete = (employeeID: string) => () => {
-    deleteEmployeeMutation.mutate({ employeeID: employeeID })
+  const handleSelect = (employeee: Employee) => (key: Key) => {
+    if (key === 'update') {
+      setIsOpen(!isOpen)
+      setIsEdit(employeee)
+    } else if (key === 'delete') {
+      deleteEmployeeMutation.mutate({ employeeID: employeee.employeeID.toString() })
+    }
+  }
+
+  const handleUpdateEmployee = (body: any) => {
+    updateEmployeeMutation.mutate(body)
   }
 
   return (
@@ -83,7 +99,10 @@ export default function EmployeeTable() {
             </svg>
             <input className='outline-none px-3' type='text' placeholder='Search by name...' />
           </div>
-          <button className='text-gray-500 bg-gray-200 hover:bg-gray-300 ml-4 px-10 py-3 text-md font-medium rounded-lg'>
+          <button
+            aria-label='search_bar'
+            className='text-gray-500 bg-gray-200 hover:bg-gray-300 ml-4 px-10 py-3 text-md font-medium rounded-lg'
+          >
             Search
           </button>
         </form>
@@ -133,26 +152,47 @@ export default function EmployeeTable() {
                     initialOpen={isOpen}
                     renderPopover={
                       isEdit && (
-                        <EmployeePopoverInfo employee={isEdit} handleOpen={handleClose} handleDelete={handleDelete} />
+                        <EmployeePopoverInfo
+                          employee={isEdit}
+                          handleOpen={handleClose}
+                          handleUpdate={handleUpdateEmployee}
+                        />
                       )
                     }
                   >
-                    <button onClick={handleOpen(item)}>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        strokeWidth='1.5'
-                        stroke='currentColor'
-                        className='size-8'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          d='M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
-                        />
-                      </svg>
-                    </button>
+                    <Dropdown aria-label='drow down'>
+                      <DropdownTrigger aria-label='drow triger'>
+                        <Button
+                          aria-label='btn_open_menu'
+                          fullWidth={false}
+                          color='default'
+                          variant='shadow'
+                          size='sm'
+                          className='bg-none! shadow-none!'
+                        >
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            strokeWidth={1.5}
+                            stroke='currentColor'
+                            className='size-6'
+                          >
+                            <path
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                              d='M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z'
+                            />
+                          </svg>
+                        </Button>
+                      </DropdownTrigger>
+                      <DropdownMenu aria-label='Action event example' onAction={handleSelect(item)}>
+                        <DropdownItem key='update'>Update</DropdownItem>
+                        <DropdownItem key='delete' className='text-danger' color='danger'>
+                          Delete
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
                   </Popover>
                 </div>
               </div>

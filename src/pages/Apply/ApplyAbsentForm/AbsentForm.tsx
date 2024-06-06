@@ -28,13 +28,13 @@ export default function AbsentForm() {
           </div>
           <div>
             <Title level={5}>Day of absence</Title>
-            <DatePicker radius='sm'  isRequired className='w-full mb-3' />
+            <DatePicker label='day_of_absense_date_picker' radius='sm'  isRequired className='w-full mb-3' />
           </div>
           <div>
             <Title level={5}>Reason of absence</Title>
             <Textarea label='Reason of absence' placeholder='Enter your reason' className='w-full mb-3 max-h-5xl' maxRows={2}/>
           </div>
-          <Button type='submit' color='primary' className='w-full'>
+          <Button aria-label='btn-submit' type='submit' color='primary' className='w-full'>
             Submit
           </Button>
         </form>

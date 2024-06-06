@@ -105,8 +105,8 @@ export default function Login() {
               )}
             />
           </div>
-          <Checkbox className='mb-2 py-4'>Remember me</Checkbox>
-          <Button type='submit' color='primary' className='w-full'>
+          <Checkbox aria-label='checkbox remember me' className='mb-2 py-4'>Remember me</Checkbox>
+          <Button aria-label='btn-login' type='submit' color='primary' className='w-full'>
             Login
           </Button>
         </form>

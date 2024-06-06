@@ -1,4 +1,5 @@
 const path = {
+  demo: '/demo',
   apply: '/',
   dashboard: '/dashboard',
   employees: '/employee',

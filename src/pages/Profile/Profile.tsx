@@ -1,7 +1,6 @@
 import { Avatar, Card, Input } from '@nextui-org/react'
 import { Upload, type UploadProps } from 'antd'
 
-
 export default function Profile() {
   const user = {
     name: 'John Doe',
@@ -22,9 +21,9 @@ export default function Profile() {
   }
   return (
     <>
-      <Card className='max-w-6xl mx-auto mt-3 p-5 bg-white rounded-lg shadow-lg'>
+      <Card aria-label='card profile' className='max-w-6xl mx-auto mt-3 p-5 bg-white rounded-lg shadow-lg'>
         <div className='flex flex-col items-center'>
-          <Avatar size='lg' src={user.avatarUrl} className='mb-4' />
+          <Avatar aria-label='avatar profile' size='lg' src={user.avatarUrl} className='mb-4' />
           <Upload {...props}>
             <h3 className='underline'>Click to upload</h3>
           </Upload>
@@ -33,23 +32,30 @@ export default function Profile() {
         <div className='mt-4'>
           <div className='flex items-center mb-2'>
             <h3 className='w-16 mr-2'>Email:</h3>
-            <Input isReadOnly size='sm' type='email' defaultValue={user.email} className='max-w-5xl' />
+            <Input
+              label='email profile'
+              isReadOnly
+              size='sm'
+              type='email'
+              defaultValue={user.email}
+              className='max-w-5xl'
+            />
           </div>
           <div className='flex items-center mb-2'>
             <h3 className='w-16 mr-2'>Phone:</h3>
-            <Input isReadOnly size='sm' defaultValue={user.phone} className='max-w-5xl' />
+            <Input label='phone profile' isReadOnly size='sm' defaultValue={user.phone} className='max-w-5xl' />
           </div>
           <div className='flex items-center mb-2'>
             <h3 className='w-16 mr-2'>Gender:</h3>
-            <Input isReadOnly size='sm' defaultValue={user.gender} className='max-w-5xl' />
+            <Input label='gender profile' isReadOnly size='sm' defaultValue={user.gender} className='max-w-5xl' />
           </div>
           <div className='flex items-center mb-2'>
             <h3 className='w-16 mr-2'>DoB:</h3>
-            <Input isReadOnly size='sm' defaultValue={user.dob} className='max-w-5xl' />
+            <Input label='dob profile' isReadOnly size='sm' defaultValue={user.dob} className='max-w-5xl' />
           </div>
           <div className='flex items-center mb-2'>
             <h3 className='w-16 mr-2'>Address:</h3>
-            <Input isReadOnly size='sm' defaultValue={user.address} className='max-w-5xl' />
+            <Input label='address profile' isReadOnly size='sm' defaultValue={user.address} className='max-w-5xl' />
           </div>
         </div>
       </Card>

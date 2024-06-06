@@ -22,35 +22,35 @@ export default function EmployeeData() {
       status: 'Available'
     },
     {
-      id: 1,
+      id: 4,
       name: 'Alice',
       shift: 'Morning',
       time: '8:00 AM - 1:00 PM',
       status: 'Active'
     },
     {
-      id: 2,
+      id: 5,
       name: 'Bob',
       shift: 'Afternoon',
       time: '1:00 PM - 6:00 PM',
       status: 'On Break'
     },
     {
-      id: 3,
+      id: 6,
       name: 'Charlie',
       shift: 'Evening',
       time: '6:00 PM - 10:00 PM',
       status: 'Available'
     },
     {
-      id: 1,
+      id: 7,
       name: 'Alice',
       shift: 'Morning',
       time: '8:00 AM - 1:00 PM',
       status: 'Active'
     },
     {
-      id: 2,
+      id: 8,
       name: 'Bob',
       shift: 'Afternoon',
       time: '1:00 PM - 6:00 PM',

@@ -23,7 +23,7 @@ export const employeeSchema = yup.object({
     .min(10, 'At least 10 characters !')
     .max(12, 'Maximum 12 characters !'),
   address: yup.string().required('Can not be Empty !').max(160, 'Maximum 160 characters !'),
-  role: yup.string().required('Can not be Empty !').max(10, 'Maximum 10 characters !'),
+  roleId: yup.number().required('Can not be Empty !').max(10, 'Maximum 10 characters !'),
   dateOfBirth: yup.date().required('Can not be Empty !'),
   dateJoined: yup.date().required('Can not be Empty !'),
   isActive: yup.boolean().required('Can not be Empty !')

@@ -16,6 +16,20 @@ const employeeApi = {
     return http.delete<SuccessResponse<String>>(URL, {
       data: body
     })
+  },
+  updateEmployee(body: {
+    employeeID: string
+    email: string
+    phoneNumber: string
+    address: string
+    roleId: number
+    fullName: string
+    dateOfBirth: Date
+    isActive: boolean
+  }) {
+    return http.put<SuccessResponse<String>>(URL, {
+      data: body
+    })
   }
 }
 

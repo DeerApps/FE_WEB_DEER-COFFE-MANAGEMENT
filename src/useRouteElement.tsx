@@ -13,6 +13,7 @@ import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
 import Profile from 'src/pages/Profile'
 import AbsentForm from './pages/Apply/ApplyAbsentForm'
+import Restaurant from 'src/pages/Restaurant'
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
   return isAuthenticated ? <Outlet /> : <Navigate to='/' />
@@ -49,6 +50,16 @@ export default function useRouteElements() {
             <Apply />
           </Suspense>
         </LoginLayout>
+      )
+    },
+    {
+      path: path.restaurant,
+      element: (
+        <SideBarLayout>
+          <Suspense>
+            <Restaurant />
+          </Suspense>
+        </SideBarLayout>
       )
     },
     {

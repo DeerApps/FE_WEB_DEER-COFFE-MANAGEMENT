@@ -46,17 +46,6 @@ export default function EmployeeTable() {
     }
   })
 
-  const updateEmployeeMutation = useMutation({
-    mutationFn: employeeApi.updateEmployee,
-    onSuccess: () => {
-      refetch()
-      toast('Update Successfully', { autoClose: 1000 })
-    },
-    onError: (error) => {
-      console.log(error)
-    }
-  })
-
   const page = Number(queryConfig.pageNumber)
 
   const employeeList = employeesData?.data.data as EmployeeList
@@ -72,10 +61,6 @@ export default function EmployeeTable() {
     } else if (key === 'delete') {
       deleteEmployeeMutation.mutate({ employeeID: employeee.employeeID.toString() })
     }
-  }
-
-  const handleUpdateEmployee = (body: any) => {
-    updateEmployeeMutation.mutate(body)
   }
 
   return (
@@ -150,15 +135,7 @@ export default function EmployeeTable() {
                   <Popover
                     key={item.id}
                     initialOpen={isOpen}
-                    renderPopover={
-                      isEdit && (
-                        <EmployeePopoverInfo
-                          employee={isEdit}
-                          handleOpen={handleClose}
-                          handleUpdate={handleUpdateEmployee}
-                        />
-                      )
-                    }
+                    renderPopover={isEdit && <EmployeePopoverInfo employee={isEdit} handleOpen={handleClose} />}
                   >
                     <Dropdown aria-label='drow down'>
                       <DropdownTrigger aria-label='drow triger'>

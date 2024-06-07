@@ -2,16 +2,20 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import InputFile from 'src/components/InputFile'
 import { Employee, RoleId } from 'src/types/employee.type'
-import { handleDate } from 'src/utils/utils'
+import { handleDate, isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 import Input from 'src/components/Input'
 import { Select, SelectItem } from '@nextui-org/react'
 import { omit } from 'lodash'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import employeeApi from 'src/apis/employee.api'
+import { toast } from 'react-toastify'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { ErrorResponse } from 'src/types/utils.type'
 
 interface Props {
   employee: Employee
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-  handleUpdate: (body: any) => void
 }
 
 type FormData = Pick<
@@ -31,12 +35,15 @@ const schema = employeeSchema.pick([
   'dateOfBirth'
 ])
 
-export default function EmployeePopoverInfo({ employee, handleOpen, handleUpdate }: Props) {
+export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
+  const queryClient = useQueryClient()
+  const queryConfig = useQueryConfig()
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control
+    control,
+    setError
   } = useForm<FormData>({
     defaultValues: {
       employeeID: employee.employeeID,
@@ -52,8 +59,30 @@ export default function EmployeePopoverInfo({ employee, handleOpen, handleUpdate
     resolver: yupResolver(schema)
   })
 
+  const updateEmployeeMutation = useMutation({
+    mutationFn: employeeApi.updateEmployee,
+    onSuccess: () => {
+      // refetch()
+      toast('Update Successfully', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['employee', queryConfig] })
+    },
+    onError: (error) => {
+      if (isAxiosUnprocessableEntityError<ErrorResponse<EmployeeSchema>>(error)) {
+        const formError = error.response?.data.data
+        if (formError) {
+          Object.keys(formError).forEach((key) => {
+            setError(key as keyof EmployeeSchema, {
+              message: formError[key as keyof EmployeeSchema] as string,
+              type: 'Server'
+            })
+          })
+        }
+      }
+    }
+  })
+
   const onSubmit = handleSubmit((data) => {
-    handleUpdate(omit(data, ['dateJoined']))
+    updateEmployeeMutation.mutate(omit(data, ['dateJoined']))
   })
 
   return (

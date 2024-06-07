@@ -1,8 +1,8 @@
 const path = {
-  demo: '/demo',
   apply: '/',
   dashboard: '/dashboard',
   employees: '/employee',
+  restaurant: '/restaurant',
   users: '/users',
   approval: '/approval',
   schedule: '/schedule',

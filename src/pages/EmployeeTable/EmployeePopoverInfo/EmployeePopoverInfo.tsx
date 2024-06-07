@@ -69,6 +69,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
     onError: (error) => {
       if (isAxiosUnprocessableEntityError<ErrorResponse<EmployeeSchema>>(error)) {
         const formError = error.response?.data.data
+        console.log(formError)
         if (formError) {
           Object.keys(formError).forEach((key) => {
             setError(key as keyof EmployeeSchema, {
@@ -234,24 +235,31 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
                   />
                 </div>
               </div>
-              <div className='flex w-full items-center mb-6'>
-                <div className='w-[20%] text-lg capitalize pl-5'>Birthdate</div>
+              <div className='flex w-full items-start'>
+                <div className='w-[20%] text-lg capitalize pl-5 pt-3'>Birthdate</div>
                 <Controller
                   control={control}
                   name='dateOfBirth'
                   render={({ field }) => (
-                    <div className='flex items-center w-[40%]'>
-                      <input
-                        type='date'
-                        className='w-[100%] p-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
-                        value={handleDate(field.value)}
-                        onChange={field.onChange}
-                      />
-                      {/* You can add an icon here if needed */}
+                    <div className=' w-[40%]'>
+                      <div className='flex items-center'>
+                        <input
+                          type='date'
+                          className='w-[100%] p-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
+                          value={handleDate(field.value)}
+                          onChange={(input) => {
+                            const rawDate = input.target.value
+                            console.log(new Date(rawDate))
+                            field.onChange(new Date(rawDate))
+                          }}
+                        />
+                      </div>
+                      <div className='h-6 min-h-6 text-sm text-red-600 py-1 pl-2'>{errors.dateOfBirth?.message}</div>
                     </div>
                   )}
                 />
               </div>
+
               <div className='flex w-full items-center'>
                 <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Joined</div>
                 <Controller

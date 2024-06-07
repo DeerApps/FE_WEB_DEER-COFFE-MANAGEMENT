@@ -27,9 +27,7 @@ const employeeApi = {
     dateOfBirth: Date
     isActive: boolean
   }) {
-    return http.put<SuccessResponse<String>>(URL, {
-      data: body
-    })
+    return http.put<SuccessResponse<String>>(URL, body)
   }
 }
 

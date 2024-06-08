@@ -1,6 +1,9 @@
 import classNames from 'classnames'
+import { useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import path from 'src/constant/path'
+import { AppContext } from 'src/context/app.context'
+import SideBarHeader from 'src/layouts/SideBarLayout/SideBarHeader'
 
 interface Props {
   children?: React.ReactNode
@@ -8,7 +11,7 @@ interface Props {
 
 export default function SideBarLayout({ children }: Props) {
   let pathName = useLocation().pathname
-
+  const { employee } = useContext(AppContext)
   return (
     <div className='grid grid-cols-12 h-[100vh]'>
       <div className='py-4 px-2 col-start-1 col-span-2 '>
@@ -21,7 +24,13 @@ export default function SideBarLayout({ children }: Props) {
           <p className='ml-2 text-lg font-light'>DEER COFFEE</p>
         </div>
         <div className='mt-4'>
-          <Link to={path.dashboard}>
+          <Link
+            to={path.dashboard}
+            className={classNames('', {
+              '': 'Manager' === (employee?.roleName as string),
+              'text-sm hidden': 'Manager' !== employee?.roleName
+            })}
+          >
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -48,7 +57,13 @@ export default function SideBarLayout({ children }: Props) {
               Dashboard
             </div>
           </Link>
-          <Link to={path.employees}>
+          <Link
+            to={path.employees}
+            className={classNames('', {
+              '': 'Manager' === (employee?.roleName as string),
+              'text-sm hidden': 'Manager' !== employee?.roleName
+            })}
+          >
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -75,7 +90,13 @@ export default function SideBarLayout({ children }: Props) {
               Employee
             </div>
           </Link>
-          <Link to={path.schedule}>
+          <Link
+            to={path.schedule}
+            className={classNames('', {
+              '': 'Manager' === (employee?.roleName as string),
+              'text-sm hidden': 'Manager' !== employee?.roleName
+            })}
+          >
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -102,7 +123,13 @@ export default function SideBarLayout({ children }: Props) {
               Schedule
             </div>
           </Link>
-          <Link to={path.approval}>
+          <Link
+            to={path.approval}
+            className={classNames('', {
+              '': 'Admin' === (employee?.roleName as string),
+              'text-sm hidden': 'Admin' !== employee?.roleName
+            })}
+          >
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -129,7 +156,13 @@ export default function SideBarLayout({ children }: Props) {
               Approval
             </div>
           </Link>
-          <Link to={path.restaurant}>
+          <Link
+            to={path.restaurant}
+            className={classNames('', {
+              '': 'Admin' === (employee?.roleName as string),
+              'text-sm hidden': 'Admin' !== employee?.roleName
+            })}
+          >
             <div
               className={classNames(
                 'py-3 px-3 rounded-lg mb-2 font-medium flex items-center transition-background duration-100',
@@ -160,16 +193,7 @@ export default function SideBarLayout({ children }: Props) {
       </div>
       <div className='col-span-10 bg-sky-100'>
         <div className='h-full'>
-          <div className='px-10 h-[7%] bg-stone-100 flex justify-start items-center flex-row-reverse'>
-            <div className='w-9 h-9 mr-0 flex-shrink-0'>
-              <img
-                src={'https://picsum.photos/200/300'}
-                alt='avatar'
-                className='w-full h-full object-cover rounded-full'
-              />
-            </div>
-            <div className='px-2 mr-2 text-lg font-medium text-zinc-600'>bentran1vn</div>
-          </div>
+          <SideBarHeader />
           <div className='h-[93%] p-10'>{children}</div>
         </div>
       </div>

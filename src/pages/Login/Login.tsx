@@ -2,10 +2,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Checkbox, Input } from '@nextui-org/react'
 import { useMutation } from '@tanstack/react-query'
 import { Typography } from 'antd'
+import { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import authApi from 'src/apis/authenticate.api'
 import path from 'src/constant/path'
+import { AppContext } from 'src/context/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
 import { LoginSchema, loginSchema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
@@ -13,7 +15,7 @@ import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 const { Title } = Typography
 
 export default function Login() {
-  // const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const { setIsAuthenticated, setEmployee } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -35,9 +37,9 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
-        console.log(data.data.data.accessToken)
-        // const result = decode(data.data.data.accessToken)
-        // console.log(result)
+        setIsAuthenticated(true)
+        setEmployee(data.data.data.employeeDto)
+        console.log(data.data.data.employeeDto)
         navigate(path.dashboard)
       },
       onError: (error) => {
@@ -105,7 +107,9 @@ export default function Login() {
               )}
             />
           </div>
-          <Checkbox aria-label='checkbox remember me' className='mb-2 py-4'>Remember me</Checkbox>
+          <Checkbox aria-label='checkbox remember me' className='mb-2 py-4'>
+            Remember me
+          </Checkbox>
           <Button aria-label='btn-login' type='submit' color='primary' className='w-full'>
             Login
           </Button>

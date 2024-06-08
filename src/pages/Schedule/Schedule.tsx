@@ -3,8 +3,10 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useCallback, useMemo, useState } from 'react'
+import Popover from 'src/components/Popover'
+import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
 
-interface Event {
+export interface Shift {
   id: string
   start: Date
   end: Date
@@ -12,11 +14,11 @@ interface Event {
   title?: string
 }
 
-const eventsList: Event[] = [
+const eventsList: Shift[] = [
   {
     id: '1',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
+    start: moment('2024-06-29T10:00:00').toDate(),
+    end: moment('2024-06-29T11:00:00').toDate(),
     title: 'MRI Registration'
   },
   {
@@ -63,15 +65,16 @@ const eventsList: Event[] = [
   }
 ]
 
-const DragAndDropCalendar = withDragAndDrop<Event>(Calendar)
+const DragAndDropCalendar = withDragAndDrop<Shift>(Calendar)
 
 const localizer = momentLocalizer(moment)
 
 export default function Schedule() {
-  const [myEvents, setEvents] = useState<Event[]>(eventsList)
+  const [myEvents, setEvents] = useState<Shift[]>(eventsList)
+  const [isEdit, setIsEdit] = useState<Shift>()
 
   const moveEvent = useCallback(
-    (args: EventInteractionArgs<Event>) => {
+    (args: EventInteractionArgs<Shift>) => {
       const { event, start, end, isAllDay: droppedOnAllDaySlot = false } = args
       const { allDay } = event
       if (!allDay && droppedOnAllDaySlot) {
@@ -81,10 +84,10 @@ export default function Schedule() {
         event.allDay = false
       }
 
-      setEvents((prev: Event[]) => {
-        const existing = prev.find((ev: Event) => ev.id === event.id) ?? {}
-        const filtered = prev.filter((ev: any) => ev.id !== event.id)
-        return [...filtered, { ...existing, start, end, allDay: event.allDay }] as Event[]
+      setEvents((prev: Shift[]) => {
+        const existing = prev.find((ev: Shift) => ev.id === event.id) ?? {}
+        const filtered = prev.filter((ev: Shift) => ev.id !== event.id)
+        return [...filtered, { ...existing, start, end, allDay: event.allDay }] as Shift[]
       })
     },
     [setEvents]
@@ -94,9 +97,9 @@ export default function Schedule() {
     ({ start, end }: { start: Date; end: Date }) => {
       const title = window.prompt(`Create New Event: `)
       if (title) {
-        setEvents((prev: Event[]) => {
-          const existing = prev.find((ev: Event) => ev.start === start && ev.end === end)
-          if (!existing) return [...prev, { id: eventsList.length + 1, title, start, end }] as Event[]
+        setEvents((prev: Shift[]) => {
+          const existing = prev.find((ev: Shift) => ev.start === start && ev.end === end)
+          if (!existing) return [...prev, { id: eventsList.length + 1, title, start, end }] as Shift[]
           return [...prev]
         })
       }
@@ -104,7 +107,7 @@ export default function Schedule() {
     [setEvents]
   )
 
-  const handleSelectEvent = useCallback((event: any) => window.alert(event.title), [])
+  const handleSelectEvent = useCallback((event: Shift) => setIsEdit(event), [])
 
   const { defaultDate, scrollToTime } = useMemo(() => {
     const now = new Date()
@@ -113,8 +116,17 @@ export default function Schedule() {
       scrollToTime: new Date(1970, 1, 1, 6)
     }
   }, [])
+
+  const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsEdit(undefined)
+  }
+
   return (
-    <div className='h-full'>
+    <Popover
+      className='h-full'
+      initialOpen={Boolean(isEdit)}
+      renderPopover={Boolean(isEdit) && <EventPopoverInfo shift={isEdit as Shift} handleOpen={handleClose} />}
+    >
       <DragAndDropCalendar
         defaultDate={defaultDate}
         dayLayoutAlgorithm='no-overlap'
@@ -129,6 +141,6 @@ export default function Schedule() {
         scrollToTime={scrollToTime}
         popup
       />
-    </div>
+    </Popover>
   )
 }

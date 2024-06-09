@@ -17,6 +17,9 @@ const employeeApi = {
       data: body
     })
   },
+  applyEmployee(body: { email: string; phoneNumber: string; fullName: string; dateOfBirth: Date; address: string }) {
+    return http.post<SuccessResponse<String>>(`${URL}/apply`, body)
+  },
   updateEmployee(body: {
     employeeID: string
     email: string

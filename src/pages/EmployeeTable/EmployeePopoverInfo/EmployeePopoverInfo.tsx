@@ -63,7 +63,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
     mutationFn: employeeApi.updateEmployee,
     onSuccess: () => {
       // refetch()
-      toast('Update Successfully', { autoClose: 1000 })
+      toast('Update Successfully !', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['employee', queryConfig] })
     },
     onError: (error) => {

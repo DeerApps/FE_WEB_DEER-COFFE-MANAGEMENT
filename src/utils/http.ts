@@ -51,6 +51,7 @@ class Http {
           this.refreshToken = (response.data as AuthResponse).data.refreshToken
           saveAccessTokenAndRefreshTokenToLS(this.accessToken, this.refreshToken)
           setProfileToLS((response.data as AuthResponse).data.employeeDto)
+          
         } else if (url === path.logout) {
           this.accessToken = ''
           this.refreshToken = ''

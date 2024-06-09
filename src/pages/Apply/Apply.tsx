@@ -1,14 +1,66 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, DatePicker, Input } from '@nextui-org/react'
+import { useMutation } from '@tanstack/react-query'
 import { Typography } from 'antd'
+import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import employeeApi from 'src/apis/employee.api'
 import path from 'src/constant/path'
+import { ErrorResponse } from 'src/types/utils.type'
+import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
+import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
 const { Title } = Typography
 
+type FormData = Pick<EmployeeSchema, 'address' | 'email' | 'fullName' | 'phoneNumber' | 'dateOfBirth'>
+
+const schema = employeeSchema.pick(['email', 'address', 'phoneNumber', 'fullName', 'dateOfBirth'])
+
 export default function Apply() {
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-  }
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError
+  } = useForm<FormData>({
+    defaultValues: {
+      email: '',
+      phoneNumber: '',
+      address: '',
+      fullName: '',
+      dateOfBirth: new Date()
+    },
+    resolver: yupResolver(schema)
+  })
+
+  const applyEmployeeMutation = useMutation({
+    mutationFn: employeeApi.applyEmployee,
+    onSuccess: () => {
+      // refetch()
+      toast('Please Check Your Mail !', { autoClose: 1000 })
+      // queryClient.invalidateQueries({ queryKey: ['employee', queryConfig] })
+    },
+    onError: (error) => {
+      if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
+        const formError = error.response?.data.data
+        console.log(formError)
+        if (formError) {
+          Object.keys(formError).forEach((key) => {
+            setError(key as keyof FormData, {
+              message: formError[key as keyof FormData] as string,
+              type: 'Server'
+            })
+          })
+        }
+      }
+    }
+  })
+
+  const onSubmit = handleSubmit((data) => {
+    applyEmployeeMutation.mutate(data)
+  })
+
   return (
     <div className=' min-h-screen flex items-center justify-center'>
       <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md'>
@@ -32,26 +84,98 @@ export default function Apply() {
             </Link>
           </div>
         </div>
-        <form onSubmit={handleSubmit} className=''>
+        <form onSubmit={onSubmit} className=''>
           <div>
             <Title level={5}>Full name</Title>
-            <Input label='Full name' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <Controller
+              control={control}
+              name='fullName'
+              render={({ field }) => (
+                <Input
+                  label='Full name'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.fullName?.message}
+                />
+              )}
+            />
           </div>
           <div>
             <Title level={5}>Email</Title>
-            <Input label='Email' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <Controller
+              control={control}
+              name='email'
+              render={({ field }) => (
+                <Input
+                  label='Email'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.email?.message}
+                />
+              )}
+            />
           </div>
           <div>
             <Title level={5}>Address</Title>
-            <Input label='Address' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <Controller
+              control={control}
+              name='address'
+              render={({ field }) => (
+                <Input
+                  label='Address'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.address?.message}
+                />
+              )}
+            />
           </div>
           <div>
             <Title level={5}>Date of birth</Title>
-            <DatePicker aria-label='date_of_birth_date_picker' radius='sm' isRequired className='w-full mb-3' />
+            <Controller
+              control={control}
+              name='dateOfBirth'
+              render={({ field }) => (
+                <DatePicker
+                  aria-label='date_of_birth_date_picker'
+                  radius='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={(input) => {
+                    const dateString = `${input.year}-${input.month}-${input.day}`
+                    return field.onChange(new Date(dateString))
+                  }}
+                  errorMessage={errors.dateOfBirth?.message}
+                />
+              )}
+            />
           </div>
           <div>
             <Title level={5}>Phone number</Title>
-            <Input label='Phone number' radius='sm' size='sm' isRequired className='w-full mb-3' />
+            <Controller
+              control={control}
+              name='phoneNumber'
+              render={({ field }) => (
+                <Input
+                  label='Phone number'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.phoneNumber?.message}
+                />
+              )}
+            />
           </div>
           <Title level={5} className='mt-0.5 text-gray-500/60 text-sm'>
             Fill in this form and we will contact you

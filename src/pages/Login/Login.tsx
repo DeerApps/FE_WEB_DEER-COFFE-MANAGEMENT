@@ -39,7 +39,6 @@ export default function Login() {
       onSuccess: (data) => {
         setIsAuthenticated(true)
         setEmployee(data.data.data.employeeDto)
-        console.log(data.data.data.employeeDto)
         navigate(path.dashboard)
       },
       onError: (error) => {

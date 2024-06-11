@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link, Outlet, createSearchParams } from 'react-router-dom'
+import { Link, createSearchParams } from 'react-router-dom'
 import formApi from 'src/apis/form.api'
 import path from 'src/constant/path'
 import useQueryConfig from 'src/hooks/useQueryConfig'

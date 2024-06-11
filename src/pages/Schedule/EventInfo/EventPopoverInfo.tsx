@@ -7,7 +7,7 @@ interface Props {
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-export default function EventPopoverInfo({ shift, handleOpen }: Props) {
+export default function EventPopoverInfo({ handleOpen }: Props) {
   return (
     <div className='w-[75%] h-[85%] bg-white p-6'>
       <div className='flex justify-between items-center'>

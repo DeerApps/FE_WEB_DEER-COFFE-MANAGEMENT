@@ -1,4 +1,4 @@
-type Role = string & ('Employee' | 'Admin' | 'Manager' | 'SuperAdmin')
+export type Role = string & ('Employee' | 'Admin' | 'Manager' | 'SuperAdmin')
 
 export enum RoleId {
   Admin = 1,

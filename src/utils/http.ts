@@ -33,7 +33,7 @@ class Http {
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken && config.headers) {
-          config.headers.Authorization = this.accessToken
+          config.headers.Authorization = `Bearer ${this.accessToken}`
           return config
         }
         return config
@@ -46,12 +46,13 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
+        console.log(url)
         if (`/${url?.split('/')[1]}` === path.login) {
           this.accessToken = (response.data as AuthResponse).data.accessToken
           this.refreshToken = (response.data as AuthResponse).data.refreshToken
+          console.log(this.accessToken)
           saveAccessTokenAndRefreshTokenToLS(this.accessToken, this.refreshToken)
           setProfileToLS((response.data as AuthResponse).data.employeeDto)
-          
         } else if (url === path.logout) {
           this.accessToken = ''
           this.refreshToken = ''

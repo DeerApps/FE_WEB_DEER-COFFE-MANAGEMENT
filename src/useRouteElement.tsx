@@ -100,17 +100,7 @@ export default function useRouteElements() {
             <Approval />
           </Suspense>
         </SideBarLayout>
-      ),
-      children: [
-        {
-          path: path.approvalForm,
-          element: (
-            <Suspense>
-              <ApprovalForm />
-            </Suspense>
-          )
-        }
-      ]
+      )
     },
     {
       path: path.profile,

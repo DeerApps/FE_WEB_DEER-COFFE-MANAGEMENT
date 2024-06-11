@@ -3,6 +3,7 @@ import { Link, Outlet, createSearchParams } from 'react-router-dom'
 import formApi from 'src/apis/form.api'
 import path from 'src/constant/path'
 import useQueryConfig from 'src/hooks/useQueryConfig'
+import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import ApprovalItem from 'src/pages/Approval/ApprovalItem/ApprovalItem'
 import { FormListConfig } from 'src/types/form.type'
 import { handleDate, handleRenderNo } from 'src/utils/utils'
@@ -23,40 +24,19 @@ export default function Approval() {
 
   const FormList = formsData?.data.data.data
 
+  console.log(FormList)
+
   return (
     <div className='grid grid-cols-10 gap-4 h-full'>
       <div className='col-span-4 border border-slate-300 rounded-md p-3 bg-white'>
         {/* Header */}
         <div className='p-3 mb-4 border border-slate-300 shadow-lg rounded-md font-medium text-md text-gray-500 grid grid-cols-8'>
           <div className='col-span-1 border-r-2'>No</div>
-          <div className='col-span-4 border-r-2 pl-3'>Employee Name</div>
-          <div className='col-span-3 pl-4'>Created At</div>
+          <div className='col-span-3 border-r-2 pl-3'>Employee Name</div>
+          <div className='col-span-2 pl-6 border-r-2'>Type</div>
+          <div className='col-span-2 pl-4'>Created At</div>
         </div>
         <div className='h-[87%] min-h-[87%]'>
-          <ApprovalItem
-            key={1231231}
-            number='01'
-            name='Trần Đình Thiên Tân'
-            createAt='24:00 24-12-2004'
-            formType={'Apply'}
-            isDanger
-          />
-          <ApprovalItem
-            key={1231431}
-            number='02'
-            name='Trần Thị Meo Meo'
-            createAt='24:00 24-12-2004'
-            formType={'Approve'}
-            isDanger
-          />
-          <ApprovalItem
-            key={1231261}
-            number='03'
-            name='Trần Thị Gâu Gâu'
-            createAt='24:00 24-12-2004'
-            formType={'Approve'}
-            isDanger
-          />
           {FormList &&
             FormList.map((data, index) => {
               const no = handleRenderNo(formsData?.data.data.pageNumber, formsData?.data.data.pageSize, index)
@@ -67,6 +47,7 @@ export default function Approval() {
                   number={no}
                   createAt={handleDate(data.date)}
                   name={'Empty'}
+                  isDanger={data.priority > 0}
                 />
               )
             })}
@@ -148,7 +129,7 @@ export default function Approval() {
         </div>
       </div>
       <div className='col-span-6 border border-slate-300 bg-white rounded-md p-4'>
-        <Outlet />
+        <ApprovalForm />
       </div>
     </div>
   )

@@ -7,7 +7,9 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import employeeApi from 'src/apis/employee.api'
 import path from 'src/constant/path'
+
 import { ErrorResponse } from 'src/types/utils.type'
+
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
@@ -37,9 +39,7 @@ export default function Apply() {
   const applyEmployeeMutation = useMutation({
     mutationFn: employeeApi.applyEmployee,
     onSuccess: () => {
-      // refetch()
       toast('Please Check Your Mail !', { autoClose: 1000 })
-      // queryClient.invalidateQueries({ queryKey: ['employee', queryConfig] })
     },
     onError: (error) => {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {

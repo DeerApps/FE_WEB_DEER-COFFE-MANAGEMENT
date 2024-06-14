@@ -11,6 +11,15 @@ import { AppContext } from 'src/context/app.context'
 import { ErrorResponse } from 'src/types/utils.type'
 import { LoginSchema, loginSchema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
+import { jwtDecode, type JwtPayload } from 'jwt-decode'
+import { Role } from 'src/types/employee.type'
+
+export interface CustomJwtPayload extends JwtPayload {
+  // Add any custom claims here if needed, for example:
+  role?: Role
+  exp?: number
+  restaurantId?: string
+}
 
 const { Title } = Typography
 
@@ -38,8 +47,13 @@ export default function Login() {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true)
+        try {
+          const decoded = jwtDecode<CustomJwtPayload>(data.data.data.accessToken)
+          console.log(decoded)
+        } catch (error) {
+          console.error('Failed to decode JWT', error)
+        }
         setEmployee(data.data.data.employeeDto)
-        console.log(data.data.data.employeeDto)
         navigate(path.dashboard)
       },
       onError: (error) => {

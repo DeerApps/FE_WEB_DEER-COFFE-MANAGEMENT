@@ -1,41 +1,65 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from '@nextui-org/react'
+import { Button, DatePicker, Input } from '@nextui-org/react'
+import { useMutation } from '@tanstack/react-query'
 import { Typography } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import employeeApi from 'src/apis/employee.api'
 import path from 'src/constant/path'
+
+import { ErrorResponse } from 'src/types/utils.type'
+
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
-import { handleDate } from 'src/utils/utils'
+import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
 const { Title } = Typography
 
-type FormData = Pick<EmployeeSchema, 'fullName' | 'email' | 'address' | 'dateOfBirth' | 'phoneNumber'>
+type FormData = Pick<EmployeeSchema, 'address' | 'email' | 'fullName' | 'phoneNumber' | 'dateOfBirth'>
 
-const schema = employeeSchema.pick([
-  'fullName',
-  'email',
-  'address',
-  'dateOfBirth',
-  'phoneNumber'
-])
+const schema = employeeSchema.pick(['email', 'address', 'phoneNumber', 'fullName', 'dateOfBirth'])
 
 export default function Apply() {
-  const {handleSubmit, formState:{errors}, control} = useForm<FormData>({ 
-    defaultValues:{ 
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    setError
+  } = useForm<FormData>({
+    defaultValues: {
+      email: '',
+      phoneNumber: '',
+      address: '',
       fullName: '',
-      email:'',
-      address:'',
-      dateOfBirth:new Date(),
-      phoneNumber:''
-      },
-      resolver: yupResolver(schema)
-    })
+      dateOfBirth: new Date()
+    },
+    resolver: yupResolver(schema)
+  })
 
-    console.log(errors)
+  const applyEmployeeMutation = useMutation({
+    mutationFn: employeeApi.applyEmployee,
+    onSuccess: () => {
+      toast('Please Check Your Mail !', { autoClose: 1000 })
+    },
+    onError: (error) => {
+      if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
+        const formError = error.response?.data.data
+        console.log(formError)
+        if (formError) {
+          Object.keys(formError).forEach((key) => {
+            setError(key as keyof FormData, {
+              message: formError[key as keyof FormData] as string,
+              type: 'Server'
+            })
+          })
+        }
+      }
+    }
+  })
 
-    const onSubmit = handleSubmit((data) => {
-      console.log(data)
-    })
+  const onSubmit = handleSubmit((data) => {
+    applyEmployeeMutation.mutate(data)
+  })
 
   return (
     <div className=' min-h-screen flex items-center justify-center'>
@@ -63,59 +87,93 @@ export default function Apply() {
         <form onSubmit={onSubmit} className=''>
           <div>
             <Title level={5}>Full name</Title>
-            <Controller 
+            <Controller
               control={control}
               name='fullName'
-              render={({field}) => (
-                <Input label='Full name' radius='sm' size='sm' isRequired className='w-full mb-3' onChange={field.onChange}/>
+              render={({ field }) => (
+                <Input
+                  label='Full name'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.fullName?.message}
+                />
               )}
             />
           </div>
           <div>
             <Title level={5}>Email</Title>
-            <Controller 
+            <Controller
               control={control}
               name='email'
-              render={({field}) => (
-                <Input label='Email' radius='sm' size='sm' isRequired className='w-full mb-3' onChange={field.onChange}/>
+              render={({ field }) => (
+                <Input
+                  label='Email'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.email?.message}
+                />
               )}
             />
-           
           </div>
           <div>
             <Title level={5}>Address</Title>
-            <Controller 
+            <Controller
               control={control}
               name='address'
-              render={({field}) => (
-                <Input label='Address' radius='sm' size='sm' isRequired className='w-full mb-3' onChange={field.onChange}/>
+              render={({ field }) => (
+                <Input
+                  label='Address'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.address?.message}
+                />
               )}
             />
           </div>
           <div>
             <Title level={5}>Date of birth</Title>
             <Controller
-                  control={control}
-                  name='dateOfBirth'
-                  render={({ field }) => (
-                    <div className='flex items-center w-full mb-2'>
-                      <input
-                        type='date'
-                        className='w-full rounded-lg p-3 outline-none bg-gray-100 focus:border-gray-500 focus:shadow-sm'
-                        value={handleDate(field.value)}
-                        onChange={field.onChange}
-                      />
-                    </div>
-                  )}
+              control={control}
+              name='dateOfBirth'
+              render={({ field }) => (
+                <DatePicker
+                  aria-label='date_of_birth_date_picker'
+                  radius='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={(input) => {
+                    const dateString = `${input.year}-${input.month}-${input.day}`
+                    return field.onChange(new Date(dateString))
+                  }}
+                  errorMessage={errors.dateOfBirth?.message}
                 />
+              )}
+            />
           </div>
           <div>
             <Title level={5}>Phone number</Title>
-            <Controller 
+            <Controller
               control={control}
               name='phoneNumber'
-              render={({field}) => (
-                <Input label='Phone number' radius='sm' size='sm' isRequired className='w-full mb-3' onChange={field.onChange}/>
+              render={({ field }) => (
+                <Input
+                  label='Phone number'
+                  radius='sm'
+                  size='sm'
+                  isRequired
+                  className='w-full mb-3'
+                  onChange={field.onChange}
+                  errorMessage={errors.phoneNumber?.message}
+                />
               )}
             />
           </div>

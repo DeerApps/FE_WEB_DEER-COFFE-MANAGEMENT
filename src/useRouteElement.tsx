@@ -9,7 +9,6 @@ import SideBarLayout from 'src/layouts/SideBarLayout'
 import EmployeeTable from 'src/pages/EmployeeTable'
 import Dashboard from 'src/pages/Dashboard'
 import Approval from 'src/pages/Approval'
-import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import Schedule from 'src/pages/Schedule'
 import Profile from 'src/pages/Profile'
 import AbsentForm from './pages/Apply/ApplyAbsentForm'
@@ -100,17 +99,7 @@ export default function useRouteElements() {
             <Approval />
           </Suspense>
         </SideBarLayout>
-      ),
-      children: [
-        {
-          path: path.approvalForm,
-          element: (
-            <Suspense>
-              <ApprovalForm />
-            </Suspense>
-          )
-        }
-      ]
+      )
     },
     {
       path: path.profile,

@@ -10,8 +10,8 @@ import { omit } from 'lodash'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
 import { toast } from 'react-toastify'
-import useQueryConfig from 'src/hooks/useQueryConfig'
 import { ErrorResponse } from 'src/types/utils.type'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
 
 interface Props {
   employee: Employee

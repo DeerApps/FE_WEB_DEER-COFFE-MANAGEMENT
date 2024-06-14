@@ -18,7 +18,7 @@ const intialAppContext: AppContextInterface = {
   setIsAuthenticated: () => null,
   employee: getProfileFromLS(),
   setEmployee: () => null,
-  user: jwtDecode<CustomJwtPayload>(getAccessTokenToLS()),
+  user: getAccessTokenToLS() !== '' ? jwtDecode<CustomJwtPayload>(getAccessTokenToLS()) : null,
   reset: () => null
 }
 

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Avatar, Button,DatePicker, Divider } from '@nextui-org/react'
+import { Avatar, Button, DatePicker } from '@nextui-org/react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import Input from 'src/components/Input'
 import InputFile from 'src/components/InputFile'
@@ -18,12 +18,11 @@ export default function Profile() {
 
   type FormData = Pick<EmployeeSchema, 'fullName' | 'address' | 'phoneNumber' | 'dateOfBirth' | 'email'>
 
-  type FormDataError = Omit<FormData, 'dateOfBirth'> & {
-    dateOfBirth?: string
-  }
+  // type FormDataError = Omit<FormData, 'dateOfBirth'> & {
+  //   dateOfBirth?: string
+  // }
 
   const profileSchema = employeeSchema.pick(['fullName', 'address', 'phoneNumber', 'dateOfBirth', 'email'])
-
 
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -41,14 +40,12 @@ export default function Profile() {
     control,
     formState: { errors },
     handleSubmit,
-    watch,
-    setValue,
-    setError
+    watch
   } = formMethods
 
-  console.log(watch("dateOfBirth"))
+  console.log(watch('dateOfBirth'))
   const onSubmit = handleSubmit(() => {
-    console.log("123")
+    console.log('123')
   })
 
   return (
@@ -90,23 +87,22 @@ export default function Profile() {
             <div className='w-full flex items-center'>
               <label className='w-[20%] pl-6'>DoB:</label>
               <Controller
-              control={control}
-              name='dateOfBirth'
-              render={({ field }) => (
-                <DatePicker
-                  aria-label='date_of_birth_date_picker'
-                  className='w-[80%] mb-4'
-                  radius='sm'
-                  isRequired
-                  onChange={(input) => {
-                    const dateString = `${input.year}-${input.month}-${input.day}`
-                    return field.onChange(new Date(dateString))
-                  }}
-                  
-                />
-              )}
-            />
-            <div>{errors.dateOfBirth?.message}</div>
+                control={control}
+                name='dateOfBirth'
+                render={({ field }) => (
+                  <DatePicker
+                    aria-label='date_of_birth_date_picker'
+                    className='w-[80%] mb-4'
+                    radius='sm'
+                    isRequired
+                    onChange={(input) => {
+                      const dateString = `${input.year}-${input.month}-${input.day}`
+                      return field.onChange(new Date(dateString))
+                    }}
+                  />
+                )}
+              />
+              <div>{errors.dateOfBirth?.message}</div>
             </div>
 
             <div className='w-full flex items-center'>
@@ -131,7 +127,9 @@ export default function Profile() {
         </div>
         <div>
           <div className='space-x-4'>
-            <Button color='primary' type='submit'>Update</Button>
+            <Button color='primary' type='submit'>
+              Update
+            </Button>
           </div>
         </div>
       </form>

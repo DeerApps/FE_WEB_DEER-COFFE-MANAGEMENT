@@ -1,13 +1,3 @@
-import { Employee } from "./employee.type"
-
-export interface Restaurant {
-  restaurantID: string
-  restaurantName: string
-  restaurantAddress: string
-  manager: Employee
-  totalEmployee: number
-}
-
 export interface RestaurantList {
   data: Restaurant[]
   totalCount: number
@@ -16,15 +6,18 @@ export interface RestaurantList {
   pageNumber: number
 }
 
+export interface Restaurant {
+  id: string
+  restaurantChainID: string
+  managerID: string
+  restaurantName: string
+  restaurantAddress: string
+  totalEmployee: number
+}
+
 export interface RestaurantListConfig {
   pageNumber?: number | string
   pageSize?: number | string
-  // sort_by?: 'createdAt' | 'view' | 'sold' | 'price'
-  // order?: 'asc' | 'desc'
-  // exclude?: string
-  // rating_filter?: number | string
-  // price_max?: number | string
-  // price_min?: number | string
-  // name?: string
-  // category?: string
+  restaurantName?: string
+  restaurantAddress?: string
 }

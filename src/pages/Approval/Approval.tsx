@@ -30,9 +30,9 @@ export default function Approval() {
         {/* Header */}
         <div className='p-3 mb-4 border border-slate-300 shadow-lg rounded-md font-medium text-md text-gray-500 grid grid-cols-8'>
           <div className='col-span-1 border-r-2'>No</div>
-          <div className='col-span-3 border-r-2 pl-3'>Employee Name</div>
+          <div className='col-span-3 border-r-2 pl-3 truncate'>Employee Name</div>
           <div className='col-span-2 pl-6 border-r-2'>Type</div>
-          <div className='col-span-2 pl-4'>Created At</div>
+          <div className='col-span-2 pl-4 truncate'>Created At</div>
         </div>
         <div className='h-[87%] min-h-[87%]'>
           {FormList &&

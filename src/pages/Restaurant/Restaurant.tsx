@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Key, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import employeeApi from 'src/apis/employee.api'
 
@@ -16,7 +16,7 @@ export default function Restaurant() {
   const { data: restaurantData, refetch } = useQuery({
     queryKey: ['restaurant', queryConfig],
     queryFn: () => {
-      return restaurantApi.getRestaurant(queryConfig as RestaurantListConfig)
+      return restaurantApi.getRestaurants(queryConfig as RestaurantListConfig)
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
@@ -34,7 +34,6 @@ export default function Restaurant() {
           <div className='col-span-3 text-left'>Restaurant Manager</div>
           <div className='col-span-1 ml-6 text-left'>Action</div>
         </div>
-        
       )}
 
       <div className='flex justify-center mt-5'>

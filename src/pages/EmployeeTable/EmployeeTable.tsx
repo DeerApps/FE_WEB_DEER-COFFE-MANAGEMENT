@@ -2,8 +2,6 @@ import { Employee, EmployeeList, EmployeeListConfig } from 'src/types/employee.t
 import { useMutation, useQuery } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
 import classNames from 'classnames'
-import { Link, createSearchParams } from 'react-router-dom'
-import path from 'src/constant/path'
 import Popover from 'src/components/Popover'
 import { useState } from 'react'
 import EmployeePopoverInfo from 'src/pages/EmployeeTable/EmployeePopoverInfo'
@@ -11,7 +9,8 @@ import { handleRenderNo } from 'src/utils/utils'
 import { toast } from 'react-toastify'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { Key } from 'node_modules/@react-types/shared/src/key'
-import { useQueryConfig } from 'src/hooks/useQueryConfig'
+import Pagination from 'src/components/Pagination'
+import path from 'src/constant/path'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -45,8 +44,6 @@ export default function EmployeeTable() {
       toast('Delete Successfully', { autoClose: 1000 })
     }
   })
-
-  const page = Number(queryConfig.pageNumber)
 
   const employeeList = employeesData?.data.data as EmployeeList
 
@@ -183,8 +180,10 @@ export default function EmployeeTable() {
             </div>
           </div>
         )}
-        <div className='flex justify-center'>
-          {page === 1 ? (
+        {employeeList && (
+          <div className='flex justify-center'>
+            <Pagination queryConfig={queryConfig} pageSize={employeeList.pageSize} pathName={path.employees} />
+            {/* {page === 1 ? (
             <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -275,8 +274,9 @@ export default function EmployeeTable() {
                 <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
               </svg>
             </Link>
-          )}
-        </div>
+          )} */}
+          </div>
+        )}
       </div>
     </div>
   )

@@ -44,7 +44,6 @@ export default function Apply() {
     onError: (error) => {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
         const formError = error.response?.data.data
-        console.log(formError)
         if (formError) {
           Object.keys(formError).forEach((key) => {
             setError(key as keyof FormData, {

@@ -8,7 +8,7 @@ export function useQueryConfig() {
   const queryConfig: QueryConfig = omitBy(
     {
       pageNumber: queryParams.pageNumber || '1',
-      pageSize: queryParams.pageSize || '9'
+      pageSize: Number(queryParams.pageSize) > 9 ? '9' : queryParams.pageSize || '9'
       // exclude: queryParams.exclude,
       // sort_by: queryParams.sort_by,
       // order: queryParams.order,

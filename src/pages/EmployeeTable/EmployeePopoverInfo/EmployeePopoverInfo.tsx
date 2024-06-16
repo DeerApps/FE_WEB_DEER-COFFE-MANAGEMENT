@@ -249,7 +249,6 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
                           value={handleDate(field.value)}
                           onChange={(input) => {
                             const rawDate = input.target.value
-                            console.log(new Date(rawDate))
                             field.onChange(new Date(rawDate))
                           }}
                         />

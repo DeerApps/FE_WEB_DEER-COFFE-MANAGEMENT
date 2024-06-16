@@ -11,7 +11,7 @@ interface Props {
 
 export default function SideBarLayout({ children }: Props) {
   let pathName = useLocation().pathname
-  const { employee } = useContext(AppContext)
+  const { user } = useContext(AppContext)
   return (
     <div className='grid grid-cols-12 h-[100vh]'>
       <div className='py-4 px-2 col-start-1 col-span-2 '>
@@ -27,8 +27,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.dashboard}
             className={classNames('', {
-              '': 'Manager' === (employee?.roleName as string),
-              'text-sm hidden': 'Manager' !== employee?.roleName
+              '': 'Manager' === (user?.RoleName as string),
+              'text-sm hidden': 'Manager' !== user?.RoleName
             })}
           >
             <div
@@ -60,8 +60,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.employees}
             className={classNames('', {
-              '': 'Manager' === (employee?.roleName as string),
-              'text-sm hidden': 'Manager' !== employee?.roleName
+              '': 'Manager' === (user?.RoleName as string),
+              'text-sm hidden': 'Manager' !== user?.RoleName
             })}
           >
             <div
@@ -93,8 +93,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.schedule}
             className={classNames('', {
-              '': 'Manager' === (employee?.roleName as string),
-              'text-sm hidden': 'Manager' !== employee?.roleName
+              '': 'Manager' === (user?.RoleName as string),
+              'text-sm hidden': 'Manager' !== user?.RoleName
             })}
           >
             <div
@@ -126,8 +126,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.approval}
             className={classNames('', {
-              '': 'Admin' === (employee?.roleName as string),
-              'text-sm hidden': 'Admin' !== employee?.roleName
+              '': 'Admin' === (user?.RoleName as string),
+              'text-sm hidden': 'Admin' !== user?.RoleName
             })}
           >
             <div
@@ -159,8 +159,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.restaurant}
             className={classNames('', {
-              '': 'Admin' === (employee?.roleName as string),
-              'text-sm hidden': 'Admin' !== employee?.roleName
+              '': 'Admin' === (user?.RoleName as string),
+              'text-sm hidden': 'Admin' !== user?.RoleName
             })}
           >
             <div

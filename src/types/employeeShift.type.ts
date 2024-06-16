@@ -42,7 +42,7 @@ export interface EmployeeShiftDayList {
   totalCount: number
   pageCount: number
   pageSize: number
-  pageNumber: number
+  pageNo: number
 }
 
 export interface EmployeeShiftListConfig {

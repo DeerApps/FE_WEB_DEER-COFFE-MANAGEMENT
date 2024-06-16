@@ -36,5 +36,3 @@ export function useNewQueryConfig() {
   return newQueryConfig
 }
 
-// dateOfWork : new Date('2023-08-01'),
-//       restaurantId: '1e2f3g4h-5i6j-7k8l-9m0n'

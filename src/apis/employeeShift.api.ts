@@ -2,8 +2,6 @@ import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
 import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
 
-
-
 const URL = 'employeeshift'
 const employeeShiftApi = {
   getEmployeeShift(params: EmployeeShiftListConfig) {

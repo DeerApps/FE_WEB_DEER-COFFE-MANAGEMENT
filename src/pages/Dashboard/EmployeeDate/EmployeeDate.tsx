@@ -21,7 +21,7 @@ export default function EmployeeData() {
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
   })
-  
+
   const page = Number(queryConfig.pageNo)
 
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
@@ -45,7 +45,7 @@ export default function EmployeeData() {
               key={item.id}
             >
               <div className='col-span-1 pl-4'>
-                {handleRenderNo(employeeShiftData?.data.data.pageNumber, employeeShiftData?.data.data.pageSize, index)}
+                {handleRenderNo(employeeShiftData?.data.data.pageNo, employeeShiftData?.data.data.pageSize, index)}
               </div>
               <div className='col-span-2'>{item.employee.employeeID}</div>
               <div className='col-span-3'>{item.employee.fullName}</div>
@@ -53,104 +53,102 @@ export default function EmployeeData() {
               <div className='col-span-2'>{}</div>
               <div className='col-span-2'>{item.status}</div>
             </div>
-            
           ))}
           <div className='flex justify-center'>
-          {page === 1 ? (
-            <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
-              </svg>
-            </div>
-          ) : (
-            <Link
-              to={{
-                pathname: path.dashboard,
-                search: createSearchParams({
-                  ...queryConfig,
-                  pageNumber: (page - 1).toString()
-                }).toString()
-              }}
-              className='bg-slate-300 px-5 rounded-md mr-1 transition'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
-              </svg>
-            </Link>
-          )}
-          {Array(employeeShiftData?.data.data.pageCount)
-            .fill(0)
-            .map((_, index) => (
+            {page === 1 ? (
+              <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='white'
+                  className='size-7'
+                >
+                  <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
+                </svg>
+              </div>
+            ) : (
               <Link
                 to={{
                   pathname: path.dashboard,
                   search: createSearchParams({
                     ...queryConfig,
-                    pageNumber: (index + 1).toString()
+                    pageNumber: (page - 1).toString()
                   }).toString()
                 }}
-                key={index}
-                className={classNames('px-4 rounded-md text-white mx-1 flex items-center transition', {
-                  'bg-blue-300': index + 1 === page,
-                  'bg-slate-300': index + 1 !== page
-                })}
+                className='bg-slate-300 px-5 rounded-md mr-1 transition'
               >
-                {index + 1}
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='white'
+                  className='size-7'
+                >
+                  <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
+                </svg>
               </Link>
-            ))}
-          {page === (employeeShiftData?.data.data.pageCount as number) ? (
-            <div className='bg-slate-200/90 px-5 rounded-md ml-1 flex items-center transition'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
+            )}
+            {Array(employeeShiftData?.data.data.pageCount)
+              .fill(0)
+              .map((_, index) => (
+                <Link
+                  to={{
+                    pathname: path.dashboard,
+                    search: createSearchParams({
+                      ...queryConfig,
+                      pageNumber: (index + 1).toString()
+                    }).toString()
+                  }}
+                  key={index}
+                  className={classNames('px-4 rounded-md text-white mx-1 flex items-center transition', {
+                    'bg-blue-300': index + 1 === page,
+                    'bg-slate-300': index + 1 !== page
+                  })}
+                >
+                  {index + 1}
+                </Link>
+              ))}
+            {page === (employeeShiftData?.data.data.pageCount as number) ? (
+              <div className='bg-slate-200/90 px-5 rounded-md ml-1 flex items-center transition'>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='white'
+                  className='size-7'
+                >
+                  <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
+                </svg>
+              </div>
+            ) : (
+              <Link
+                to={{
+                  pathname: path.dashboard,
+                  search: createSearchParams({
+                    ...queryConfig,
+                    pageNumber: (page + 1).toString()
+                  }).toString()
+                }}
+                className='bg-slate-300 px-5 rounded-md ml-1 transition'
               >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
-              </svg>
-            </div>
-          ) : (
-            <Link
-              to={{
-                pathname: path.dashboard,
-                search: createSearchParams({
-                  ...queryConfig,
-                  pageNumber: (page + 1).toString()
-                }).toString()
-              }}
-              className='bg-slate-300 px-5 rounded-md ml-1 transition'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
-              </svg>
-            </Link>
-          )}
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  strokeWidth={1.5}
+                  stroke='white'
+                  className='size-7'
+                >
+                  <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
+                </svg>
+              </Link>
+            )}
+          </div>
         </div>
-        </div>
-        
       )}
       {!employeeShiftList && (
         <div className='p-4 min-h-[625px]'>
@@ -159,7 +157,6 @@ export default function EmployeeData() {
           </div>
         </div>
       )}
-      
     </div>
   )
 }

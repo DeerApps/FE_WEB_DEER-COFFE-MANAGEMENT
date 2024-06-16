@@ -16,7 +16,7 @@ import { Role } from 'src/types/employee.type'
 
 export interface CustomJwtPayload extends JwtPayload {
   // Add any custom claims here if needed, for example:
-  role?: Role
+  RoleName?: Role
   exp?: number
   restaurantId?: string
 }
@@ -24,7 +24,7 @@ export interface CustomJwtPayload extends JwtPayload {
 const { Title } = Typography
 
 export default function Login() {
-  const { setIsAuthenticated, setEmployee } = useContext(AppContext)
+  const { setIsAuthenticated, setUser } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -46,14 +46,14 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
+        console.log(data)
         setIsAuthenticated(true)
         try {
           const decoded = jwtDecode<CustomJwtPayload>(data.data.data.accessToken)
-          console.log(decoded)
+          setUser(decoded)
         } catch (error) {
           console.error('Failed to decode JWT', error)
         }
-        setEmployee(data.data.data.employeeDto)
         navigate(path.dashboard)
       },
       onError: (error) => {
@@ -70,7 +70,6 @@ export default function Login() {
         }
       }
     })
-    console.log(data)
   })
 
   return (

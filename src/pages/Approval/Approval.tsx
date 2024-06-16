@@ -24,8 +24,6 @@ export default function Approval() {
 
   const FormList = formsData?.data.data.data
 
-  console.log(FormList)
-
   return (
     <div className='grid grid-cols-10 gap-4 h-full'>
       <div className='col-span-4 border border-slate-300 rounded-md p-3 bg-white'>

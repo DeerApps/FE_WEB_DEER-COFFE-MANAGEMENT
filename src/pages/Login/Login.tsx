@@ -24,7 +24,7 @@ export interface CustomJwtPayload extends JwtPayload {
 const { Title } = Typography
 
 export default function Login() {
-  const { setIsAuthenticated, setUser } = useContext(AppContext)
+  const { setIsAuthenticated, setUser, setEmployee } = useContext(AppContext)
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -46,8 +46,8 @@ export default function Login() {
   const onSubmit = handleSubmit((data) => {
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
-        console.log(data)
         setIsAuthenticated(true)
+        setEmployee(data.data.data.employeeDto)
         try {
           const decoded = jwtDecode<CustomJwtPayload>(data.data.data.accessToken)
           setUser(decoded)

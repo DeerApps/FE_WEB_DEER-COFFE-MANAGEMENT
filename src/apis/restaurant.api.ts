@@ -5,7 +5,7 @@ import { RestaurantList, RestaurantListConfig } from 'src/types/restaurant.type'
 const URL = 'restaurant'
 
 const restaurantApi = {
-  getEmployees(params: RestaurantListConfig) {
+  getRestaurants(params: RestaurantListConfig) {
     return http.get<SuccessResponse<RestaurantList>>(URL, {
       params
     })

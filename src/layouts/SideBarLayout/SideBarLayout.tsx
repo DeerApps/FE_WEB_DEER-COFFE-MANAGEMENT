@@ -193,8 +193,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.profile}
             className={classNames('', {
-              '': 'Employee' === (employee?.roleName as string),
-              'text-sm hidden': 'Employee' !== employee?.roleName
+              '': 'Employee' === (user?.RoleName as string),
+              'text-sm hidden': 'Employee' !== user?.RoleName
             })}
           >
             <div
@@ -226,8 +226,8 @@ export default function SideBarLayout({ children }: Props) {
           <Link
             to={path.schedule}
             className={classNames('', {
-              '': 'Employee' === (employee?.roleName as string),
-              'text-sm hidden': 'Employee' !== employee?.roleName
+              '': 'Employee' === (user?.RoleName as string),
+              'text-sm hidden': 'Employee' !== user?.RoleName
             })}
           >
             <div

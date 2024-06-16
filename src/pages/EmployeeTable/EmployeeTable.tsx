@@ -11,6 +11,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@
 import { Key } from 'node_modules/@react-types/shared/src/key'
 import Pagination from 'src/components/Pagination'
 import path from 'src/constant/path'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string

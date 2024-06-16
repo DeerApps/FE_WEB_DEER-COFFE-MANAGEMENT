@@ -17,9 +17,9 @@ export default function Input({
   register,
   rules,
   className,
-  classNameInput = 'p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm',
+  classNameInput = 'p-2 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm ',
   classNameError = 'pl-2 my-1 text-red-600 min-h-[1rem] h-5 text-sm',
-  classNameEye = 'absolute top-[8px] right-[5px] w-5 h-5 cursor-pointer',
+  classNameEye = 'absolute top-[7px] right-[5px] w-5 h-5 cursor-pointer mt-[3px]',
   ...rest
 }: Props) {
   const [visibleEye, setVisibleEye] = useState<boolean>(false)

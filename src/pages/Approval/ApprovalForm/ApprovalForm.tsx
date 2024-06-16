@@ -23,12 +23,16 @@ export default function ApprovalForm() {
         <div className='mt-3'>
           <ApprovalFormInput label='Interviewer' />
         </div>
-        <ApprovalFormInput label='Interview Date' />
         <ApprovalFormInput label='Interview Location' />
+        <ApprovalFormInput label='Interview Date' />
       </div>
       <div className=' row-span-1 col-span-5 flex'>
-        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'>Submit</button>
-        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>Reject</button>
+        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'>
+          Submit
+        </button>
+        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>
+          Reject
+        </button>
       </div>
     </div>
   )

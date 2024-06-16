@@ -11,3 +11,5 @@ const restaurantApi = {
     })
   }
 }
+
+export default restaurantApi

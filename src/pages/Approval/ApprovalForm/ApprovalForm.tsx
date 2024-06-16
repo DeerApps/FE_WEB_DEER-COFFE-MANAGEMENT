@@ -1,8 +1,10 @@
 import ApprovalFormInput from 'src/pages/Approval/ApprovalForm/ApprovalFormInput'
 
 export default function ApprovalForm() {
+  
   return (
-    <div className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
+
+    <form className='grid grid-cols-5 grid-rows-12 gap-2 h-full' >
       <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 rounded-md mb-2'>
         <div className=' p-4 flex justify-center items-center'>
           <div className=' h-[100px] w-[100px]'>
@@ -34,6 +36,6 @@ export default function ApprovalForm() {
           Reject
         </button>
       </div>
-    </div>
+    </form>
   )
 }

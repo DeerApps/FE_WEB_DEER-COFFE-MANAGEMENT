@@ -1,5 +1,4 @@
 import { Employee, EmployeeList, EmployeeListConfig } from 'src/types/employee.type'
-import useQueryConfig from 'src/hooks/useQueryConfig'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
 import classNames from 'classnames'
@@ -103,7 +102,7 @@ export default function EmployeeTable() {
             </div>
             {employeesData?.data.data.data.map((item, index) => (
               <div
-                className='bg-gray-100/80 h-[46px] mb-3 px-4 grid grid-cols-12 text-center rounded-xl items-center'
+                className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
                 key={item.id}
               >
                 <div className='col-span-1 text-left pl-4'>

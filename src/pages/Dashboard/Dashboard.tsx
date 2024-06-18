@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Calendar, Progress } from '@nextui-org/react'
 import { parseDate } from '@internationalized/date'
 import { getNow } from 'src/utils/utils'
+// import EmployeeDate from 'src/pages/Dashboard/EmployeeDate'
 import EmployeeDate from 'src/pages/Dashboard/EmployeeDate'
 
 export default function Dashboard() {
@@ -73,7 +74,7 @@ export default function Dashboard() {
             onChange={setValue}
           />
         </div>
-        <div className='col-span-12 row-span-3'>
+        <div className='col-span-12 row-span-3 '>
           <EmployeeDate />
         </div>
       </div>

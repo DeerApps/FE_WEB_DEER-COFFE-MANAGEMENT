@@ -92,7 +92,7 @@ export default function EmployeeTable() {
       </div>
       <div className='min-h-[700px]'>
         {employeeList && (
-          <div className='p-4 min-h-[625px]'>
+          <div className='p-4 pb-0 min-h-[625px]'>
             <div className='grid grid-cols-12 bg-gray-400/80 text-white my-3 text-lg font-medium p-4 py-2 rounded-xl text-center items-center'>
               <div className='col-span-1 text-left pl-4'>No</div>
               <div className='col-span-3'>Full Name</div>
@@ -175,7 +175,7 @@ export default function EmployeeTable() {
           </div>
         )}
         {!employeeList && (
-          <div className='p-4 min-h-[625px]'>
+          <div className='p-4 pb-0! min-h-[625px]'>
             <div className='text-lg font-normal leading-none  text-blue-800 bg-blue-200 animate-pulse dark:bg-blue-900 dark:text-blue-200 min-h-[600px] text-center flex justify-center items-center'>
               loading...
             </div>

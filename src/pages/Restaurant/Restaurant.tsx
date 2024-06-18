@@ -1,28 +1,28 @@
-import { useQuery } from '@tanstack/react-query';
-import { useQueryConfig } from 'src/hooks/useQueryConfig';
-import { RestaurantList, RestaurantListConfig } from 'src/types/restaurant.type';
-import restaurantApi from 'src/apis/restaurant.api';
-import { handleRenderNo } from 'src/utils/utils';
-import { Link, createSearchParams } from 'react-router-dom';
-import path from 'src/constant/path';
-import classNames from 'classnames';
+import { useQuery } from '@tanstack/react-query'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
+import { RestaurantList, RestaurantListConfig } from 'src/types/restaurant.type'
+import restaurantApi from 'src/apis/restaurant.api'
+import { handleRenderNo } from 'src/utils/utils'
+import { Link, createSearchParams } from 'react-router-dom'
+import path from 'src/constant/path'
+import classNames from 'classnames'
 
 export default function Restaurant() {
-  const queryConfig = useQueryConfig();
+  const queryConfig = useQueryConfig()
 
   const { data: restaurantData } = useQuery({
     queryKey: ['restaurant', queryConfig],
     queryFn: () => {
-      return restaurantApi.getRestaurants(queryConfig as RestaurantListConfig);
+      return restaurantApi.getRestaurants(queryConfig as RestaurantListConfig)
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
-  });
+  })
 
-  const restaurantList = restaurantData?.data.data as RestaurantList;
-  console.log("1",restaurantList)
+  const restaurantList = restaurantData?.data.data as RestaurantList
+  console.log('1', restaurantList)
 
-  const page = Number(queryConfig.pageNumber) || 1;
+  const page = Number(queryConfig.pageNumber) || 1
 
   return (
     <div className='p-2 px-2 bg-white rounded-lg shadow-md mx-auto min-h-[580px]'>
@@ -35,20 +35,23 @@ export default function Restaurant() {
           <div className='col-span-1 ml-6'>Action</div>
         </div>
       )}
-      {restaurantData?.data?.data?.data?.map((item, index) => (
-        <div
-          className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
-          key={item.id}
-        >
-          <div className='col-span-1'>
-            {handleRenderNo(restaurantList.pageNumber, restaurantList.pageSize, index)}
+      <div className='min-h-[460px]'>
+        {restaurantData?.data?.data?.data?.map((item, index) => (
+          <div
+            className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
+            key={item.id}
+          >
+            <div className='col-span-1'>
+              {handleRenderNo(restaurantList.pageNumber, restaurantList.pageSize, index)}
+            </div>
+            <div className='col-span-3'>{item.restaurantChainID}</div>
+            <div className='col-span-3'>{item.restaurantName}</div>
+            <div className='col-span-3'>{item.manager.fullName}</div>
+            <div className='col-span-1 ml-6'></div>
           </div>
-          <div className='col-span-3'>{item.restaurantChainID}</div>
-          <div className='col-span-3'>{item.restaurantName}</div>
-          <div className='col-span-3'>{item.manager.fullName}</div>
-          <div className='col-span-1 ml-6'></div>
-        </div>
-      ))}
+        ))}
+      </div>
+
       <div className='flex justify-center'>
         {page === 1 ? (
           <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
@@ -142,5 +145,5 @@ export default function Restaurant() {
         )}
       </div>
     </div>
-  );
+  )
 }

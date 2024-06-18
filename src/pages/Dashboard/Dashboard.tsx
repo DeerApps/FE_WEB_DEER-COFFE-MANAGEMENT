@@ -76,7 +76,7 @@ export default function Dashboard() {
           />
         </div>
         <div className='col-span-12 row-span-3'>
-          <EmployeeDate />
+          <EmployeeDate shiftDate={handleDateNet(value)}/>
         </div>
       </div>
     </>

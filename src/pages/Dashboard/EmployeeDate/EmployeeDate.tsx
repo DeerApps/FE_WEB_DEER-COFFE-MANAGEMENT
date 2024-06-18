@@ -26,6 +26,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   const page = Number(queryConfig.pageNo)
 
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
+  console.log(employeeShiftList)
 
   return (
     <div>
@@ -39,24 +40,31 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
             <div className='col-span-2 '>CheckIn-CheckOut</div>
             <div className='col-span-2 '>Status</div>
           </div>
-          {employeeShiftData?.data.data.data.map((item, index) => (
-            <div
-              className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
-              key={item.id}
-            >
-              <div className='col-span-1 pl-4'>
-                {handleRenderNo(employeeShiftData?.data.data.pageNumber, employeeShiftData?.data.data.pageSize, index)}
+          <div className='min-h-[380px]'>
+            {employeeShiftData?.data.data.data.map((item, index) => (
+              <div
+                className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
+                key={item.id}
+              >
+                <div className='col-span-1 pl-4'>
+                  {handleRenderNo(
+                    employeeShiftData?.data.data.pageNumber,
+                    employeeShiftData?.data.data.pageSize,
+                    index
+                  )}
+                </div>
+                <div className='col-span-2'>{item.employee.fullName}</div>
+                <div className='col-span-2'>{item.employee.phoneNumber}</div>
+                <div className='col-span-2'>{handleTime(item.shift.shiftStart, item.shift.shiftEnd)}</div>
+                <div className='col-span-2'>
+                  {formatTime(item.checkIn)} - {formatTime(item.checkOut)}
+                </div>
+                <div className='col-span-2'>{item.status}</div>
               </div>
-              <div className='col-span-2'>{item.employee.fullName}</div>
-              <div className='col-span-2'>{item.employee.phoneNumber}</div>
-              <div className='col-span-2'>
-                {handleTime(item.shift.shiftStart,item.shift.shiftEnd)}
-              </div>
-              <div className='col-span-2'>{formatTime(item.checkIn)} - {formatTime(item.checkOut)}</div>
-              <div className='col-span-2'>{item.status}</div>
-            </div>
-          ))}
-          <div className='flex justify-center'>
+            ))}
+          </div>
+
+          <div className='flex justify-center '>
             {page === 1 ? (
               <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
                 <svg

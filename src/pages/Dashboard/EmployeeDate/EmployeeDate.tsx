@@ -26,7 +26,6 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   const page = Number(queryConfig.pageNo)
 
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
-  console.log(employeeShiftData)
 
   return (
     <div>

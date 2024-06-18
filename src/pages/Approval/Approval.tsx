@@ -1,15 +1,34 @@
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { Link, createSearchParams } from 'react-router-dom'
 import formApi from 'src/apis/form.api'
 import path from 'src/constant/path'
-import {useQueryConfig} from 'src/hooks/useQueryConfig'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
+// import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import ApprovalItem from 'src/pages/Approval/ApprovalItem/ApprovalItem'
-import { FormListConfig } from 'src/types/form.type'
+import { Form, FormListConfig } from 'src/types/form.type'
 import { handleDate, handleRenderNo } from 'src/utils/utils'
+
+// JOB_APPLICATION = 1,
+//         DAY_OFF_UNWANTED_SHIFT = 2,
+//         DAY_OFF_EMMERGENCY = 3,
+//         ACCEPPTED= 4,
+
+const formTypeConfig: Record<string, string> = {
+  '1': 'Apply',
+  '2': 'DAY_OFF_UNWANTED_SHIFT',
+  '3': 'DAY_OFF_EMMERGENCY',
+  '4': 'Accept'
+}
 
 export default function Approval() {
   const queryConfig = useQueryConfig()
+  const [formChoose, setFormChoose] = useState<Form | undefined>()
+
+  const handleFormChoose = (form: Form) => {
+    setFormChoose(form)
+  }
 
   const { data: formsData } = useQuery({
     queryKey: ['forms', queryConfig],
@@ -19,6 +38,8 @@ export default function Approval() {
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
   })
+
+  console.log(formsData)
 
   const page = Number(queryConfig.pageNumber)
 
@@ -38,14 +59,17 @@ export default function Approval() {
           {FormList &&
             FormList.map((data, index) => {
               const no = handleRenderNo(formsData?.data.data.pageNumber, formsData?.data.data.pageSize, index)
+              const formTypeString = `${data.formType}`
+              const now = new Date()
               return (
                 <ApprovalItem
-                  formType={'Approve'}
+                  handleClick={() => handleFormChoose(data)}
+                  formType={formTypeConfig[formTypeString]}
                   key={index}
                   number={no}
                   createAt={handleDate(data.date)}
-                  name={'Empty'}
-                  isDanger={data.priority > 0}
+                  name={data?.employee?.fullName || 'Empty'}
+                  isDanger={now.getDate() - new Date(data.date).getDate() > 1}
                 />
               )
             })}
@@ -127,7 +151,7 @@ export default function Approval() {
         </div>
       </div>
       <div className='col-span-6 border border-slate-300 bg-white rounded-md p-4'>
-        <ApprovalForm />
+        <ApprovalForm form={formChoose} />
       </div>
     </div>
   )

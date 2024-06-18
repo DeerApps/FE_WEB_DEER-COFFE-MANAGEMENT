@@ -1,5 +1,3 @@
-import { Employee } from './employee.type'
-
 export interface RestaurantList {
   data: Restaurant[]
   totalCount: number
@@ -12,10 +10,10 @@ export interface Restaurant {
   id: string
   manager: Employee
   restaurantChainID: string
-  managerID: string
+
   restaurantName: string
   restaurantAddress: string
-  totalEmployee: number
+  totalEmployees: number
 }
 
 export interface RestaurantListConfig {

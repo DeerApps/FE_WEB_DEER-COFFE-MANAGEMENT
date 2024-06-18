@@ -20,6 +20,7 @@ export interface Employee {
   email: string
   fullName: string
   phoneNumber: string
+  avatarUrl: string
   dateOfBirth: Date
   dateJoined: Date
   address: string

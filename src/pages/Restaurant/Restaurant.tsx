@@ -13,7 +13,7 @@ export default function Restaurant() {
   const [isEdit, setIsEdit] = useState<Employee>()
   const queryConfig = useQueryConfig()
 
-  const { data: restaurantData, refetch } = useQuery({
+  const { data: restaurantData } = useQuery({
     queryKey: ['restaurant', queryConfig],
     queryFn: () => {
       return restaurantApi.getRestaurants(queryConfig as RestaurantListConfig)

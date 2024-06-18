@@ -20,6 +20,7 @@ export function getNow() {
 }
 
 export function handleDate(dateTime: Date) {
+  if (!dateTime) return ''
   const time = new Date(dateTime)
   const month = time.getMonth() + 1
   const date = time.getDate()

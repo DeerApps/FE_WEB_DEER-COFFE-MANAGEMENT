@@ -31,7 +31,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   return (
     <div>
       {employeeShiftList && (
-        <div className='p-2 bg-white rounded-lg mt-6 shadow-md mx-auto min-h-[420px]'>
+        <div className='p-2 bg-white rounded-lg mt-6 shadow-md mx-auto min-h-[340px]'>
           <div className='grid grid-cols-12 bg-gray-400/80 text-white my-2 text-lg font-medium p-4 py-2 rounded-xl text-center'>
             <div className='col-span-1'>No</div>
             <div className='col-span-2 '>Full Name</div>
@@ -40,7 +40,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
             <div className='col-span-2 '>CheckIn-CheckOut</div>
             <div className='col-span-2 '>Status</div>
           </div>
-          <div className='min-h-[380px]'>
+          <div className='min-h-[330px] h-[330px]'>
             {employeeShiftData?.data.data.data.map((item, index) => (
               <div
                 className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'

@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { Calendar, Progress } from '@nextui-org/react'
 import { parseDate } from '@internationalized/date'
-import { getNow } from 'src/utils/utils'
+import { getNow, handleDate, handleDateNet } from 'src/utils/utils'
 import EmployeeDate from 'src/pages/Dashboard/EmployeeDate'
 
 export default function Dashboard() {
-  let [value, setValue] = useState(parseDate(`${getNow()}`))
-
+  let [value, setValue] = useState<Date>(new Date())
   return (
     <>
       <div className='grid grid-cols-12 grid-rows-5 h-full'>
@@ -69,12 +68,15 @@ export default function Dashboard() {
             className='flex justify-center item'
             calendarWidth='350px'
             aria-label='Date (Controlled)'
-            value={value}
-            onChange={setValue}
+            value={parseDate(handleDate(value))}
+            onChange={(e) => {
+              var date = `${e.year}-${e.month}-${e.day}`
+              return setValue(new Date(date))
+            }}
           />
         </div>
         <div className='col-span-12 row-span-3'>
-          <EmployeeDate />
+          <EmployeeDate shiftDate={handleDateNet(value)}/>
         </div>
       </div>
     </>

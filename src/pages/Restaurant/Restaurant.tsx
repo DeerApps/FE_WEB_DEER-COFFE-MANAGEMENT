@@ -25,7 +25,7 @@ export default function Restaurant() {
   const page = Number(queryConfig.pageNumber) || 1;
 
   return (
-    <div className='p-2 px-2 bg-white rounded-lg shadow-md mx-auto min-h-[420px]'>
+    <div className='p-2 px-2 bg-white rounded-lg shadow-md mx-auto min-h-[580px]'>
       {restaurantList && (
         <div className='grid grid-cols-12 bg-gray-400/80 text-white my-2 text-lg font-medium p-4 py-2 rounded-xl text-center'>
           <div className='col-span-1'>No</div>
@@ -35,7 +35,7 @@ export default function Restaurant() {
           <div className='col-span-1 ml-6'>Action</div>
         </div>
       )}
-      {restaurantData?.data?.data?.map((item, index) => (
+      {restaurantData?.data?.data?.data?.map((item, index) => (
         <div
           className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
           key={item.id}

@@ -15,7 +15,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const handleSelection = (select: Restaurant) => {
     setRestaurant(select)
   }
-  
+
   return (
     <form className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
       <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 rounded-md mb-2'>
@@ -23,7 +23,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
           <div className=' h-[100px] w-[100px]'>
             <img
               className='h-full w-full rounded-full shadow-lg'
-              src={form?.employee?.avatarUrl}
+              src={form?.employee?.avatarUrl || 'https://lh3.google.com/u/0/d/1cA_e2CcO33m9Tzj4GbRMekWel9u20JGs'}
               alt='EmployeePicture'
             />
           </div>

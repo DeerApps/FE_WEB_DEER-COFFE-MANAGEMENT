@@ -11,9 +11,9 @@ export enum Status {
 
 export interface Shift {
   shiftID: string
-  shiftName: string
-  shiftStart: Date
-  shiftEnd: Date
+  name: string
+  shiftStart: number
+  shiftEnd: number
   shiftDescription: string
   shiftActive: boolean
 }
@@ -42,13 +42,13 @@ export interface EmployeeShiftDayList {
   totalCount: number
   pageCount: number
   pageSize: number
-  pageNo: number
+  pageNumber: number
 }
 
 export interface EmployeeShiftListConfig {
   pageNo?: number | string
   pageSize?: number | string
-  dateOfWork?: Date
+  dateOfWork?: string
   restaurantId?:string
   // sort_by?: 'createdAt' | 'view' | 'sold' | 'price'
   // order?: 'asc' | 'desc'

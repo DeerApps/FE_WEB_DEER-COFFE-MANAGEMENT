@@ -5,18 +5,19 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
-import { handleRenderNo } from 'src/utils/utils'
+import { formatTime, handleRenderNo, handleTime } from 'src/utils/utils'
 
 export type EmployeeShiftQueryConfig = {
   [key in keyof EmployeeShiftListConfig]: string
 }
 
-export default function EmployeeData() {
+export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   const queryConfig = useNewQueryConfig()
+
   const { data: employeeShiftData } = useQuery({
-    queryKey: ['employeeshift', useNewQueryConfig],
+    queryKey: ['employeeshift', { ...queryConfig, dateOfWork: shiftDate }],
     queryFn: () => {
-      return employeeShiftApi.getEmployeeShift(queryConfig as EmployeeShiftListConfig)
+      return employeeShiftApi.getEmployeeShift({ ...queryConfig, dateOfWork: shiftDate } as EmployeeShiftListConfig)
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
@@ -32,10 +33,10 @@ export default function EmployeeData() {
         <div className='p-2 bg-white rounded-lg mt-6 shadow-md mx-auto min-h-[420px]'>
           <div className='grid grid-cols-12 bg-gray-400/80 text-white my-2 text-lg font-medium p-4 py-2 rounded-xl text-center'>
             <div className='col-span-1'>No</div>
-            <div className='col-span-2'>Employee ID</div>
-            <div className='col-span-3 '>Full Name</div>
-            <div className='col-span-2 '>Shift</div>
+            <div className='col-span-2 '>Full Name</div>
+            <div className='col-span-2 '>Phone number</div>
             <div className='col-span-2 '>Time</div>
+            <div className='col-span-2 '>CheckIn-CheckOut</div>
             <div className='col-span-2 '>Status</div>
           </div>
           {employeeShiftData?.data.data.data.map((item, index) => (
@@ -44,12 +45,14 @@ export default function EmployeeData() {
               key={item.id}
             >
               <div className='col-span-1 pl-4'>
-                {handleRenderNo(employeeShiftData?.data.data.pageNo, employeeShiftData?.data.data.pageSize, index)}
+                {handleRenderNo(employeeShiftData?.data.data.pageNumber, employeeShiftData?.data.data.pageSize, index)}
               </div>
-              <div className='col-span-2'>{item.employee.employeeID}</div>
-              <div className='col-span-3'>{item.employee.fullName}</div>
-              <div className='col-span-2'>{item.name}</div>
-              <div className='col-span-2'>{}</div>
+              <div className='col-span-2'>{item.employee.fullName}</div>
+              <div className='col-span-2'>{item.employee.phoneNumber}</div>
+              <div className='col-span-2'>
+                {handleTime(item.shift.shiftStart,item.shift.shiftEnd)}
+              </div>
+              <div className='col-span-2'>{formatTime(item.checkIn)} - {formatTime(item.checkOut)}</div>
               <div className='col-span-2'>{item.status}</div>
             </div>
           ))}

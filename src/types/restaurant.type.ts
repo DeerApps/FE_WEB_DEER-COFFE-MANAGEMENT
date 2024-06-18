@@ -1,5 +1,3 @@
-import { Employee } from 'src/types/employee.type'
-
 export interface RestaurantList {
   data: Restaurant[]
   totalCount: number
@@ -9,8 +7,10 @@ export interface RestaurantList {
 }
 
 export interface Restaurant {
-  restaurantChainID: string
+  id: string
   manager: Employee
+  restaurantChainID: string
+
   restaurantName: string
   restaurantAddress: string
   totalEmployees: number
@@ -19,6 +19,6 @@ export interface Restaurant {
 export interface RestaurantListConfig {
   pageNumber?: number | string
   pageSize?: number | string
-  restaurantName?: string
-  restaurantAddress?: string
+  // restaurantName?: string
+  // restaurantAddress?: string
 }

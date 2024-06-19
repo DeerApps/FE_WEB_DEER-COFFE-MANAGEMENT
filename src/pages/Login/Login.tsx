@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import { Button, Input } from '@nextui-org/react'
 import { useMutation } from '@tanstack/react-query'
 import { Typography } from 'antd'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import authApi from 'src/apis/authenticate.api'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
@@ -15,7 +15,6 @@ import { jwtDecode, type JwtPayload } from 'jwt-decode'
 import { Role } from 'src/types/employee.type'
 
 export interface CustomJwtPayload extends JwtPayload {
-  // Add any custom claims here if needed, for example:
   RoleName?: Role
   exp?: number
   restaurantId?: string
@@ -25,6 +24,7 @@ const { Title } = Typography
 
 export default function Login() {
   const { setIsAuthenticated, setUser, setEmployee } = useContext(AppContext)
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const {
     handleSubmit,
@@ -44,6 +44,7 @@ export default function Login() {
   })
 
   const onSubmit = handleSubmit((data) => {
+    setIsLoading(true)
     loginAccountMutation.mutate(data, {
       onSuccess: (data) => {
         setIsAuthenticated(true)
@@ -54,6 +55,7 @@ export default function Login() {
         } catch (error) {
           console.error('Failed to decode JWT', error)
         }
+        setIsLoading(false)
         navigate(path.dashboard)
       },
       onError: (error) => {
@@ -83,13 +85,13 @@ export default function Login() {
         </div>
         <form onSubmit={onSubmit} className='space-y-7'>
           <div>
-            <Title level={5}>Email</Title>
+            <Title level={5}>Username</Title>
             <Controller
               control={control}
               name='employeeID'
               render={({ field }) => (
                 <Input
-                  label='Employee Id'
+                  label='Employee ID'
                   radius='sm'
                   size='sm'
                   isRequired
@@ -97,6 +99,7 @@ export default function Login() {
                   value={field.value || ''}
                   onChange={field.onChange}
                   errorMessage={errors.employeeID?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -109,6 +112,7 @@ export default function Login() {
               render={({ field }) => (
                 <Input
                   label='Password'
+                  type='password'
                   radius='sm'
                   size='sm'
                   isRequired
@@ -116,16 +120,20 @@ export default function Login() {
                   value={field.value || ''}
                   onChange={field.onChange}
                   errorMessage={errors.password?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
           </div>
-          <Checkbox aria-label='checkbox remember me' className='mb-2 py-4'>
-            Remember me
-          </Checkbox>
-          <Button aria-label='btn-login' type='submit' color='primary' className='w-full'>
+
+          <Button aria-label='btn-login' type='submit' color='primary' className='w-full' isLoading={isLoading}>
             Login
           </Button>
+          <div className='text-center'>
+            <Link className='text-small underline' to={path.apply}>
+              Not a member ?
+            </Link>
+          </div>
         </form>
       </div>
     </div>

@@ -47,6 +47,7 @@ export default function EmployeeTable() {
   })
 
   const employeeList = employeesData?.data.data as EmployeeList
+  console.log(employeeList)
 
   const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsOpen(!isOpen)
@@ -57,7 +58,7 @@ export default function EmployeeTable() {
       setIsOpen(!isOpen)
       setIsEdit(employeee)
     } else if (key === 'delete') {
-      deleteEmployeeMutation.mutate({ employeeID: employeee.employeeID.toString() })
+      deleteEmployeeMutation.mutate({ employeeID: employeee.id.toString() })
     }
   }
 

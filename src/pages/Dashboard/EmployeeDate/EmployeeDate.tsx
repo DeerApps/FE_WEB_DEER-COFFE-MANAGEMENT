@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import classNames from 'classnames'
-import { Link, createSearchParams } from 'react-router-dom'
 import employeeShiftApi from 'src/apis/employeeShift.api'
+import Pagination from 'src/components/Pagination'
 import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
@@ -23,13 +22,11 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
     staleTime: 3 * 60 * 1000
   })
 
-  const page = Number(queryConfig.pageNo)
-
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
   console.log(employeeShiftList)
 
   return (
-    <div>
+    <div className='min-h-[500px]'>
       {employeeShiftList && (
         <div className='p-2 bg-white rounded-lg mt-6 shadow-md mx-auto min-h-[420px]'>
           <div className='grid grid-cols-12 bg-gray-400/80 text-white my-2 text-lg font-medium p-4 py-2 rounded-xl text-center'>
@@ -63,9 +60,10 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
               </div>
             ))}
           </div>
-
-          <div className='flex justify-center '>
-            {page === 1 ? (
+          {employeeShiftList && (
+            <div className='flex justify-center '>
+              <Pagination queryConfig={queryConfig} pageSize={employeeShiftList.pageSize} pathName={path.dashboard} />
+              {/* {page === 1 ? (
               <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -156,8 +154,9 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
                   <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
                 </svg>
               </Link>
-            )}
-          </div>
+            )} */}
+            </div>
+          )}
         </div>
       )}
       {!employeeShiftList && (

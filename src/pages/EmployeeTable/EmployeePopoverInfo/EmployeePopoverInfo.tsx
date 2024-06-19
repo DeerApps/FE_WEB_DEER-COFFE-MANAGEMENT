@@ -46,7 +46,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
     setError
   } = useForm<FormData>({
     defaultValues: {
-      employeeID: employee.employeeID,
+      employeeID: employee.id,
       email: employee.email,
       phoneNumber: employee.phoneNumber,
       address: employee.address,

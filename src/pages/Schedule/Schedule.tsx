@@ -2,79 +2,51 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
+import { useQuery } from '@tanstack/react-query'
+import employeeShiftApi from 'src/apis/employeeShift.api'
+import { handleDateNet, mapToDateTime } from 'src/utils/utils'
+import { EmployeeShift } from 'src/types/employeeShift.type'
 
-export interface Shift {
-  id: string
-  start: Date
-  end: Date
-  allDay?: boolean
-  title?: string
-}
+// {
+//   id: '1',
+//   start: moment('2024-06-29T10:00:00').toDate(),
+//   end: moment('2024-06-29T11:00:00').toDate(),
+//   title: 'MRI Registration'
+// },
 
-const eventsList: Shift[] = [
-  {
-    id: '1',
-    start: moment('2024-06-29T10:00:00').toDate(),
-    end: moment('2024-06-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '2',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '3',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '4',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '5',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '6',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '7',
-    start: moment('2024-05-29T10:00:00').toDate(),
-    end: moment('2024-05-29T11:00:00').toDate(),
-    title: 'MRI Registration'
-  },
-  {
-    id: '8',
-    start: moment('2024-05-28T14:00:00').toDate(),
-    end: moment('2024-05-28T15:30:00').toDate(),
-    title: 'ENT Appointment'
-  }
-]
-
-const DragAndDropCalendar = withDragAndDrop<Shift>(Calendar)
+const DragAndDropCalendar = withDragAndDrop<EmployeeShift>(Calendar)
 
 const localizer = momentLocalizer(moment)
 
 export default function Schedule() {
-  const [myEvents, setEvents] = useState<Shift[]>(eventsList)
-  const [isEdit, setIsEdit] = useState<Shift>()
+  const [myEvents, setEvents] = useState<EmployeeShift[] | []>([])
+  const [isEdit, setIsEdit] = useState<EmployeeShift | null>(null)
+
+  const { data: employeeShiftData } = useQuery({
+    queryKey: ['employeeshift'],
+    queryFn: () => {
+      return employeeShiftApi.getEmployeeShiftByWeek({
+        Date: '2024/06/14'
+        // Date: handleDateNet(new Date())
+      })
+    },
+    placeholderData: (prevData) => prevData,
+    staleTime: 3 * 60 * 1000
+  })
+
+  useEffect(() => {
+    if (employeeShiftData?.data.data.data) {
+      setEvents([])
+    }
+  }, [employeeShiftData])
+
+  console.log(employeeShiftData)
 
   const moveEvent = useCallback(
-    (args: EventInteractionArgs<Shift>) => {
+    (args: EventInteractionArgs<EmployeeShift>) => {
       const { event, start, end, isAllDay: droppedOnAllDaySlot = false } = args
       const { allDay } = event
       if (!allDay && droppedOnAllDaySlot) {
@@ -84,10 +56,10 @@ export default function Schedule() {
         event.allDay = false
       }
 
-      setEvents((prev: Shift[]) => {
-        const existing = prev.find((ev: Shift) => ev.id === event.id) ?? {}
-        const filtered = prev.filter((ev: Shift) => ev.id !== event.id)
-        return [...filtered, { ...existing, start, end, allDay: event.allDay }] as Shift[]
+      setEvents((prev: EmployeeShift[]) => {
+        const existing = prev.find((ev: EmployeeShift) => ev.iD === event.iD) ?? {}
+        const filtered = prev.filter((ev: EmployeeShift) => ev.iD !== event.iD)
+        return [...filtered, { ...existing, start, end, allDay: event.allDay }] as EmployeeShift[]
       })
     },
     [setEvents]
@@ -97,9 +69,13 @@ export default function Schedule() {
     ({ start, end }: { start: Date; end: Date }) => {
       const title = window.prompt(`Create New Event: `)
       if (title) {
-        setEvents((prev: Shift[]) => {
-          const existing = prev.find((ev: Shift) => ev.start === start && ev.end === end)
-          if (!existing) return [...prev, { id: eventsList.length + 1, title, start, end }] as Shift[]
+        setEvents((prev: EmployeeShift[]) => {
+          const existing = prev.find(
+            (ev: EmployeeShift) =>
+              mapToDateTime(ev.dateOfWork, ev.shift.shiftStart) === start &&
+              mapToDateTime(ev.dateOfWork, ev.shift.shiftEnd) === end
+          )
+          if (!existing) return [...prev, { id: 111, title, start, end }] as EmployeeShift[]
           return [...prev]
         })
       }
@@ -107,7 +83,7 @@ export default function Schedule() {
     [setEvents]
   )
 
-  const handleSelectEvent = useCallback((event: Shift) => setIsEdit(event), [])
+  const handleSelectEvent = useCallback((event: EmployeeShift) => setIsEdit(event), [])
 
   const { defaultDate, scrollToTime } = useMemo(() => {
     const now = new Date()
@@ -118,14 +94,16 @@ export default function Schedule() {
   }, [])
 
   const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setIsEdit(undefined)
+    setIsEdit(null)
   }
 
   return (
     <Popover
       className='h-full'
       initialOpen={Boolean(isEdit)}
-      renderPopover={Boolean(isEdit) && <EventPopoverInfo shift={isEdit as Shift} handleOpen={handleClose} />}
+      renderPopover={
+        Boolean(isEdit) && <EventPopoverInfo employeeShift={isEdit as EmployeeShift} handleOpen={handleClose} />
+      }
     >
       <DragAndDropCalendar
         defaultDate={defaultDate}

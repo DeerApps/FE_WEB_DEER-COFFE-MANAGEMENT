@@ -44,7 +44,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
             {employeeShiftData?.data.data.data.map((item, index) => (
               <div
                 className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
-                key={item.id}
+                key={index}
               >
                 <div className='col-span-1 pl-4'>
                   {handleRenderNo(

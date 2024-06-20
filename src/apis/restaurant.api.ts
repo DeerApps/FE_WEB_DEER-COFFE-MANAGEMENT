@@ -9,6 +9,20 @@ const restaurantApi = {
     return http.get<SuccessResponse<RestaurantList>>(URL, {
       params
     })
+  },
+  deleteRestaurant(params: { ID: string }) {
+    return http.delete<SuccessResponse<String>>(URL, {
+      params
+    })
+  },
+  updateRestaurant(body: {
+    resID: string
+    manageID: string
+    resName: string
+    resAddress: string
+    resChainID: string
+  }) {
+    return http.put<SuccessResponse<String>>(URL, body)
   }
 }
 

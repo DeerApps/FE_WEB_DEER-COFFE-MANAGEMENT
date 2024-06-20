@@ -32,6 +32,7 @@ export default function useRouteElements() {
   const routeElements = useRoutes([
     {
       path: path.login,
+      index: true,
       element: (
         <LoginLayout>
           <Suspense>
@@ -42,7 +43,6 @@ export default function useRouteElements() {
     },
     {
       path: path.apply,
-      index: true,
       element: (
         <LoginLayout>
           <Suspense>

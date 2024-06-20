@@ -1,5 +1,5 @@
 const path = {
-  apply: '/',
+  apply: '/apply',
   dashboard: '/dashboard',
   employees: '/employee',
   restaurant: '/restaurant',
@@ -7,7 +7,7 @@ const path = {
   approval: '/approval',
   schedule: '/schedule',
   approvalForm: '/approval/:formId',
-  login: '/login',
+  login: '/',
   logout: '/logout',
   user: '/user',
   profile: '/profile',

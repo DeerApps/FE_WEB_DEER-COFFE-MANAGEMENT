@@ -7,7 +7,7 @@ import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
 import { useQuery } from '@tanstack/react-query'
 import employeeShiftApi from 'src/apis/employeeShift.api'
-import { handleDateNet, mapToDateTime } from 'src/utils/utils'
+import { mapToDateTime } from 'src/utils/utils'
 import { EmployeeShift } from 'src/types/employeeShift.type'
 
 // {

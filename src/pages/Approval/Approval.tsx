@@ -10,11 +10,6 @@ import ApprovalItem from 'src/pages/Approval/ApprovalItem/ApprovalItem'
 import { Form, FormListConfig } from 'src/types/form.type'
 import { handleDate, handleRenderNo } from 'src/utils/utils'
 
-// JOB_APPLICATION = 1,
-//         DAY_OFF_UNWANTED_SHIFT = 2,
-//         DAY_OFF_EMMERGENCY = 3,
-//         ACCEPPTED= 4,
-
 const formTypeConfig: Record<string, string> = {
   '1': 'Apply',
   '2': 'DAY_OFF_UNWANTED_SHIFT',

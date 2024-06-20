@@ -1,5 +1,4 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios'
-import { toast } from 'react-toastify'
 import { HttpStatusCode } from 'src/constant/httpStatusCode.enum'
 import { AuthResponse } from 'src/types/auth.type'
 import {

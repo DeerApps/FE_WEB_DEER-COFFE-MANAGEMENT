@@ -1,6 +1,7 @@
 import { Employee } from 'src/types/employee.type'
 
 export interface Form {
+  id: string
   employee: Employee
   formType: number
   content: string

@@ -1,9 +1,9 @@
 import Input from 'src/components/Input'
-import { Shift } from 'src/pages/Schedule/Schedule'
+import { EmployeeShift } from 'src/types/employeeShift.type'
 import { handleDate } from 'src/utils/utils'
 
 interface Props {
-  shift: Shift
+  employeeShift: EmployeeShift
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 

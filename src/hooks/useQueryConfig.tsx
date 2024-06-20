@@ -1,7 +1,7 @@
 import { QueryConfig } from 'src/pages/EmployeeTable/EmployeeTable'
-import useQueryParams from './useQueryParams'
 import { isUndefined, omitBy } from 'lodash'
 import { EmployeeShiftQueryConfig } from 'src/pages/Dashboard/EmployeeDate/EmployeeDate'
+import { useNewQueryParams, useQueryParams } from 'src/hooks/useQueryParams'
 
 export function useQueryConfig() {
   const queryParams = useQueryParams()
@@ -25,12 +25,13 @@ export function useQueryConfig() {
 }
 
 export function useNewQueryConfig() {
-  const queryParams = useQueryParams()
-  const newQueryConfig: EmployeeShiftQueryConfig = omitBy({
-    pageNo: queryParams.pageNumber || '1',
-    pageSize: queryParams.pageSize || '9',
-  },
-  isUndefined)
+  const queryParams = useNewQueryParams()
+  const newQueryConfig: EmployeeShiftQueryConfig = omitBy(
+    {
+      pageNo: queryParams.pageNo || '1',
+      pageSize: queryParams.pageSize || '5'
+    },
+    isUndefined
+  )
   return newQueryConfig
 }
-

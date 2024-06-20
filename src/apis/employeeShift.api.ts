@@ -9,6 +9,11 @@ const employeeShiftApi = {
       params
     })
   },
+  getEmployeeShiftByWeek(params: { Date: string }) {
+    return http.get<SuccessResponse<EmployeeShiftDayList>>(`${URL}/week`, {
+      params
+    })
+  }
   // getEmployeeShiftDetail(id: string) {
   //   return http.get<SuccessResponse<EmployeeShift>>(`${URL}/${id}`)
   // },
@@ -21,7 +26,6 @@ const employeeShiftApi = {
   //   employee: Employee
   //   restaurant: Restaurant
 
-  
   // }) {
   //   return http.put<SuccessResponse<String>>(URL, body)
   // }

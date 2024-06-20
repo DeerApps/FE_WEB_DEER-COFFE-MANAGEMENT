@@ -184,7 +184,7 @@ export default function EmployeeTable() {
         )}
         {employeeList && (
           <div className='flex justify-center'>
-            <Pagination queryConfig={queryConfig} pageSize={employeeList.pageSize} pathName={path.employees} />
+            <Pagination queryConfig={queryConfig} pageSize={employeeList.pageCount} pathName={path.employees} />
             {/* {page === 1 ? (
             <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
               <svg

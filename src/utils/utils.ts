@@ -77,3 +77,27 @@ export const mapToDateTime = (dateStr: string, time: number) => {
 
   return dateTime
 }
+
+export const handleTimeClock = (dateTime: string | Date) => {
+  if (!dateTime) return ''
+
+  // Convert the input to a Date object if it's not already
+  const date = typeof dateTime === 'string' ? new Date(dateTime) : dateTime
+
+  // Extract hours and minutes
+  let hours = date.getHours()
+  const minutes = date.getMinutes()
+
+  // Determine AM or PM
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+
+  // Convert hours to 12-hour format
+  hours = hours % 12
+  hours = hours ? hours : 12 // The hour '0' should be '12'
+
+  // Format minutes with leading zero if needed
+  const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes
+
+  // Return formatted time string
+  return `${hours}:${minutesFormatted} ${ampm}`
+}

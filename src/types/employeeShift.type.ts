@@ -45,6 +45,23 @@ export interface EmployeeShiftDayList {
   pageNumber: number
 }
 
+export interface EmployeeShiftEventList {
+  data: EmployeeShiftEvent[]
+  totalCount: number
+  pageCount: number
+  pageSize: number
+  pageNumber: number
+}
+
+export interface EmployeeShiftEvent {
+  id: string
+  title: string
+  start: Date
+  end: Date
+  resource: EmployeeShift
+  allDay: boolean
+}
+
 export interface EmployeeShiftListConfig {
   pageNo?: number | string
   pageSize?: number | string

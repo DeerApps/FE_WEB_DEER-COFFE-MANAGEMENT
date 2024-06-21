@@ -23,7 +23,11 @@ const restaurantApi = {
     resChainID: string
   }) {
     return http.put<SuccessResponse<String>>(URL, body)
-  }
+  },
+
+  createRestaurant(body: { restaurantChainID: string; restaurantName: string; restaurantAddress: string; managerID: string }) {
+    return http.post<SuccessResponse<String>>(URL, body)
+  },
 }
 
 export default restaurantApi

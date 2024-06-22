@@ -36,7 +36,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
           <div className='flex w-full mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Date</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {employeeShift?.resource.dateOfWork}
+              {employeeShift?.resource?.dateOfWork}
             </div>
           </div>
           <div className='flex w-full mb-6'>
@@ -60,19 +60,19 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
           <div className='flex w-full mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Check In</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {handleTimeClock(employeeShift?.resource.actual_CheckIn)}
+              {handleTimeClock(employeeShift?.resource?.actual_CheckIn)}
             </div>
           </div>
           <div className='flex w-full mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Check Out</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {handleTimeClock(employeeShift?.resource.actual_CheckOut)}
+              {handleTimeClock(employeeShift?.resource?.actual_CheckOut)}
             </div>
           </div>
           <div className='flex w-full mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Note</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {employeeShift.resource.note}
+              {employeeShift.resource?.note}
             </div>
           </div>
           <div className='flex justify-start items-center'>
@@ -94,32 +94,32 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Id</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource.employee.id}
+              {employeeShift.resource?.employee.id}
             </div>
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Name</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource.employee.fullName}
+              {employeeShift.resource?.employee.fullName}
             </div>
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Email</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource.employee.email}
+              {employeeShift.resource?.employee.email}
             </div>
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Phone</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource.employee.phoneNumber}
+              {employeeShift.resource?.employee.phoneNumber}
             </div>
           </div>
 
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Joined</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {handleDate(employeeShift.resource.employee.dateJoined)}
+              {handleDate(employeeShift.resource?.employee.dateJoined)}
             </div>
           </div>
         </div>

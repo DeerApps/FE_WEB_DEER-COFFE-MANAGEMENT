@@ -58,8 +58,8 @@ export interface EmployeeShiftEvent {
   title: string
   start: Date
   end: Date
-  resource: EmployeeShift
-  allDay: boolean
+  resource?: EmployeeShift
+  allDay?: boolean
 }
 
 export interface EmployeeShiftListConfig {

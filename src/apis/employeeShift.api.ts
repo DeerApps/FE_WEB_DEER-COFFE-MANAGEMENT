@@ -9,7 +9,7 @@ const employeeShiftApi = {
       params
     })
   },
-  getEmployeeShiftByWeek(params: { Date: string }) {
+  getEmployeeShiftByWeek(params: { Date: string; isMonth?: boolean }) {
     return http.get<SuccessResponse<EmployeeShiftEvent[]>>(`${URL}/week`, {
       params
     })

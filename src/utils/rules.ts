@@ -29,5 +29,14 @@ export const employeeSchema = yup.object({
   isActive: yup.boolean().required('Can not be Empty !')
 })
 
+export const restaurantSchema = yup.object({
+  resID: yup.string().required('Can not be Empty !').max(20, 'Maximum 20 characters !'),
+  manageID: yup.string().required('Can not be Empty !'),
+  resName: yup.string().required('Can not be Empty !').max(50, 'Maximum 50 characters !'),
+  resAddress: yup.string().required('Can not be Empty !').max(160, 'Maximum 160 characters !'),
+  resChainID: yup.string().required('Can not be Empty !').max(50, 'Maximum 10 characters !')
+})
+
+export type RestaurantSchema = yup.InferType<typeof restaurantSchema>
 export type EmployeeSchema = yup.InferType<typeof employeeSchema>
 export type LoginSchema = yup.InferType<typeof loginSchema>

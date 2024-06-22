@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Calendar, Progress } from '@nextui-org/react'
 import { parseDate } from '@internationalized/date'
-import { getNow, handleDate, handleDateNet } from 'src/utils/utils'
+import { handleDate, handleDateNet } from 'src/utils/utils'
 import EmployeeDate from 'src/pages/Dashboard/EmployeeDate'
 
 export default function Dashboard() {
@@ -76,7 +76,7 @@ export default function Dashboard() {
           />
         </div>
         <div className='col-span-12 row-span-3'>
-          <EmployeeDate shiftDate={handleDateNet(value)}/>
+          <EmployeeDate shiftDate={handleDateNet(value)} />
         </div>
       </div>
     </>

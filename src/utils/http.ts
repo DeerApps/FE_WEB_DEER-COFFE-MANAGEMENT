@@ -1,5 +1,4 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios'
-import { toast } from 'react-toastify'
 import { HttpStatusCode } from 'src/constant/httpStatusCode.enum'
 import { AuthResponse } from 'src/types/auth.type'
 import {
@@ -46,7 +45,7 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
-        if (`/${url?.split('/')[1]}` === path.login) {
+        if (`${url?.split('/')[1]}` === 'login') {
           this.accessToken = (response.data as AuthResponse).data.accessToken
           this.refreshToken = (response.data as AuthResponse).data.refreshToken
           saveAccessTokenAndRefreshTokenToLS(this.accessToken, this.refreshToken)
@@ -61,9 +60,9 @@ class Http {
       (error: AxiosError) => {
         if (error.response?.status !== HttpStatusCode.UnprocessableEntity) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data: any | undefined = error.response?.data
-          const message = data?.message || error.message
-          toast.error(message)
+          // const data: any | undefined = error.response?.data
+          // const message = data?.message || error.message
+          // toast.error(message)
         }
         if (error.response?.status === HttpStatusCode.Unauthorized) {
           clearLS()

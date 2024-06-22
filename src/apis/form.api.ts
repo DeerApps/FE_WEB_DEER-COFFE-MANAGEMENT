@@ -8,6 +8,9 @@ const formApi = {
     return http.get<SuccessResponse<FormList>>(URL, {
       params
     })
+  },
+  acceptForms(body: { formID: string; restaurantID: string; date: Date }) {
+    return http.post<SuccessResponse<string>>(URL, body)
   }
 }
 

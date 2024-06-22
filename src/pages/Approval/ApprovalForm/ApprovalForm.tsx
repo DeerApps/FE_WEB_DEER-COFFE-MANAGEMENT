@@ -7,23 +7,45 @@ import { Restaurant } from 'src/types/restaurant.type'
 import { handleDate } from 'src/utils/utils'
 import { parseDate } from '@internationalized/date'
 import { Form } from 'src/types/form.type'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import formApi from 'src/apis/form.api'
+import { toast } from 'react-toastify'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
+  const queryClient = useQueryClient()
+  const queryConfig = useQueryConfig()
   const [restaurant, setRestaurant] = useState<Restaurant | undefined>()
   const [date, setDate] = useState<Date>(new Date())
+
+  const acceptFormMutation = useMutation({
+    mutationFn: formApi.acceptForms,
+    onSuccess: () => {
+      toast('Form Submit !', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig] })
+    },
+    onError: (_) => {
+      toast('Error in sending form !', { autoClose: 1000 })
+    }
+  })
 
   const handleSelection = (select: Restaurant) => {
     setRestaurant(select)
   }
-  
+
+  const handleSubmitForm = () => {
+    console.log({ formID: (form as Form).id, restaurantID: (restaurant as Restaurant)?.id, date })
+    acceptFormMutation.mutate({ formID: (form as Form).id, restaurantID: (restaurant as Restaurant)?.id, date })
+  }
+
   return (
-    <form className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
+    <div className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
       <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 rounded-md mb-2'>
         <div className=' p-4 flex justify-center items-center'>
           <div className=' h-[100px] w-[100px]'>
             <img
               className='h-full w-full rounded-full shadow-lg'
-              src={form?.employee?.avatarUrl}
+              src={form?.employee?.avatarUrl || 'https://lh3.google.com/u/0/d/1cA_e2CcO33m9Tzj4GbRMekWel9u20JGs'}
               alt='EmployeePicture'
             />
           </div>
@@ -80,14 +102,18 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
         </div>
       </div>
       <div className=' row-span-1 col-span-5 flex'>
-        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'>
+        <button
+          onClick={handleSubmitForm}
+          className={'bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'}
+          disabled={!restaurant}
+        >
           Submit
         </button>
         <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>
           Reject
         </button>
       </div>
-    </form>
+    </div>
     // <InfiniteScroll />
   )
 }

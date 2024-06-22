@@ -47,7 +47,6 @@ export default function EmployeeTable() {
   })
 
   const employeeList = employeesData?.data.data as EmployeeList
-  console.log(employeeList)
 
   const handleClose = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setIsOpen(!isOpen)
@@ -184,99 +183,7 @@ export default function EmployeeTable() {
         )}
         {employeeList && (
           <div className='flex justify-center'>
-            <Pagination queryConfig={queryConfig} pageSize={employeeList.pageSize} pathName={path.employees} />
-            {/* {page === 1 ? (
-            <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
-              </svg>
-            </div>
-          ) : (
-            <Link
-              to={{
-                pathname: path.employees,
-                search: createSearchParams({
-                  ...queryConfig,
-                  pageNumber: (page - 1).toString()
-                }).toString()
-              }}
-              className='bg-slate-300 px-5 rounded-md mr-1 transition'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18' />
-              </svg>
-            </Link>
-          )}
-          {Array(employeesData?.data.data.pageCount)
-            .fill(0)
-            .map((_, index) => (
-              <Link
-                to={{
-                  pathname: path.employees,
-                  search: createSearchParams({
-                    ...queryConfig,
-                    pageNumber: (index + 1).toString()
-                  }).toString()
-                }}
-                key={index}
-                className={classNames('px-4 rounded-md text-white mx-1 flex items-center transition', {
-                  'bg-blue-300': index + 1 === page,
-                  'bg-slate-300': index + 1 !== page
-                })}
-              >
-                {index + 1}
-              </Link>
-            ))}
-          {page === (employeesData?.data.data.pageCount as number) ? (
-            <div className='bg-slate-200/90 px-5 rounded-md ml-1 flex items-center transition'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
-              </svg>
-            </div>
-          ) : (
-            <Link
-              to={{
-                pathname: path.employees,
-                search: createSearchParams({
-                  ...queryConfig,
-                  pageNumber: (page + 1).toString()
-                }).toString()
-              }}
-              className='bg-slate-300 px-5 rounded-md ml-1 transition'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                strokeWidth={1.5}
-                stroke='white'
-                className='size-7'
-              >
-                <path strokeLinecap='round' strokeLinejoin='round' d='M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3' />
-              </svg>
-            </Link>
-          )} */}
+            <Pagination queryConfig={queryConfig} pageSize={employeeList.pageCount} pathName={path.employees} />
           </div>
         )}
       </div>

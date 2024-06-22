@@ -48,21 +48,19 @@ export function handleTime(shiftStart: number, shiftEnd: number) {
 }
 
 export function formatTime(isoString: Date): string {
-  const date = new Date(isoString);
-  
+  const date = new Date(isoString)
+
   // Ensure the date is valid
   if (isNaN(date.getTime())) {
-      throw new Error('Invalid date string');
+    throw new Error('Invalid date string')
   }
 
-  const hours = date.getHours().toString().padStart(2, '0');
-  const minutes = date.getMinutes().toString().padStart(2, '0');
-  const seconds = date.getSeconds().toString().padStart(2, '0');
-  
-  return `${hours}:${minutes}:${seconds}`;
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+  const seconds = date.getSeconds().toString().padStart(2, '0')
+
+  return `${hours}:${minutes}:${seconds}`
 }
-
-
 
 export function handleRenderNo(pageNumber: number, pageSize: number, index: number) {
   const no =
@@ -70,4 +68,36 @@ export function handleRenderNo(pageNumber: number, pageSize: number, index: numb
       ? '0' + (pageSize * pageNumber - (pageSize - index) + 1)
       : pageSize * pageNumber - (pageSize - index) + 1
   return no.toString()
+}
+
+export const mapToDateTime = (dateStr: string, time: number) => {
+  const [year, month, day] = dateStr.split('-').map(Number)
+
+  const dateTime = new Date(year, month - 1, day, time)
+
+  return dateTime
+}
+
+export const handleTimeClock = (dateTime: string | Date) => {
+  if (!dateTime) return ''
+
+  // Convert the input to a Date object if it's not already
+  const date = typeof dateTime === 'string' ? new Date(dateTime) : dateTime
+
+  // Extract hours and minutes
+  let hours = date.getHours()
+  const minutes = date.getMinutes()
+
+  // Determine AM or PM
+  const ampm = hours >= 12 ? 'PM' : 'AM'
+
+  // Convert hours to 12-hour format
+  hours = hours % 12
+  hours = hours ? hours : 12 // The hour '0' should be '12'
+
+  // Format minutes with leading zero if needed
+  const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes
+
+  // Return formatted time string
+  return `${hours}:${minutesFormatted} ${ampm}`
 }

@@ -1,4 +1,4 @@
-import { Employee } from "./employee.type"
+import { Employee } from 'src/types/employee.type'
 
 export interface RestaurantList {
   data: Restaurant[]

@@ -1,6 +1,6 @@
 import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
-import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { EmployeeShiftDayList, EmployeeShiftEvent, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
 
 const URL = 'employeeshift'
 const employeeShiftApi = {
@@ -9,6 +9,11 @@ const employeeShiftApi = {
       params
     })
   },
+  getEmployeeShiftByWeek(params: { Date: string }) {
+    return http.get<SuccessResponse<EmployeeShiftEvent[]>>(`${URL}/week`, {
+      params
+    })
+  }
   // getEmployeeShiftDetail(id: string) {
   //   return http.get<SuccessResponse<EmployeeShift>>(`${URL}/${id}`)
   // },
@@ -21,7 +26,6 @@ const employeeShiftApi = {
   //   employee: Employee
   //   restaurant: Restaurant
 
-  
   // }) {
   //   return http.put<SuccessResponse<String>>(URL, body)
   // }

@@ -1,7 +1,6 @@
 import { Employee } from './employee.type'
 import { Restaurant } from './restaurant.type'
 
-
 export enum Status {
   OnTime,
   Late,
@@ -10,31 +9,32 @@ export enum Status {
 }
 
 export interface Shift {
-  shiftID: string
   name: string
   shiftStart: number
   shiftEnd: number
   shiftDescription: string
-  shiftActive: boolean
+  isActive: boolean
 }
 
 export interface EmployeeShift {
-  id: string
+  iD: string
+  restaurantID: string
   employee: Employee
   name: string
   restaurant: Restaurant
   shift: Shift
-  dateOfWork: Date
+  dateOfWork: string
   checkIn: Date
   checkOut: Date
-  actualCheckIn: Date
-  actualCheckOut: Date
+  actual_CheckIn: Date
+  actual_CheckOut: Date
   totalHours: Date
   isOnTime: boolean
   status: Status
   employeeNote: number
   note: string
   isEmpty: boolean
+  allDay: boolean // BigCalendar
 }
 
 export interface EmployeeShiftDayList {
@@ -45,11 +45,28 @@ export interface EmployeeShiftDayList {
   pageNumber: number
 }
 
+export interface EmployeeShiftEventList {
+  data: EmployeeShiftEvent[]
+  totalCount: number
+  pageCount: number
+  pageSize: number
+  pageNumber: number
+}
+
+export interface EmployeeShiftEvent {
+  id: string
+  title: string
+  start: Date
+  end: Date
+  resource: EmployeeShift
+  allDay: boolean
+}
+
 export interface EmployeeShiftListConfig {
   pageNo?: number | string
   pageSize?: number | string
   dateOfWork?: string
-  restaurantId?:string
+  restaurantId?: string
   // sort_by?: 'createdAt' | 'view' | 'sold' | 'price'
   // order?: 'asc' | 'desc'
   // exclude?: string

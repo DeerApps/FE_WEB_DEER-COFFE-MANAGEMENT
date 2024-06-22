@@ -198,7 +198,7 @@ export default function Schedule() {
       <div
         className={classNames('border rounded-md bg-white mt-10 p-4 h-[700px] max-h-[700px] min-w-[80%]', {
           ' overflow-auto': !isMonth,
-          ' overflow-hidden': isMonth
+          ' overflow-hidden overflow-x-auto': isMonth
         })}
       >
         <DragAndDropCalendar

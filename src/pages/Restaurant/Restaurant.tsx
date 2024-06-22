@@ -83,7 +83,7 @@ export default function Restaurant() {
             </div>
             {restaurantData?.data?.data?.data?.map((item, index) => (
               <div
-                className='bg-gray-100/80 h-[46px] mb-4 px-4 grid grid-cols-12 text-center rounded-xl items-center'
+                className='bg-gray-100/80 h-[46px] mb-3 px-4 grid grid-cols-12 text-center rounded-xl items-center'
                 key={item.id}
               >
                 <div className='col-span-1'>

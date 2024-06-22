@@ -79,7 +79,7 @@ export default function RestaurantPopoverInfo({restaurant, handleOpen}:Props) {
     <div className='w-[70%] h-[80%] bg-white p-6'>
       {/* Header + Button Leave */}
       <div className='flex justify-between items-center'>
-        <div className='p-2 ml-4 text-3xl font-normal text-gray-600 flex items-center'>Employee Information</div>
+        <div className='p-2 ml-4 text-3xl font-normal text-gray-600 flex items-center'>Restaurant Information</div>
         <button onClick={handleOpen} className='rounded-md py-2 px-10 bg-gray-200 text-gray-500 h-[10%]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'

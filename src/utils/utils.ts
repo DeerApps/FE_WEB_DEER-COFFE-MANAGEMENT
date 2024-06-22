@@ -19,7 +19,7 @@ export function getNow() {
   return nowHandled
 }
 
-export function handleDate(dateTime: Date) {
+export function handleDate(dateTime: Date | undefined) {
   if (!dateTime) return ''
   const time = new Date(dateTime)
   const month = time.getMonth() + 1
@@ -78,7 +78,7 @@ export const mapToDateTime = (dateStr: string, time: number) => {
   return dateTime
 }
 
-export const handleTimeClock = (dateTime: string | Date) => {
+export const handleTimeClock = (dateTime: string | Date | undefined) => {
   if (!dateTime) return ''
 
   // Convert the input to a Date object if it's not already
@@ -100,4 +100,16 @@ export const handleTimeClock = (dateTime: string | Date) => {
 
   // Return formatted time string
   return `${hours}:${minutesFormatted} ${ampm}`
+}
+
+export const subtractDays = (date: Date, days: number) => {
+  const result = new Date(date) // Create a new Date object to avoid mutating the original
+  result.setDate(result.getDate() - days) // Subtract the specified number of days
+  return result
+}
+
+export const plusDays = (date: Date, days: number) => {
+  const result = new Date(date) // Create a new Date object to avoid mutating the original
+  result.setDate(result.getDate() + days) // Subtract the specified number of days
+  return result
 }

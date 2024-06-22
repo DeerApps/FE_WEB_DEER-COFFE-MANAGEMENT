@@ -59,6 +59,7 @@ export default function Login() {
         navigate(path.dashboard)
       },
       onError: (error) => {
+        setIsLoading(false) // Reset loading state on error
         if (isAxiosUnprocessableEntityError<ErrorResponse<LoginSchema>>(error)) {
           const formError = error.response?.data.data
           if (formError) {

@@ -182,6 +182,10 @@ export default function Schedule() {
     }
   }
 
+  const handleGoNow = () => {
+    setDate(new Date())
+  }
+
   return (
     <Popover
       className='h-full'
@@ -223,6 +227,7 @@ export default function Schedule() {
                 handleViewWeek={handleView('week')}
                 handleBackMonth={handleActionMonth('subtract')}
                 handleNextMonth={handleActionMonth('plus')}
+                handleGoNow={handleGoNow}
                 {...props}
               />
             )

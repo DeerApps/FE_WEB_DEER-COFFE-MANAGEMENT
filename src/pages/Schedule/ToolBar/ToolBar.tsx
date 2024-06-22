@@ -6,6 +6,7 @@ interface MyToolBar {
   handleBackWeek?: () => void
   handleNextWeek?: () => void
   handleBackMonth?: () => void
+  handleGoNow?: () => void
   handleNextMonth?: () => void
   handleViewWeek?: () => void
   handleViewMonth?: () => void
@@ -18,6 +19,7 @@ export default function ToolBar({
   onView,
   handleBackWeek,
   handleNextWeek,
+  handleGoNow,
   handleViewMonth,
   handleViewWeek,
   handleBackMonth,
@@ -60,6 +62,13 @@ export default function ToolBar({
     }
   }
 
+  const handleNow = () => {
+    if (handleGoNow) {
+      onNavigate('TODAY')
+      handleGoNow()
+    }
+  }
+
   return (
     <div className='flex justify-center items-center absolute py-2 top-[12%] left-[19.3%] right-[2.7%] bg-white z-30'>
       {/* <span className='rbc-toolbar-label'>{view}</span> */}
@@ -70,6 +79,13 @@ export default function ToolBar({
           onClick={handleBack}
         >
           Back
+        </button>
+        <button
+          className='px-4 py-2 border border-slate-300 mr-2 hover:bg-sky-300 hover:text-white'
+          type='button'
+          onClick={handleNow}
+        >
+          Today
         </button>
         <button
           className='px-4 py-2 border border-slate-300 hover:bg-sky-300 hover:text-white'

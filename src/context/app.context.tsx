@@ -34,6 +34,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const reset = () => {
     setIsAuthenticated(false)
     setUser(null)
+    setEmployee(null)
   }
 
   return (

@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
 import SideBarHeader from 'src/layouts/SideBarLayout/SideBarHeader'
-import Logout from 'src/pages/Logout'
 
 interface Props {
   children?: React.ReactNode
@@ -15,7 +14,7 @@ export default function SideBarLayout({ children }: Props) {
   const { user } = useContext(AppContext)
   return (
     <div className='grid grid-cols-12 h-[100vh]'>
-      <div className='py-4 px-2 col-start-1 col-span-2 relative'>
+      <div className='py-4 px-2 col-start-1 col-span-2 '>
         <div className='flex items-center ml-3'>
           <img
             className='h-9 w-9'
@@ -257,7 +256,6 @@ export default function SideBarLayout({ children }: Props) {
             </div>
           </Link>
         </div>
-        <Logout />
       </div>
       <div className='col-span-10 bg-sky-100'>
         <div className='h-full'>

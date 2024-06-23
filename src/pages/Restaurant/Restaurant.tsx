@@ -64,15 +64,15 @@ export default function Restaurant() {
 
   return (
     <div className='bg-white h-full border border-gray-300 rounded-md'>
-      <div className='p-4'>
-        <Button onClick={handleCreateOpen}>Create New Restaurant</Button>
+      <div className='p-3 flex justify-end'>
+        <Button onClick={handleCreateOpen}>Create new</Button>
       </div>
       <Modal title='Create New Restaurant' visible={isCreateOpen} onCancel={handleCreateClose} footer={null}>
         <CreateRestaurant />
       </Modal>
-      <div className='min-h-[550px]'>
+      <div className='min-h-[700px]'>
         {restaurantList && (
-          <div className='px-4 pb-0 min-h-[520px]'>
+          <div className='px-4 pb-0 min-h-[625px]'>
             <div className='grid grid-cols-12 bg-gray-400/80 text-white my-2 text-lg font-medium p-4 py-2 rounded-xl text-center'>
               <div className='col-span-1'>No</div>
               <div className='col-span-2'>Restaurant ID</div>
@@ -89,7 +89,7 @@ export default function Restaurant() {
                 <div className='col-span-1'>
                   {handleRenderNo(restaurantList.pageNumber, restaurantList.pageSize, index)}
                 </div>
-                <div className='col-span-2'>{item.id}</div>
+                <div className='col-span-2 truncate'>{item.id}</div>
                 <div className='col-span-3'>{item.restaurantName}</div>
                 <div className='col-span-2'>{item.manager.fullName}</div>
                 <div className='col-span-2'>{item.manager.phoneNumber}</div>
@@ -139,8 +139,8 @@ export default function Restaurant() {
           </div>
         )}
         {!restaurantList && (
-          <div className='p-4 pb-0! max-h-[300px]'>
-            <div className='text-lg font-normal leading-none  text-blue-800 bg-blue-200 animate-pulse dark:bg-blue-900 dark:text-blue-200 min-h-[600px] text-center flex justify-center items-center'>
+          <div className='p-4 pb-0! min-h-[625px]'>
+            <div className='text-lg font-normal leading-none text-blue-800 bg-blue-200 animate-pulse dark:bg-blue-900 dark:text-blue-200 min-h-[600px] text-center flex justify-center items-center'>
               loading...
             </div>
           </div>

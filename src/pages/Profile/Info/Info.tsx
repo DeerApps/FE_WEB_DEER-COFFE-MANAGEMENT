@@ -1,20 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Avatar, Button, DatePicker } from '@nextui-org/react'
+import { useContext } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import Input from 'src/components/Input'
 import InputFile from 'src/components/InputFile'
+import { AppContext } from 'src/context/app.context'
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 
 export default function Profile() {
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '(123) 456-7890',
-    gender: 'Male',
-    dob: '1990-01-01',
-    address: '123 Main St, Springfield, USA',
-    avatarUrl: 'https://i.pravatar.cc/150?img=3'
-  }
+  const { employee } = useContext(AppContext)
+  console.log(employee)
 
   type FormData = Pick<EmployeeSchema, 'fullName' | 'address' | 'phoneNumber' | 'dateOfBirth' | 'email'>
 
@@ -51,13 +46,13 @@ export default function Profile() {
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={onSubmit}>
-        <div className=' flex'>
+        <div className=' flex min-h-[450px]'>
           <div className='flex flex-col w-[60%] pr-12 border-r-1'>
             <div className='w-full flex items-center'>
               <label className='w-[20%] pl-6'>Full name:</label>
               <Input
                 register={register}
-                defaultValue={user.name}
+                defaultValue={employee?.fullName}
                 className='w-[80%] mt-2'
                 errorMessage={errors.address?.message}
               />
@@ -67,7 +62,7 @@ export default function Profile() {
               <label className='w-[20%] pl-6'>Email:</label>
               <Input
                 type='email'
-                defaultValue={user.email}
+                defaultValue={employee?.email}
                 className='w-[80%] mt-2'
                 register={register}
                 errorMessage={errors.email?.message}
@@ -77,7 +72,7 @@ export default function Profile() {
             <div className='w-full flex items-center'>
               <label className='w-[20%] pl-6'>Phone:</label>
               <Input
-                defaultValue={user.phone}
+                defaultValue={employee?.phoneNumber}
                 className='w-[80%] mt-2'
                 register={register}
                 errorMessage={errors.phoneNumber?.message}
@@ -108,7 +103,7 @@ export default function Profile() {
             <div className='w-full flex items-center'>
               <label className='w-[20%] pl-6'>Address:</label>
               <Input
-                defaultValue={user.address}
+                defaultValue={employee?.address}
                 className='w-[80%] mt-2'
                 register={register}
                 errorMessage={errors.address?.message}
@@ -117,7 +112,7 @@ export default function Profile() {
           </div>
 
           <div className='space-y-2 flex flex-col items-center justify-center w-[40%]'>
-            <Avatar src={user.avatarUrl} className='w-24 h-24' />
+            <Avatar src={employee?.avatarUrl} className='w-24 h-24' />
             <InputFile />
             <div className='text-gray-300 text-sm'>
               <p>Maximun file 1MB</p>

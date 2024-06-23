@@ -11,10 +11,10 @@ export default function Logout() {
     clearLS()
   }
   return (
-    <div className='absolute bottom-0 left-0 w-full h-[8%] p-2 '>
+    <div className=' w-full p-2 flex justify-center items-center hover:bg-gray-100 rounded-lg'>
       <button
         onClick={handleLogout}
-        className='w-full h-[100%] rounded-lg text-md font-medium flex justify-center items-center bg-slate-100 border border-black'
+        className='h-[100%] text-md font-medium flex justify-center items-center text-red-500 '
       >
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -22,7 +22,7 @@ export default function Logout() {
           viewBox='0 0 24 24'
           strokeWidth={1.5}
           stroke='currentColor'
-          className='size-6 mr-2'
+          className='size-5 mr-2'
         >
           <path
             strokeLinecap='round'

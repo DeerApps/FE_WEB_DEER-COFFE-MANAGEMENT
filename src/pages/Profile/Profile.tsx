@@ -21,7 +21,7 @@ export default function Profile() {
 
   return (
     <>
-      <Card aria-label='card profile' className='max-w-6xl mx-auto px-7 py-4'>
+      <Card aria-label='card profile' className='max-w-6xl mx-auto p-4 shadow-none'>
       <Tabs defaultActiveKey="1" items={items} />
       </Card>
     </>

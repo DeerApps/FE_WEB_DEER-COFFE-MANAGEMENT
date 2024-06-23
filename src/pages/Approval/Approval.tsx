@@ -50,7 +50,7 @@ export default function Approval() {
           <div className='col-span-2 pl-6 border-r-2'>Type</div>
           <div className='col-span-2 pl-4 truncate'>Created At</div>
         </div>
-        <div className='h-[87%] min-h-[87%]'>
+        <div className='h-[85%] min-h-[85%]'>
           {FormList &&
             FormList.map((data, index) => {
               const no = handleRenderNo(formsData?.data.data.pageNumber, formsData?.data.data.pageSize, index)
@@ -70,7 +70,7 @@ export default function Approval() {
             })}
         </div>
         {/* Navigation Bar */}
-        <div className='flex justify-center mt-1'>
+        <div className='flex justify-center'>
           {page === 1 ? (
             <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
               <svg

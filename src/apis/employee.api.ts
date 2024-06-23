@@ -9,7 +9,7 @@ const employeeApi = {
       params
     })
   },
-  getEmployeeDetail(id: string) {
+  getEmployee(id: string) {
     return http.get<SuccessResponse<Employee>>(`${URL}/${id}`)
   },
   deleteEmployee(body: { employeeID: string }) {

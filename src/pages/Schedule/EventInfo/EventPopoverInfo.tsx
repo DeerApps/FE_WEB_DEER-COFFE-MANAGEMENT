@@ -9,10 +9,10 @@ interface Props {
 export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
   console.log(employeeShift)
   return (
-    <div className='w-[75%] h-[85%] bg-white p-6'>
+    <div className='w-[75%] h-[95%] bg-white p-5'>
       <div className='flex justify-between items-center'>
         <div className='p-2 ml-4 text-3xl font-normal text-gray-600 flex items-center'>Shift Information</div>
-        <button onClick={handleOpen} className='rounded-md py-2 px-10 bg-gray-200 text-gray-500 h-[10%]'>
+        <button onClick={handleOpen} className='rounded-md py-2 px-8 bg-gray-200 text-gray-500 h-[10%]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -25,8 +25,8 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
           </svg>
         </button>
       </div>
-      <div className='flex w-[100%] h-[90%] justify-between my-3'>
-        <div className='w-[58%] p-4 bg-gray-100'>
+      <div className='flex w-[100%] h-[90%] justify-between my-2'>
+        <div className='w-[60%] p-2 bg-gray-100'>
           <div className='flex w-full mt-5 mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Id</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>

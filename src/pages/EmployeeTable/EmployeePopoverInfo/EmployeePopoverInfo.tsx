@@ -87,11 +87,11 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
   })
 
   return (
-    <div className='w-[70%] h-[80%] bg-white p-6'>
+    <div className='w-[70%] h-[95%] bg-white p-6'>
       {/* Header + Button Leave */}
       <div className='flex justify-between items-center'>
         <div className='p-2 ml-4 text-3xl font-normal text-gray-600 flex items-center'>Employee Information</div>
-        <button onClick={handleOpen} className='rounded-md py-2 px-10 bg-gray-200 text-gray-500 h-[10%]'>
+        <button onClick={handleOpen} className='rounded-md py-2 px-8 bg-gray-200 text-gray-500 h-[10%]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -105,14 +105,14 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
         </button>
       </div>
       {/* Employee Form */}
-      <div className=' py-4 h-[95%]'>
-        <form onSubmit={onSubmit} className=' bg-gray-100 h-[100%] p-4'>
+      <div className=' py-3 h-[95%]'>
+        <form onSubmit={onSubmit} className=' bg-gray-100 h-[100%] p-3'>
           <div className='max-h-[92%] h-[92%] grid grid-cols-12'>
             {/* Employee Infor */}
-            <div className='col-span-8 border-r-2 py-4'>
+            <div className='col-span-8 border-r-2 py-3'>
               {/* EmpId */}
               <div className='flex w-full'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Id</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Id</div>
                 <Input
                   disabled
                   className='w-[80%] pr-10'
@@ -125,7 +125,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
               </div>
               {/* FullName */}
               <div className='flex w-full'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Name</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Name</div>
                 <Input
                   name='fullName'
                   className='w-[80%] pr-10'
@@ -137,7 +137,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
               </div>
               {/* Email */}
               <div className='flex w-full'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Email</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Email</div>
                 <Input
                   className='w-[80%] pr-10'
                   classNameInput='w-[100%] px-3 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
@@ -151,7 +151,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
 
               {/* Phone */}
               <div className='flex w-full'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Phone</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Phone</div>
                 <Input
                   className='w-[80%] pr-10'
                   classNameInput='w-[100%] px-3 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
@@ -163,17 +163,17 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
               </div>
               {/* Address */}
               <div className='flex w-full'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Address</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Address</div>
                 <Input
                   className='w-[80%] pr-10'
-                  classNameInput='w-[100%] px-3 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
+                  classNameInput='w-[100%] px-2 py-2 outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm'
                   register={register}
                   name='address'
                   placeholder='Address'
                   errorMessage={errors.address?.message}
                 />
               </div>
-              <div className='flex w-full justify-between items-center mb-5'>
+              <div className='flex w-full justify-between items-center mb-3'>
                 <div className='flex w-[50%] pl-5 items-center'>
                   <div className=' text-lg capitalize w-[55%]'>Role</div>
                   <Controller
@@ -236,7 +236,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
                 </div>
               </div>
               <div className='flex w-full items-start'>
-                <div className='w-[20%] text-lg capitalize pl-5 pt-3'>Birthdate</div>
+                <div className='w-[20%] text-lg capitalize pl-5 pt-2'>Birthdate</div>
                 <Controller
                   control={control}
                   name='dateOfBirth'
@@ -260,7 +260,7 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
               </div>
 
               <div className='flex w-full items-center'>
-                <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Joined</div>
+                <div className='w-[20%] text-lg capitalize pt-1 pl-5'>Joined</div>
                 <Controller
                   control={control}
                   name='dateJoined'

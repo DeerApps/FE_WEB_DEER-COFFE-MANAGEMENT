@@ -1,8 +1,7 @@
-// import InfiniteScroll from 'src/components/InfiniteScroll'
 import { Button, DatePicker, Popover, PopoverContent, PopoverTrigger } from '@nextui-org/react'
 import { useState } from 'react'
 import ApprovalFormItem from 'src/pages/Approval/ApprovalForm/ApprovalFormItem'
-import InfiniteScroll from 'src/pages/Approval/ApprovalForm/InfiniteScroll'
+import InfiniteScroll from './InfiniteScroll'
 import { Restaurant } from 'src/types/restaurant.type'
 import { handleDate } from 'src/utils/utils'
 import { parseDate } from '@internationalized/date'
@@ -10,22 +9,23 @@ import { Form } from 'src/types/form.type'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import formApi from 'src/apis/form.api'
 import { toast } from 'react-toastify'
-import { useQueryConfig } from 'src/hooks/useQueryConfig'
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const queryClient = useQueryClient()
-  const queryConfig = useQueryConfig()
   const [restaurant, setRestaurant] = useState<Restaurant | undefined>()
   const [date, setDate] = useState<Date>(new Date())
+  const [isLoading, setIsLoading] = useState(false)
 
   const acceptFormMutation = useMutation({
     mutationFn: formApi.acceptForms,
     onSuccess: () => {
-      toast('Form Submit !', { autoClose: 1000 })
-      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig] })
+      toast('Form Submitted!', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['forms'], exact: true })
+      setIsLoading(false)
     },
-    onError: (_) => {
-      toast('Error in sending form !', { autoClose: 1000 })
+    onError: (error) => {
+      toast('Error in sending form!', { autoClose: 1000 })
+      setIsLoading(false)
     }
   })
 
@@ -33,9 +33,18 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
     setRestaurant(select)
   }
 
-  const handleSubmitForm = () => {
-    console.log({ formID: (form as Form).id, restaurantID: (restaurant as Restaurant)?.id, date })
-    acceptFormMutation.mutate({ formID: (form as Form).id, restaurantID: (restaurant as Restaurant)?.id, date })
+  const handleSubmitForm = async () => {
+    setIsLoading(true)
+    try {
+      await acceptFormMutation.mutateAsync({
+        formID: form?.id ?? '',
+        restaurantID: restaurant?.id ?? '',
+        date
+      })
+    } catch (error) {
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -50,11 +59,13 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
             />
           </div>
         </div>
-        <ApprovalFormItem label='Full name' value={form?.employee?.fullName} />
-        <ApprovalFormItem label='Email' value={form?.employee?.email} />
-        <ApprovalFormItem label='Address' value={form?.employee?.address} />
-        <ApprovalFormItem label='Date of birth' value={handleDate(form?.employee?.dateOfBirth as Date)} />
-        <ApprovalFormItem label='Phone number' value={form?.employee?.phoneNumber} />
+        <div>
+          <ApprovalFormItem label='Full name' value={form?.employee?.fullName} />
+          <ApprovalFormItem label='Email' value={form?.employee?.email} />
+          <ApprovalFormItem label='Address' value={form?.employee?.address} />
+          <ApprovalFormItem label='Date of birth' value={handleDate(form?.employee?.dateOfBirth as Date)} />
+          <ApprovalFormItem label='Phone number' value={form?.employee?.phoneNumber} />
+        </div>
       </div>
       <div className='grid row-span-3 col-span-5 border border-slate-300 rounded-md px-4 mb-2'>
         <div className='mt-3 grid grid-cols-10 px-2 mb-2'>
@@ -95,25 +106,27 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
               defaultValue={parseDate(handleDate(date))}
               onChange={(event) => {
                 const dateString = `${event.year}-${event.month}-${event.day}`
-                return setDate(new Date(dateString))
+                setDate(new Date(dateString))
               }}
             />
           </div>
         </div>
       </div>
       <div className=' row-span-1 col-span-5 flex'>
-        <button
+        <Button
           onClick={handleSubmitForm}
-          className={'bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'}
-          disabled={!restaurant}
+          className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'
+          color='default'
+          variant='flat'
+          disabled={!restaurant || isLoading}
+          isLoading={isLoading}
         >
           Submit
-        </button>
-        <button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>
+        </Button>
+        <Button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>
           Reject
-        </button>
+        </Button>
       </div>
     </div>
-    // <InfiniteScroll />
   )
 }

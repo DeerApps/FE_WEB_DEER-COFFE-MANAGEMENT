@@ -5,11 +5,12 @@ import { Typography } from 'antd'
 import { Controller, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { parseDate } from '@internationalized/date'
+import { useState } from 'react'
 import employeeApi from 'src/apis/employee.api'
 import path from 'src/constant/path'
 
 import { ErrorResponse } from 'src/types/utils.type'
-
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
@@ -20,28 +21,32 @@ type FormData = Pick<EmployeeSchema, 'address' | 'email' | 'fullName' | 'phoneNu
 const schema = employeeSchema.pick(['email', 'address', 'phoneNumber', 'fullName', 'dateOfBirth'])
 
 export default function Apply() {
+  const [isLoading, setIsLoading] = useState(false)
+
   const {
     handleSubmit,
     formState: { errors },
     control,
     setError
   } = useForm<FormData>({
+    resolver: yupResolver(schema),
     defaultValues: {
       email: '',
       phoneNumber: '',
       address: '',
       fullName: '',
       dateOfBirth: new Date()
-    },
-    resolver: yupResolver(schema)
+    }
   })
 
   const applyEmployeeMutation = useMutation({
     mutationFn: employeeApi.applyEmployee,
     onSuccess: () => {
-      toast('Please Check Your Mail !', { autoClose: 1000 })
+      toast('Please Check Your Mail!', { autoClose: 1000 })
+      setIsLoading(false)
     },
     onError: (error) => {
+      setIsLoading(false)
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
         const formError = error.response?.data.data
         if (formError) {
@@ -56,19 +61,25 @@ export default function Apply() {
     }
   })
 
-  const onSubmit = handleSubmit((data) => {
-    applyEmployeeMutation.mutate(data)
+  const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true)
+    try {
+      await applyEmployeeMutation.mutateAsync(data)
+    } catch (error) {
+    } finally {
+      setIsLoading(false)
+    }
   })
 
   return (
-    <div className=' min-h-screen flex items-center justify-center'>
+    <div className='min-h-screen flex items-center justify-center'>
       <div className='bg-white bg-opacity-90 p-6 rounded-lg shadow-lg w-full max-w-md'>
         <div className='text-left mb-4'>
           <div className='flex justify-between items-end'>
             <Title level={2} className='mb-0'>
               Application Form
             </Title>
-            <Link className='text-small  underline  pb-1' to={path.login}>
+            <Link className='text-small underline pb-1' to={path.login}>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 fill='none'
@@ -96,8 +107,10 @@ export default function Apply() {
                   size='sm'
                   isRequired
                   className='w-full mb-3'
+                  {...field}
                   onChange={field.onChange}
                   errorMessage={errors.fullName?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -114,8 +127,10 @@ export default function Apply() {
                   size='sm'
                   isRequired
                   className='w-full mb-3'
+                  {...field}
                   onChange={field.onChange}
                   errorMessage={errors.email?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -132,8 +147,10 @@ export default function Apply() {
                   size='sm'
                   isRequired
                   className='w-full mb-3'
+                  {...field}
                   onChange={field.onChange}
                   errorMessage={errors.address?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -149,11 +166,10 @@ export default function Apply() {
                   radius='sm'
                   isRequired
                   className='w-full mb-3'
-                  onChange={(input) => {
-                    const dateString = `${input.year}-${input.month}-${input.day}`
-                    return field.onChange(new Date(dateString))
-                  }}
+                  value={parseDate(field.value.toISOString().split('T')[0])}
+                  onChange={(date) => field.onChange(date.toDate('UTC'))}
                   errorMessage={errors.dateOfBirth?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -170,8 +186,10 @@ export default function Apply() {
                   size='sm'
                   isRequired
                   className='w-full mb-3'
+                  {...field}
                   onChange={field.onChange}
                   errorMessage={errors.phoneNumber?.message}
+                  isDisabled={isLoading}
                 />
               )}
             />
@@ -179,7 +197,14 @@ export default function Apply() {
           <Title level={5} className='mt-0.5 text-gray-500/60 text-sm'>
             Fill in this form and we will contact you
           </Title>
-          <Button aria-label='button-submit-apply' type='submit' color='primary' className='w-full'>
+          <Button
+            aria-label='button-submit-apply'
+            type='submit'
+            color='primary'
+            className='w-full'
+            isLoading={isLoading}
+            isDisabled={isLoading}
+          >
             Submit
           </Button>
         </form>

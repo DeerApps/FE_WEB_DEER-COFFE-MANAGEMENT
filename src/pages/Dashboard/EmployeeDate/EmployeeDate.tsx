@@ -4,7 +4,7 @@ import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import Pagination from 'src/pages/Dashboard/Pagination'
 import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
-import { formatTime, handleRenderNo, handleTime } from 'src/utils/utils'
+import { formatTime, handleRenderNo, handleTimeClock } from 'src/utils/utils'
 
 export type EmployeeShiftQueryConfig = {
   [key in keyof EmployeeShiftListConfig]: string
@@ -12,7 +12,6 @@ export type EmployeeShiftQueryConfig = {
 
 export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   const queryConfig = useNewQueryConfig()
-  console.log(queryConfig)
 
   const { data: employeeShiftData, isLoading } = useQuery({
     queryKey: ['employeeshift', { ...queryConfig, dateOfWork: shiftDate }],
@@ -25,6 +24,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
 
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
   console.log(employeeShiftData)
+  console.log(employeeShiftList)
 
   return (
     <div className='min-h-[425px]'>
@@ -54,9 +54,15 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
                   </div>
                   <div className='col-span-2'>{item.employee.fullName}</div>
                   <div className='col-span-2'>{item.employee.phoneNumber}</div>
-                  <div className='col-span-2'>{handleTime(item.shift.shiftStart, item.shift.shiftEnd)}</div>
                   <div className='col-span-2'>
-                    {formatTime(item.checkIn)} - {formatTime(item.checkOut)}
+                    {handleTimeClock(item.checkIn)}
+                    <span className='px-2'>-</span>
+                    {handleTimeClock(item.checkIn)}
+                  </div>
+                  <div className='col-span-2'>
+                    {formatTime(item.actual_CheckIn)}
+                    <span className='px-2'>-</span>
+                    {formatTime(item.actual_CheckOut)}
                   </div>
                   <div className='col-span-2'>{item.status}</div>
                 </div>

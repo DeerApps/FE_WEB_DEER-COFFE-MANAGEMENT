@@ -56,7 +56,13 @@ export default function Login() {
           console.error('Failed to decode JWT', error)
         }
         setIsLoading(false)
-        navigate(path.dashboard)
+        if (data.data.data.employeeDto.roleName == 'Manager') {
+          navigate(path.dashboard)
+        } else if (data.data.data.employeeDto.roleName == 'Admin') {
+          navigate(path.approval)
+        } else if (data.data.data.employeeDto.roleName == 'Employee') {
+          navigate(path.schedule)
+        }
       },
       onError: (error) => {
         setIsLoading(false) // Reset loading state on error

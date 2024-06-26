@@ -5,12 +5,13 @@ import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/l
 import { useCallback, useMemo, useState } from 'react'
 import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import employeeShiftApi from 'src/apis/employeeShift.api'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
 import ToolBar from 'src/pages/Schedule/ToolBar'
-import { handleDateNet, plusDays, subtractDays } from 'src/utils/utils'
+import { handleDate, handleDateNet, plusDays, subtractDays } from 'src/utils/utils'
 import classNames from 'classnames'
+import { toast } from 'react-toastify'
 
 const DragAndDropCalendar = withDragAndDrop<EmployeeShiftEvent>(Calendar)
 
@@ -22,7 +23,7 @@ export default function Schedule() {
   const [myEvents, setEvents] = useState<EmployeeShiftEvent[] | []>([])
   const [isEdit, setIsEdit] = useState<EmployeeShiftEvent | null>(null)
 
-  const { data: employeeShiftData } = useQuery({
+  const { data: employeeShiftData, refetch } = useQuery({
     queryKey: ['employeeshiftevent', date, isMonth],
     queryFn: () => {
       return employeeShiftApi.getEmployeeShiftByWeek({
@@ -34,11 +35,16 @@ export default function Schedule() {
     staleTime: 3 * 60 * 1000
   })
 
-  // useEffect(() => {
-  //   if (employeeShiftData?.data.data) {
-  //     setEvents(employeeShiftData?.data.data)
-  //   }
-  // }, [employeeShiftData])
+  const assignShiftMutation = useMutation({
+    mutationFn: employeeShiftApi.assignShift,
+    onSuccess: () => {
+      toast.success('Assign Sucessfully!', { autoClose: 1000 })
+      refetch()
+    },
+    onError: (_error) => {
+      toast.error('Assign Fail!', { autoClose: 1000 })
+    }
+  })
 
   const handleActionWeek = (action: 'plus' | 'subtract') => () => {
     if (action == 'plus') {
@@ -55,10 +61,6 @@ export default function Schedule() {
       setDate((prev) => subtractDays(prev, 30))
     }
   }
-
-  console.log(date)
-  console.log(employeeShiftData?.data.data)
-  console.log(myEvents)
 
   const myEventLists = employeeShiftData?.data.data.map((event) => ({
     ...event,
@@ -91,14 +93,15 @@ export default function Schedule() {
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      const title = window.prompt(`Create New Event: `)
+      const title = window.confirm(`Assign Shift ?`)
       if (title) {
-        setEvents((prev: EmployeeShiftEvent[]) => {
-          const existing = prev.find((ev: EmployeeShiftEvent) => ev.start === start && ev.end === end)
-          if (!existing)
-            return [...prev, { id: 111, title, start: new Date(start), end: new Date(end) }] as EmployeeShiftEvent[] // Convert to Date objects
-          return [...prev]
-        })
+        assignShiftMutation.mutate({ dateOfWork: handleDate(date), checkIn: start, checkOut: end })
+        // setEvents((prev: EmployeeShiftEvent[]) => {
+        //   const existing = prev.find((ev: EmployeeShiftEvent) => ev.start === start && ev.end === end)
+        //   if (!existing)
+        //     return [...prev, { id: 111, title, start: new Date(start), end: new Date(end) }] as EmployeeShiftEvent[] // Convert to Date objects
+        //   return [...prev]
+        // })
       }
     },
     [setEvents]
@@ -107,9 +110,7 @@ export default function Schedule() {
   const handleSelectEvent = useCallback((event: EmployeeShiftEvent) => setIsEdit(event), [])
 
   const { defaultDate, scrollToTime } = useMemo(() => {
-    // const now = new Date()
     return {
-      // defaultDate: new Date('2024-06-16T00:00:00'),
       defaultDate: date,
       scrollToTime: new Date(1970, 1, 1, 6)
     }

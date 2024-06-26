@@ -9,23 +9,33 @@ import { Form } from 'src/types/form.type'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import formApi from 'src/apis/form.api'
 import { toast } from 'react-toastify'
+import { useQueryConfig10 } from 'src/hooks/useQueryConfig'
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
+  const queryConfig = useQueryConfig10()
   const queryClient = useQueryClient()
   const [restaurant, setRestaurant] = useState<Restaurant | undefined>()
   const [date, setDate] = useState<Date>(new Date())
-  const [isLoading, setIsLoading] = useState(false)
 
   const acceptFormMutation = useMutation({
     mutationFn: formApi.acceptForms,
     onSuccess: () => {
       toast('Form Submitted!', { autoClose: 1000 })
-      queryClient.invalidateQueries({ queryKey: ['forms'], exact: true })
-      setIsLoading(false)
+      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig], exact: true })
     },
-    onError: (error) => {
+    onError: (_error) => {
       toast('Error in sending form!', { autoClose: 1000 })
-      setIsLoading(false)
+    }
+  })
+
+  const acceptEmployeeMutation = useMutation({
+    mutationFn: formApi.acceptEmployee,
+    onSuccess: () => {
+      toast('Form Submitted!', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig], exact: true })
+    },
+    onError: (_error) => {
+      toast('Error in sending form!', { autoClose: 1000 })
     }
   })
 
@@ -33,19 +43,20 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
     setRestaurant(select)
   }
 
-  const handleSubmitForm = async () => {
-    setIsLoading(true)
-    try {
-      await acceptFormMutation.mutateAsync({
+  const handleSubmitForm = () => {
+    if (form?.formType == 1) {
+      acceptFormMutation.mutate({
         formID: form?.id ?? '',
         restaurantID: restaurant?.id ?? '',
         date
       })
-    } catch (error) {
-    } finally {
-      setIsLoading(false)
+    } else if (form?.formType == 4) {
+      console.log('hâhh')
+      acceptEmployeeMutation.mutate(form.id)
     }
   }
+
+  console.log(form?.formType)
 
   return (
     <div className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
@@ -67,7 +78,9 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
           <ApprovalFormItem label='Phone number' value={form?.employee?.phoneNumber} />
         </div>
       </div>
-      <div className='grid row-span-3 col-span-5 border border-slate-300 rounded-md px-4 mb-2'>
+      <div
+        className={`grid row-span-3 col-span-5 border border-slate-300 rounded-md px-4 mb-2 ${form?.formType == 4 && 'invisible'}`}
+      >
         <div className='mt-3 grid grid-cols-10 px-2 mb-2'>
           <div className='col-span-3 text-lg font-normal'>Interviewer</div>
           <div className='col-span-5 border border-gray-300 p-2 h-8 rounded-sm mr-3'>
@@ -95,7 +108,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
           </Popover>
         </div>
         <ApprovalFormItem label='Interview Location' value={restaurant?.restaurantAddress} />
-        <div className='px-2 mb-2 '>
+        <div className={`px-2 mb-2 `}>
           <div className='grid grid-cols-10'>
             <div className='col-span-3 text-lg font-normal'>Interview Date</div>
             <DatePicker
@@ -118,8 +131,10 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
           className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'
           color='default'
           variant='flat'
-          disabled={!restaurant || isLoading}
-          isLoading={isLoading}
+          disabled={
+            (form?.formType == 1 && !restaurant) || acceptFormMutation.isPending || acceptEmployeeMutation.isPending
+          }
+          isLoading={acceptFormMutation.isPending || acceptEmployeeMutation.isPending}
         >
           Submit
         </Button>

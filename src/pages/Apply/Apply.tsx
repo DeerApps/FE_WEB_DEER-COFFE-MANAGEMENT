@@ -27,7 +27,8 @@ export default function Apply() {
     handleSubmit,
     formState: { errors },
     control,
-    setError
+    setError,
+    reset
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -44,6 +45,7 @@ export default function Apply() {
     onSuccess: () => {
       toast('Please Check Your Mail!', { autoClose: 1000 })
       setIsLoading(false)
+      reset()
     },
     onError: (error) => {
       setIsLoading(false)
@@ -57,6 +59,7 @@ export default function Apply() {
             })
           })
         }
+      } else {
       }
     }
   })

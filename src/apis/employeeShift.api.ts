@@ -13,10 +13,10 @@ const employeeShiftApi = {
     return http.get<SuccessResponse<EmployeeShiftEvent[]>>(`${URL}/week`, {
       params
     })
+  },
+  assignShift(body: { dateOfWork: string; checkIn: Date; checkOut: Date }) {
+    return http.post<SuccessResponse<string>>(URL, body)
   }
-  // getEmployeeShiftDetail(id: string) {
-  //   return http.get<SuccessResponse<EmployeeShift>>(`${URL}/${id}`)
-  // },
   // deleteEmployeeShift(body: { shiftID: string }) {
   //   return http.delete<SuccessResponse<String>>(URL, {
   //     data: body
@@ -25,10 +25,6 @@ const employeeShiftApi = {
   // updateEmployeeShift(body: {
   //   employee: Employee
   //   restaurant: Restaurant
-
-  // }) {
-  //   return http.put<SuccessResponse<String>>(URL, body)
-  // }
 }
 
 export default employeeShiftApi

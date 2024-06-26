@@ -11,6 +11,9 @@ const formApi = {
   },
   acceptForms(body: { formID: string; restaurantID: string; date: Date }) {
     return http.post<SuccessResponse<string>>(URL, body)
+  },
+  acceptEmployee(formID: string) {
+    return http.post<SuccessResponse<string>>(`${URL}/${formID}`)
   }
 }
 

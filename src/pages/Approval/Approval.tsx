@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Link, createSearchParams } from 'react-router-dom'
 import formApi from 'src/apis/form.api'
 import path from 'src/constant/path'
-import { useQueryConfig } from 'src/hooks/useQueryConfig'
+import { useQueryConfig10 } from 'src/hooks/useQueryConfig'
 import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 // import ApprovalForm from 'src/pages/Approval/ApprovalForm'
 import ApprovalItem from 'src/pages/Approval/ApprovalItem/ApprovalItem'
@@ -18,7 +18,7 @@ const formTypeConfig: Record<string, string> = {
 }
 
 export default function Approval() {
-  const queryConfig = useQueryConfig()
+  const queryConfig = useQueryConfig10()
   const [formChoose, setFormChoose] = useState<Form | undefined>()
 
   const handleFormChoose = (form: Form) => {
@@ -33,8 +33,6 @@ export default function Approval() {
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
   })
-
-  console.log(formsData)
 
   const page = Number(queryConfig.pageNumber)
 

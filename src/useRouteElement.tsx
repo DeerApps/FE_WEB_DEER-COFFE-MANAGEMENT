@@ -56,6 +56,16 @@ export default function useRouteElements() {
           )
         },
         {
+          path: path.schedule,
+          element: (
+            <SideBarLayout>
+              <Suspense>
+                <Schedule />
+              </Suspense>
+            </SideBarLayout>
+          )
+        },
+        {
           path: '',
           element: <AdminProtectedRoute />,
           children: [
@@ -91,16 +101,6 @@ export default function useRouteElements() {
                 <SideBarLayout>
                   <Suspense>
                     <EmployeeTable />
-                  </Suspense>
-                </SideBarLayout>
-              )
-            },
-            {
-              path: path.schedule,
-              element: (
-                <SideBarLayout>
-                  <Suspense>
-                    <Schedule />
                   </Suspense>
                 </SideBarLayout>
               )

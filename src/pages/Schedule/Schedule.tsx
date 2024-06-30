@@ -2,7 +2,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -12,12 +12,14 @@ import ToolBar from 'src/pages/Schedule/ToolBar'
 import { handleDate, handleDateNet, plusDays, subtractDays } from 'src/utils/utils'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
+import { AppContext } from 'src/context/app.context'
 
 const DragAndDropCalendar = withDragAndDrop<EmployeeShiftEvent>(Calendar)
 
 const localizer = momentLocalizer(moment)
 
 export default function Schedule() {
+  const { employee } = useContext(AppContext)
   const [date, setDate] = useState<Date>(new Date())
   const [isMonth, setIsMonth] = useState<boolean>(false)
   const [myEvents, setEvents] = useState<EmployeeShiftEvent[] | []>([])
@@ -95,7 +97,7 @@ export default function Schedule() {
     ({ start, end }: { start: Date; end: Date }) => {
       const title = window.confirm(`Assign Shift ?`)
       if (title) {
-        assignShiftMutation.mutate({ dateOfWork: handleDate(date), checkIn: start, checkOut: end })
+        assignShiftMutation.mutate({ dateOfWork: handleDate(date), checkIn: start, checkOut: end, employeeID:"" })
         // setEvents((prev: EmployeeShiftEvent[]) => {
         //   const existing = prev.find((ev: EmployeeShiftEvent) => ev.start === start && ev.end === end)
         //   if (!existing)

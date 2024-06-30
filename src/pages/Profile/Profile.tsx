@@ -5,7 +5,6 @@ import Password from './Password';
 
 
 export default function Profile() {
-
   const items: TabsProps['items'] = [
     {
       key: '1',

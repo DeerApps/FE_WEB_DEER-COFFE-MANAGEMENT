@@ -68,7 +68,7 @@ export default function Approval() {
             })}
         </div>
         {/* Navigation Bar */}
-        <div className='flex justify-center'>
+        <div className='flex justify-center mt-3'>
           {page === 1 ? (
             <div className='bg-slate-200/90 px-5 rounded-md mr-1 flex items-center transition'>
               <svg

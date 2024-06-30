@@ -61,7 +61,7 @@ export default function InfiniteScroll({
   }
 
   return (
-    <div onScroll={onScroll} ref={listInnerRef} className='py-3 w-100 h-30 overflow-y-auto'>
+    <div onScroll={onScroll} ref={listInnerRef} className='py-3 w-[21vw] h-30 overflow-y-auto'>
       {restaurantList &&
         restaurantList.map((item, index) => {
           return (
@@ -74,7 +74,7 @@ export default function InfiniteScroll({
                 className='h-4 w-4 border border-black rounded-lg outline-none'
               />
               <div className='text-lg ml-3 flex border-l-2 hover:border-gray-400 hover:border-l-2'>
-                <div className='ml-2 mr-4 pl-2 pr-4 border-r-2 hover:border-gray-400 hover:border-r-2 w-28'>
+                <div className='ml-2 mr-4 pl-2 pr-4 border-r-2 hover:border-gray-400 hover:border-r-2 w-[10vw]'>
                   {item.manager.fullName}
                 </div>
                 <div>{item.manager.phoneNumber}</div>

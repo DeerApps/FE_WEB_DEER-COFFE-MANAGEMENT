@@ -3,7 +3,7 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import Pagination from 'src/pages/Dashboard/Pagination'
-import { EmployeeShiftDayList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { EmployeeShiftDayList, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
 import { formatTime, handleRenderNo, handleTimeClock } from 'src/utils/utils'
 
 export type EmployeeShiftQueryConfig = {
@@ -22,9 +22,9 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
     staleTime: 3 * 60 * 1000
   })
 
-  const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftDayList
-  console.log(employeeShiftData)
-  console.log(employeeShiftList)
+  const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftEventList
+  console.log("1",employeeShiftData)
+  console.log("2",employeeShiftList)
 
   return (
     <div className='min-h-[425px]'>
@@ -52,19 +52,19 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
                       index
                     )}
                   </div>
-                  <div className='col-span-2'>{item.employee.fullName}</div>
-                  <div className='col-span-2'>{item.employee.phoneNumber}</div>
+                  <div className='col-span-2'>{item.resource?.employee?.fullName}</div>
+                  <div className='col-span-2'>{item.resource?.employee?.phoneNumber}</div>
                   <div className='col-span-2'>
-                    {handleTimeClock(item.checkIn)}
+                    {handleTimeClock(item.start)}
                     <span className='px-2'>-</span>
-                    {handleTimeClock(item.checkIn)}
+                    {handleTimeClock(item.end)}
                   </div>
                   <div className='col-span-2'>
-                    {formatTime(item.actual_CheckIn)}
+                    {handleTimeClock(item.resource?.actual_CheckIn)}
                     <span className='px-2'>-</span>
-                    {formatTime(item.actual_CheckOut)}
+                    {handleTimeClock(item.resource?.actual_CheckOut)}
                   </div>
-                  <div className='col-span-2'>{item.status}</div>
+                  <div className='col-span-2'>{item.resource?.status}</div>
                 </div>
               ))}
             </div>

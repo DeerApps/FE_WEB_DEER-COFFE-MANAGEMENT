@@ -1,11 +1,11 @@
 import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
-import { EmployeeShiftDayList, EmployeeShiftEvent, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { EmployeeShiftDayList, EmployeeShiftEvent, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
 
 const URL = 'employeeshift'
 const employeeShiftApi = {
   getEmployeeShift(params: EmployeeShiftListConfig) {
-    return http.get<SuccessResponse<EmployeeShiftDayList>>(`${URL}/day`, {
+    return http.get<SuccessResponse<EmployeeShiftEventList>>(`${URL}/day`, {
       params
     })
   },
@@ -14,7 +14,7 @@ const employeeShiftApi = {
       params
     })
   },
-  assignShift(body: { dateOfWork: string; checkIn: Date; checkOut: Date }) {
+  assignShift(body: { dateOfWork: string; checkIn: Date; checkOut: Date; employeeID: string }) {
     return http.post<SuccessResponse<string>>(URL, body)
   }
   // deleteEmployeeShift(body: { shiftID: string }) {

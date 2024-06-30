@@ -38,6 +38,8 @@ const Schedule = lazy(() => import('src/pages/Schedule'))
 const Profile = lazy(() => import('src/pages/Profile'))
 const AbsentForm = lazy(() => import('./pages/Apply/ApplyAbsentForm'))
 const Restaurant = lazy(() => import('src/pages/Restaurant'))
+const ApproveAbsent = lazy(() => import('src/pages/Approval/ApproveAbsent'))
+
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -123,6 +125,16 @@ export default function useRouteElements() {
             <SideBarLayout>
               <Suspense>
                 <AbsentForm />
+              </Suspense>
+            </SideBarLayout>
+          )
+        },
+        {
+          path: path.approveAbsent,
+          element: (
+            <SideBarLayout>
+              <Suspense>
+                <ApproveAbsent />
               </Suspense>
             </SideBarLayout>
           )

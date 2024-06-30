@@ -70,7 +70,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
             />
           </div>
         </div>
-        <div>
+        <div className='space-y-6'>
           <ApprovalFormItem label='Full name' value={form?.employee?.fullName} />
           <ApprovalFormItem label='Email' value={form?.employee?.email} />
           <ApprovalFormItem label='Address' value={form?.employee?.address} />

@@ -1,6 +1,6 @@
 import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
-import { EmployeeShiftDayList, EmployeeShiftEvent, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { EmployeeShiftEvent, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
 
 const URL = 'employeeshift'
 const employeeShiftApi = {

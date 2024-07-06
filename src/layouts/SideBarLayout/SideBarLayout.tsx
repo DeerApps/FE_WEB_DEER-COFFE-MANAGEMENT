@@ -321,7 +321,6 @@ export default function SideBarLayout({ children }: Props) {
               Profile
             </div>
           </Link>
-          
         </div>
       </div>
       <div className='col-span-10 bg-sky-100'>

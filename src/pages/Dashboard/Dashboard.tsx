@@ -15,13 +15,13 @@ export default function Dashboard() {
               <div className='h-full w-[65%] bg-zinc-100 rounded-md py-4'>
                 <div className='col-span-4 text-2xl text-gray-500 px-4 mb-4 font-medium'>PENDING APPROVAL: 60</div>
                 <div className='flex justify-between mt-2 px-3'>
-                  <div className='bg-gray-500/50 text-white rounded-lg p-2 px-3'>
+                  <div className='bg-gray-500/50 text-white rounded-lg p-2 px-3 truncate'>
                     <span className='text-xl'>20</span> Shift Off
                   </div>
-                  <div className='bg-gray-500/50 text-white rounded-lg p-2 px-3'>
+                  <div className='bg-gray-500/50 text-white rounded-lg p-2 px-3 truncate'>
                     <span className='text-xl'>10</span> Job Apply
                   </div>
-                  <div className='bg-gray-500/50 text-white rounded-lg p-2'>
+                  <div className='bg-gray-500/50 text-white rounded-lg p-2 truncate'>
                     <span className='text-xl'>30</span> Shift Change
                   </div>
                 </div>

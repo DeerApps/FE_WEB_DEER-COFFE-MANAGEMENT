@@ -17,7 +17,7 @@ export interface Shift {
 }
 
 export interface EmployeeShift {
-  iD: string
+  id: string
   restaurantID: string
   employee: Employee
   name: string

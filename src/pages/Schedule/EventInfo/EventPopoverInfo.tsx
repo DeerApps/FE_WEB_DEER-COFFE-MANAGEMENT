@@ -30,7 +30,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
           <div className='flex w-full mt-5 mb-6'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Id</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {employeeShift?.id}
+              {employeeShift?.resource?.id}
             </div>
           </div>
           <div className='flex w-full mb-6'>

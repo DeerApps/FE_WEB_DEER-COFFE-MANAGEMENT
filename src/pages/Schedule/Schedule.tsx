@@ -1,7 +1,7 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
-import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import { useCallback, useMemo, useState } from 'react'
 import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
@@ -20,7 +20,6 @@ const localizer = momentLocalizer(moment)
 export default function Schedule() {
   const [date, setDate] = useState<Date>(new Date())
   const [isMonth, setIsMonth] = useState<boolean>(false)
-  const [, setEvents] = useState<EmployeeShiftEvent[] | []>([])
   const [isEdit, setIsEdit] = useState<EmployeeShiftEvent | null>(null)
 
   const { data: employeeShiftData, refetch } = useQuery({
@@ -34,8 +33,6 @@ export default function Schedule() {
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
   })
-
-  console.log(employeeShiftData?.data.data)
 
   const assignShiftMutation = useMutation({
     mutationFn: employeeShiftApi.assignShift,
@@ -70,35 +67,10 @@ export default function Schedule() {
     end: new Date(event.end)
   }))
 
-  const moveEvent = useCallback(
-    (args: EventInteractionArgs<EmployeeShiftEvent>) => {
-      const { event, start, end, isAllDay: droppedOnAllDaySlot = false } = args
-      const { allDay } = event
-      if (!allDay && droppedOnAllDaySlot) {
-        event.allDay = true
-      }
-      if (allDay && !droppedOnAllDaySlot) {
-        event.allDay = false
-      }
-
-      setEvents((prev: EmployeeShiftEvent[]) => {
-        const existing = prev.find((ev: EmployeeShiftEvent) => ev.id === event.id) ?? {}
-        const filtered = prev.filter((ev: EmployeeShiftEvent) => ev.id !== event.id)
-        return [
-          ...filtered,
-          { ...existing, start: new Date(start), end: new Date(end), allDay: event.allDay }
-        ] as EmployeeShiftEvent[]
-      })
-    },
-    [setEvents]
-  )
-
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
-      console.log(start, end)
       const title = window.confirm(`Assign Shift ?`)
       if (title) {
-        console.log({ dateOfWork: handleDate(date), checkIn: start, checkOut: end })
         assignShiftMutation.mutate({
           dateOfWork: handleDate(date),
           checkIn: toLocalISOString(start),
@@ -106,7 +78,7 @@ export default function Schedule() {
         })
       }
     },
-    [setEvents]
+    [assignShiftMutation]
   )
 
   const handleSelectEvent = useCallback((event: EmployeeShiftEvent) => setIsEdit(event), [])
@@ -215,7 +187,6 @@ export default function Schedule() {
           events={!!myEventLists ? myEventLists : []}
           localizer={localizer}
           selectable
-          onEventDrop={moveEvent}
           onSelectEvent={handleSelectEvent}
           onSelectSlot={handleSelectSlot}
           scrollToTime={scrollToTime}

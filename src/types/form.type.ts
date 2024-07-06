@@ -2,9 +2,11 @@ import { Employee } from 'src/types/employee.type'
 
 export interface Form {
   id: string
+  shiftId: string
   employee: Employee
   formType: number
   content: string
+  response: string
   date: Date
   priority: number
   isApproved: boolean

@@ -35,6 +35,7 @@ export interface EmployeeShift {
   note: string
   isEmpty: boolean
   allDay: boolean // BigCalendar
+  isLocked: boolean
 }
 
 export interface EmployeeShiftDayList {

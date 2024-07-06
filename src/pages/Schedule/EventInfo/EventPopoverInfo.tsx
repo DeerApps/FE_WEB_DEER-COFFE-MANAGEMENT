@@ -1,13 +1,54 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+import employeeShiftApi from 'src/apis/employeeShift.api'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
-import { handleDate, handleTimeClock } from 'src/utils/utils'
+import { handleDate, handleTimeClock, toLocalISOString } from 'src/utils/utils'
 
 interface Props {
   employeeShift: EmployeeShiftEvent
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  date: Date
+  isMonth: boolean
 }
 
-export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
-  console.log(employeeShift)
+export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMonth }: Props) {
+  const queryClient = useQueryClient()
+
+  const lockShiftMutation = useMutation({
+    mutationFn: employeeShiftApi.lockShift,
+    onSuccess: () => {
+      toast.success('Locking Sucessfully!', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['employeeshiftevent', date, isMonth] })
+    },
+    onError: (_error) => {
+      toast.error('Locking Fail!', { autoClose: 1000 })
+    }
+  })
+
+  const deleteShiftMutation = useMutation({
+    mutationFn: employeeShiftApi.deleteEmployeeShift,
+    onSuccess: () => {
+      toast.success('Locking Sucessfully!', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['employeeshiftevent', date, isMonth] })
+    },
+    onError: (_error) => {
+      toast.error('Locking Fail!', { autoClose: 1000 })
+    }
+  })
+
+  const handleLock = (isLock: boolean) => () => {
+    lockShiftMutation.mutate({
+      dateOfWork: employeeShift.resource?.dateOfWork as string,
+      start: toLocalISOString(employeeShift.start),
+      end: toLocalISOString(employeeShift.end),
+      isLocked: isLock
+    })
+  }
+
+  const handleDelete = () => {
+    deleteShiftMutation.mutate({ shiftID: employeeShift.resource?.id as string })
+  }
+
   return (
     <div className='w-[75%] h-[95%] bg-white p-5'>
       <div className='flex justify-between items-center'>
@@ -70,10 +111,18 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
             </div>
           </div>
           <div className='ml-4 flex justify-start items-center h-[9%]'>
-            <button type='submit' className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-yellow-200 mr-4 text-gray-500 mt-auto'>
-              Lock
+            <button
+              type='button'
+              onClick={handleLock(!employeeShift.resource?.isLocked)}
+              className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-yellow-200 mr-4 text-gray-500 mt-auto outline-none'
+            >
+              {employeeShift.resource?.isLocked != null ? 'Lock' : employeeShift.resource?.isLocked ? 'UnLock' : 'Lock'}
             </button>
-            <button type='submit' className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-gray-500 mt-auto'>
+            <button
+              type='button'
+              onClick={handleDelete}
+              className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-gray-500 mt-auto outline-none'
+            >
               Delete
             </button>
           </div>

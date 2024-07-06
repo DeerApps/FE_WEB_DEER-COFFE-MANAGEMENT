@@ -166,7 +166,14 @@ export default function Schedule() {
       className='h-full'
       initialOpen={Boolean(isEdit)}
       renderPopover={
-        Boolean(isEdit) && <EventPopoverInfo employeeShift={isEdit as EmployeeShiftEvent} handleOpen={handleClose} />
+        Boolean(isEdit) && (
+          <EventPopoverInfo
+            employeeShift={isEdit as EmployeeShiftEvent}
+            handleOpen={handleClose}
+            date={date}
+            isMonth={isMonth}
+          />
+        )
       }
     >
       <div className='mb-[40px]'></div>

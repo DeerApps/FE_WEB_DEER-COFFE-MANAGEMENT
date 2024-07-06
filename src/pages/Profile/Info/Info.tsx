@@ -7,17 +7,16 @@ import InputFile from 'src/components/InputFile'
 import { AppContext } from 'src/context/app.context'
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 
+type FormData = Pick<EmployeeSchema, 'fullName' | 'address' | 'phoneNumber' | 'dateOfBirth' | 'email'>
+
+// type FormDataError = Omit<FormData, 'dateOfBirth'> & {
+//   dateOfBirth?: string
+// }
+
+const profileSchema = employeeSchema.pick(['fullName', 'address', 'phoneNumber', 'dateOfBirth', 'email'])
+
 export default function Profile() {
   const { employee } = useContext(AppContext)
-  console.log(employee)
-
-  type FormData = Pick<EmployeeSchema, 'fullName' | 'address' | 'phoneNumber' | 'dateOfBirth' | 'email'>
-
-  // type FormDataError = Omit<FormData, 'dateOfBirth'> & {
-  //   dateOfBirth?: string
-  // }
-
-  const profileSchema = employeeSchema.pick(['fullName', 'address', 'phoneNumber', 'dateOfBirth', 'email'])
 
   const formMethods = useForm<FormData>({
     defaultValues: {
@@ -46,8 +45,8 @@ export default function Profile() {
   return (
     <FormProvider {...formMethods}>
       <form onSubmit={onSubmit}>
-        <div className=' flex min-h-[450px]'>
-          <div className='flex flex-col w-[60%] pr-12 border-r-1'>
+        <div className='flex min-h-[400px]'>
+          <div className='flex flex-col w-[60%] pr-12 border-r-1 mt-6'>
             <div className='w-full flex items-center'>
               <label className='w-[20%] pl-6'>Full name:</label>
               <Input
@@ -110,7 +109,6 @@ export default function Profile() {
               />
             </div>
           </div>
-
           <div className='space-y-2 flex flex-col items-center justify-center w-[40%]'>
             <Avatar src={employee?.avatarUrl} className='w-24 h-24' />
             <InputFile />
@@ -120,13 +118,9 @@ export default function Profile() {
             </div>
           </div>
         </div>
-        <div>
-          <div className='space-x-4'>
-            <Button color='primary' type='submit'>
-              Update
-            </Button>
-          </div>
-        </div>
+        <Button className='space-x-4 ml-4' size='lg' color='primary' type='submit'>
+          Update
+        </Button>
       </form>
     </FormProvider>
   )

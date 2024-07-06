@@ -16,12 +16,15 @@ const employeeShiftApi = {
   },
   assignShift(body: { dateOfWork: string; checkIn: string; checkOut: string }) {
     return http.post<SuccessResponse<string>>(URL, body)
+  },
+  lockShift(body: { dateOfWork: string; start: string; end: string; isLocked: boolean }) {
+    return http.post<SuccessResponse<string>>(`${URL}/lockday`, body)
+  },
+  deleteEmployeeShift(body: { shiftID: string }) {
+    return http.delete<SuccessResponse<String>>(URL, {
+      data: body
+    })
   }
-  // deleteEmployeeShift(body: { shiftID: string }) {
-  //   return http.delete<SuccessResponse<String>>(URL, {
-  //     data: body
-  //   })
-  // },
   // updateEmployeeShift(body: {
   //   employee: Employee
   //   restaurant: Restaurant

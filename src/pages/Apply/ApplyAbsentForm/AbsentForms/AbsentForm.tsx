@@ -35,11 +35,11 @@ export default function AbsentForms() {
   const createAbsentFormMutation = useMutation({
     mutationFn: formApi.createAbsentForm,
     onSuccess: () => {
-      toast('Form Submitted!', { autoClose: 1000 })
+      toast.success('Form Submitted!', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['forms', queryConfig], exact: true })
     },
     onError: (_error) => {
-      toast('Error in sending form!', { autoClose: 1000 })
+      toast.error('Error in sending form!', { autoClose: 1000 })
     }
   })
 

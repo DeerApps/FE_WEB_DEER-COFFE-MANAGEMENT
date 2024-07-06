@@ -38,8 +38,7 @@ const Schedule = lazy(() => import('src/pages/Schedule'))
 const Profile = lazy(() => import('src/pages/Profile'))
 const AbsentForm = lazy(() => import('./pages/Apply/ApplyAbsentForm'))
 const Restaurant = lazy(() => import('src/pages/Restaurant'))
-const ApproveAbsent = lazy(() => import('src/pages/Approval/ApproveAbsent/ApproveAbsent'))
-
+const ApproveAbsent = lazy(() => import('src/pages/ApproveAbsent/ApproveAbsent'))
 
 export default function useRouteElements() {
   const routeElements = useRoutes([

@@ -37,6 +37,11 @@ export const restaurantSchema = yup.object({
   resChainID: yup.string().required('Can not be Empty !').max(50, 'Maximum 10 characters !')
 })
 
+export const formSchema = yup.object({
+  formResponse: yup.string().required('Can not be Empty !').max(250, 'Maximum 20 characters !')
+})
+
 export type RestaurantSchema = yup.InferType<typeof restaurantSchema>
 export type EmployeeSchema = yup.InferType<typeof employeeSchema>
 export type LoginSchema = yup.InferType<typeof loginSchema>
+export type FormSchema = yup.InferType<typeof formSchema>

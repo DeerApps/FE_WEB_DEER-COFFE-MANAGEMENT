@@ -6,52 +6,57 @@ import formApi from 'src/apis/form.api'
 import { toast } from 'react-toastify'
 import { useQueryConfig10 } from 'src/hooks/useQueryConfig'
 import Input from 'src/components/Input'
+import { useForm } from 'react-hook-form'
+import { FormSchema, formSchema } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useState } from 'react'
+
+type FormData = Pick<FormSchema, 'formResponse'> & {
+  formID?: string
+  isApprove?: boolean
+}
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const queryConfig = useQueryConfig10()
   const queryClient = useQueryClient()
-  // const [restaurant, setRestaurant] = useState<Restaurant | undefined>()
-  // const [date, setDate] = useState<Date>(new Date())
+  const [isApprove, setIsApprove] = useState<boolean | 'empty'>('empty')
 
-  const acceptFormMutation = useMutation({
-    mutationFn: formApi.acceptForms,
+  console.log(isApprove)
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setValue
+  } = useForm<FormData>({
+    defaultValues: {
+      formResponse: '',
+      formID: form?.id
+    },
+    resolver: yupResolver(formSchema)
+  })
+
+  const approveFormMutation = useMutation({
+    mutationFn: formApi.approveForm,
     onSuccess: () => {
-      toast('Form Submitted!', { autoClose: 1000 })
-      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig], exact: true })
+      toast.success('Submit Form Successfully!', { autoClose: 1000 })
+      queryClient.invalidateQueries({ queryKey: ['formAbsents', queryConfig], exact: true })
+      setIsApprove('empty')
     },
     onError: (_error) => {
-      toast('Error in sending form!', { autoClose: 1000 })
+      toast.error('Submit Form Fail!', { autoClose: 1000 })
     }
   })
 
-  const acceptEmployeeMutation = useMutation({
-    mutationFn: formApi.acceptEmployee,
-    onSuccess: () => {
-      toast('Form Submitted!', { autoClose: 1000 })
-      queryClient.invalidateQueries({ queryKey: ['forms', queryConfig], exact: true })
-    },
-    onError: (_error) => {
-      toast('Error in sending form!', { autoClose: 1000 })
-    }
-  })
-
-  const handleSubmitForm = () => {
-    // if (form?.formType == 1) {
-    //   acceptFormMutation.mutate({
-    //     formID: form?.id ?? '',
-    //     // restaurantID: restaurant?.id ?? '',
-    //     // date
-    //   })
-    // } else if (form?.formType == 4) {
-    //   console.log('hâhh')
-    //   acceptEmployeeMutation.mutate(form.id)
-    // }
-  }
-
-  console.log(form?.formType)
+  const onSubmit = (isApprove: boolean) =>
+    handleSubmit((data) => {
+      setIsApprove(isApprove)
+      setValue('isApprove', isApprove)
+      approveFormMutation.mutate(data as { formID: string; isApprove: boolean; formResponse: string })
+    })
 
   return (
-    <div className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
+    <form className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
       <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 rounded-md mb-2'>
         <div className=' p-4 flex justify-center items-center'>
           <div className=' h-[100px] w-[100px]'>
@@ -78,28 +83,36 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
           <div className='flex'>
             <div className='w-[30%] text-lg font-normal mr-8 mt-2'>Form Response</div>
             <div className='w-[83%]'>
-              <Input/>
+              <Input
+                register={register}
+                name='formResponse'
+                placeholder='Form Response'
+                errorMessage={errors.formResponse?.message}
+              />
             </div>
           </div>
         </div>
       </div>
       <div className=' row-span-1 col-span-5 flex'>
         <Button
-          onClick={handleSubmitForm}
+          type='submit'
+          onClick={onSubmit(true)}
           className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] mr-8 rounded-lg hover:text-gray-600'
-          color='default'
-          variant='flat'
-          // disabled={
-          //   (form?.formType == 1 && !restaurant) || acceptFormMutation.isPending || acceptEmployeeMutation.isPending
-          // }
-          isLoading={acceptFormMutation.isPending || acceptEmployeeMutation.isPending}
+          isLoading={approveFormMutation.isPending && (isApprove as boolean)}
+          disabled={isApprove != 'empty' && !isApprove}
         >
           Submit
         </Button>
-        <Button className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'>
+        <Button
+          type='submit'
+          onClick={onSubmit(false)}
+          className='bg-gray-400/50 hover:bg-gray-400/30 text-white w-[200px] rounded-lg hover:text-gray-600'
+          isLoading={approveFormMutation.isPending && (!isApprove as boolean)}
+          disabled={isApprove != 'empty' && isApprove}
+        >
           Reject
         </Button>
       </div>
-    </div>
+    </form>
   )
 }

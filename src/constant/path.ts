@@ -5,14 +5,14 @@ const path = {
   restaurant: '/restaurant',
   users: '/users',
   approval: '/approval',
-  approveAbsent:'/approveAbsent',
+  approveAbsent: '/approveAbsent',
   schedule: '/schedule',
   approvalForm: '/approval/:formId',
   login: '/',
   logout: '/logout',
   user: '/user',
   profile: '/profile',
-  absentForm: '/application/absent'
+  absentForm: '/absent'
 } as const
 
 export default path

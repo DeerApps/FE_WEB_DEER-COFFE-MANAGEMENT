@@ -9,22 +9,30 @@ function ProtectedRoute() {
 }
 
 function RejectedRoute() {
-  const { isAuthenticated } = useContext(AppContext)
-  return !isAuthenticated ? <Outlet /> : <Navigate to={path.dashboard} />
+  const { isAuthenticated, user } = useContext(AppContext)
+  return !isAuthenticated ? (
+    <Outlet />
+  ) : user?.RoleName == 'Employee' ? (
+    <Navigate to={path.schedule} />
+  ) : (
+    <Navigate to={path.dashboard} />
+  )
 }
 
 function AdminProtectedRoute() {
   const { user } = useContext(AppContext)
   return user?.RoleName == 'Admin' ? <Outlet /> : <Navigate to='/' />
 }
+
 function ManagerProtectedRoute() {
   const { user } = useContext(AppContext)
   return user?.RoleName == 'Manager' ? <Outlet /> : <Navigate to='/' />
 }
-// function EmployeeProtectedRoute() {
-//   const { user } = useContext(AppContext)
-//   return user?.RoleName == 'Employee' ? <Outlet /> : <Navigate to='/' />
-// }
+
+function EmployeeRejectedRoute() {
+  const { user } = useContext(AppContext)
+  return user?.RoleName == 'Employee' ? <Navigate to='/' /> : <Outlet />
+}
 
 const Login = lazy(() => import('./pages/Login'))
 const NotFound = lazy(() => import('./pages/NotFound'))
@@ -47,14 +55,20 @@ export default function useRouteElements() {
       element: <ProtectedRoute />,
       children: [
         {
-          path: path.dashboard,
-          element: (
-            <SideBarLayout>
-              <Suspense>
-                <Dashboard />
-              </Suspense>
-            </SideBarLayout>
-          )
+          path: '',
+          element: <EmployeeRejectedRoute />,
+          children: [
+            {
+              path: path.dashboard,
+              element: (
+                <SideBarLayout>
+                  <Suspense>
+                    <Dashboard />
+                  </Suspense>
+                </SideBarLayout>
+              )
+            }
+          ]
         },
         {
           path: path.schedule,

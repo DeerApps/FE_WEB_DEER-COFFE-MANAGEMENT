@@ -1,13 +1,11 @@
-import { Button} from '@nextui-org/react'
-// import { useState } from 'react'
+import { Button, DatePicker } from '@nextui-org/react'
 import ApprovalFormItem from 'src/pages/Approval/ApprovalForm/ApprovalFormItem'
-// import { Restaurant } from 'src/types/restaurant.type'
-// import { handleDate } from 'src/utils/utils'
 import { Form } from 'src/types/form.type'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import formApi from 'src/apis/form.api'
 import { toast } from 'react-toastify'
 import { useQueryConfig10 } from 'src/hooks/useQueryConfig'
+import Input from 'src/components/Input'
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const queryConfig = useQueryConfig10()
@@ -36,7 +34,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
       toast('Error in sending form!', { autoClose: 1000 })
     }
   })
-  
+
   const handleSubmitForm = () => {
     // if (form?.formType == 1) {
     //   acceptFormMutation.mutate({
@@ -54,7 +52,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
 
   return (
     <div className='grid grid-cols-5 grid-rows-12 gap-2 h-full'>
-      <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 pb-8 rounded-md mb-2'>
+      <div className='grid row-span-8 col-span-5 border border-slate-300 px-4 rounded-md mb-2'>
         <div className=' p-4 flex justify-center items-center'>
           <div className=' h-[100px] w-[100px]'>
             <img
@@ -64,12 +62,25 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
             />
           </div>
         </div>
-        <div className='space-y-6'>
+        <div className='space-y-7'>
           <ApprovalFormItem label='Full name' />
-          <ApprovalFormItem label='Employee ID' />
-          <ApprovalFormItem label='Shift' />
-          <ApprovalFormItem label='Date of absence' />
-          <ApprovalFormItem label='Reason'/>
+          <ApprovalFormItem label='Email' />
+          <ApprovalFormItem label='Phone' />
+          <ApprovalFormItem label='Absent Reason' />
+        </div>
+      </div>
+      <div className='grid row-span-3 col-span-5 border border-slate-300 px-4 rounded-md space-y-4 h-full'>
+        <div className='space-y-8 mt-6'>
+          <div className='grid grid-cols-10'>
+            <div className='col-span-3 text-lg font-normal mt-2'>Date of absent</div>
+            <DatePicker isReadOnly className='col-end-11 col-span-7' />
+          </div>
+          <div className='flex'>
+            <div className='w-[30%] text-lg font-normal mr-8 mt-2'>Form Response</div>
+            <div className='w-[83%]'>
+              <Input/>
+            </div>
+          </div>
         </div>
       </div>
       <div className=' row-span-1 col-span-5 flex'>

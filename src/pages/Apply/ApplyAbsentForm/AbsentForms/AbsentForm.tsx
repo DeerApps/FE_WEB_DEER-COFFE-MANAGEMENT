@@ -10,7 +10,7 @@ import { Form } from 'src/types/form.type'
 const { TextArea } = Input
 
 const { Title } = Typography
-export default function AbsentForms({ form }: { form: Form | undefined }) {
+export default function AbsentForms({ form }: { form?: Form }) {
   const queryConfig = useQueryConfig10()
   const queryClient = useQueryClient()
 
@@ -30,9 +30,9 @@ export default function AbsentForms({ form }: { form: Form | undefined }) {
       acceptFormMutation.mutate({
         shiftID: form?.id ?? '',
         reason: form?.reason ?? '',
-        formType:form?.formType
+        formType: form?.formType
       })
-    } 
+    }
   }
 
   return (
@@ -46,7 +46,7 @@ export default function AbsentForms({ form }: { form: Form | undefined }) {
         <form onSubmit={handleSubmitForm} className='space-y-5'>
           <div>
             <Title level={5}>Employee Shift Id</Title>
-            <Input placeholder='Shift' size='large' className='w-full mb-3' name=''/>
+            <Input placeholder='Shift' size='large' className='w-full mb-3' name='' />
           </div>
           <div>
             <Title level={5}>Form Type</Title>

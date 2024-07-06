@@ -75,8 +75,8 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
               {employeeShift.resource?.note}
             </div>
           </div>
-          <div className='flex justify-start items-center'>
-            <button type='submit' className='rounded-md py-3 px-4 w-[140px] bg-gray-300 mr-4 text-gray-500'>
+          <div className='absolute bottom-[10%] flex justify-start items-center'>
+            <button type='submit' className='rounded-md py-3 px-4 w-[140px] bg-gray-300 mr-4 text-gray-500 mt-auto'>
               Edit
             </button>
           </div>

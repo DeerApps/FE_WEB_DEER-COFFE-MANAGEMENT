@@ -5,6 +5,7 @@ const path = {
   restaurant: '/restaurant',
   users: '/users',
   approval: '/approval',
+  approveAbsent:'/approveAbsent',
   schedule: '/schedule',
   approvalForm: '/approval/:formId',
   login: '/',

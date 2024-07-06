@@ -2,7 +2,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import withDragAndDrop, { type EventInteractionArgs } from 'react-big-calendar/lib/addons/dragAndDrop'
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import Popover from 'src/components/Popover'
 import EventPopoverInfo from 'src/pages/Schedule/EventInfo'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -12,17 +12,16 @@ import ToolBar from 'src/pages/Schedule/ToolBar'
 import { handleDate, handleDateNet, plusDays, subtractDays } from 'src/utils/utils'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
-import { AppContext } from 'src/context/app.context'
 
 const DragAndDropCalendar = withDragAndDrop<EmployeeShiftEvent>(Calendar)
 
 const localizer = momentLocalizer(moment)
 
 export default function Schedule() {
-  const { employee } = useContext(AppContext)
+  
   const [date, setDate] = useState<Date>(new Date())
   const [isMonth, setIsMonth] = useState<boolean>(false)
-  const [myEvents, setEvents] = useState<EmployeeShiftEvent[] | []>([])
+  const [, setEvents] = useState<EmployeeShiftEvent[] | []>([])
   const [isEdit, setIsEdit] = useState<EmployeeShiftEvent | null>(null)
 
   const { data: employeeShiftData, refetch } = useQuery({

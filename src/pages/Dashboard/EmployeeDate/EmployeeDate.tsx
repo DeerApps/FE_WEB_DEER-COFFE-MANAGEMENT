@@ -3,8 +3,8 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import Pagination from 'src/pages/Dashboard/Pagination'
-import { EmployeeShiftDayList, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
-import { formatTime, handleRenderNo, handleTimeClock } from 'src/utils/utils'
+import { EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { handleRenderNo, handleTimeClock } from 'src/utils/utils'
 
 export type EmployeeShiftQueryConfig = {
   [key in keyof EmployeeShiftListConfig]: string

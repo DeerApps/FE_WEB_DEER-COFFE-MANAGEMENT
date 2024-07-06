@@ -9,7 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import employeeShiftApi from 'src/apis/employeeShift.api'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
 import ToolBar from 'src/pages/Schedule/ToolBar'
-import { handleDate, handleDateNet, plusDays, subtractDays } from 'src/utils/utils'
+import { handleDate, handleDateNet, plusDays, subtractDays, toLocalISOString } from 'src/utils/utils'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 
@@ -18,7 +18,6 @@ const DragAndDropCalendar = withDragAndDrop<EmployeeShiftEvent>(Calendar)
 const localizer = momentLocalizer(moment)
 
 export default function Schedule() {
-  
   const [date, setDate] = useState<Date>(new Date())
   const [isMonth, setIsMonth] = useState<boolean>(false)
   const [, setEvents] = useState<EmployeeShiftEvent[] | []>([])
@@ -29,12 +28,14 @@ export default function Schedule() {
     queryFn: () => {
       return employeeShiftApi.getEmployeeShiftByWeek({
         Date: handleDateNet(date),
-        isMonth: true
+        isMonth: isMonth
       })
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000
   })
+
+  console.log(employeeShiftData?.data.data)
 
   const assignShiftMutation = useMutation({
     mutationFn: employeeShiftApi.assignShift,
@@ -94,15 +95,15 @@ export default function Schedule() {
 
   const handleSelectSlot = useCallback(
     ({ start, end }: { start: Date; end: Date }) => {
+      console.log(start, end)
       const title = window.confirm(`Assign Shift ?`)
       if (title) {
-        assignShiftMutation.mutate({ dateOfWork: handleDate(date), checkIn: start, checkOut: end, employeeID:"" })
-        // setEvents((prev: EmployeeShiftEvent[]) => {
-        //   const existing = prev.find((ev: EmployeeShiftEvent) => ev.start === start && ev.end === end)
-        //   if (!existing)
-        //     return [...prev, { id: 111, title, start: new Date(start), end: new Date(end) }] as EmployeeShiftEvent[] // Convert to Date objects
-        //   return [...prev]
-        // })
+        console.log({ dateOfWork: handleDate(date), checkIn: start, checkOut: end })
+        assignShiftMutation.mutate({
+          dateOfWork: handleDate(date),
+          checkIn: toLocalISOString(start),
+          checkOut: toLocalISOString(end)
+        })
       }
     },
     [setEvents]

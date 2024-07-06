@@ -113,3 +113,9 @@ export const plusDays = (date: Date, days: number) => {
   result.setDate(result.getDate() + days) // Subtract the specified number of days
   return result
 }
+
+export const toLocalISOString = (date: Date) => {
+  const offset = date.getTimezoneOffset()
+  const localDate = new Date(date.getTime() - offset * 60 * 1000)
+  return localDate.toISOString() // Remove the 'Z'
+}

@@ -14,7 +14,7 @@ const employeeShiftApi = {
       params
     })
   },
-  assignShift(body: { dateOfWork: string; checkIn: Date; checkOut: Date; employeeID: string }) {
+  assignShift(body: { dateOfWork: string; checkIn: string; checkOut: string }) {
     return http.post<SuccessResponse<string>>(URL, body)
   }
   // deleteEmployeeShift(body: { shiftID: string }) {

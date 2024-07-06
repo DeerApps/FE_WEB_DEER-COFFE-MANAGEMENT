@@ -14,7 +14,10 @@ const formApi = {
   },
   acceptEmployee(formID: string) {
     return http.post<SuccessResponse<string>>(`${URL}/${formID}`)
-  }
+  },
+  dayoffForm(body: { shiftID: string; reason: string; formType: number }) {
+    return http.post<SuccessResponse<string>>(URL, body)
+  },
 }
 
 export default formApi

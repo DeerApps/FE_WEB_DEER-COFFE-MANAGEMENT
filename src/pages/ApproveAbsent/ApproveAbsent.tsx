@@ -27,9 +27,9 @@ export default function ApproveAbsent() {
   }
 
   const { data: formsData } = useQuery({
-    queryKey: ['forms', queryConfig],
+    queryKey: ['formAbsents', queryConfig],
     queryFn: () => {
-      return formApi.getForms(queryConfig as FormListConfig)
+      return formApi.getAbsentForms(queryConfig as FormListConfig)
     },
     placeholderData: (prevData) => prevData,
     staleTime: 3 * 60 * 1000

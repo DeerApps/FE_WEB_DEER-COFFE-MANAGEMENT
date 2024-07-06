@@ -14,6 +14,14 @@ const formApi = {
   },
   acceptEmployee(formID: string) {
     return http.post<SuccessResponse<string>>(`${URL}/${formID}`)
+  },
+  getAbsentForms(params: FormListConfig) {
+    return http.get<SuccessResponse<FormList>>(`${URL}/absent-forms`, {
+      params
+    })
+  },
+  approveForm(body: { formID: string; isApprove: boolean; formResponse: string }) {
+    return http.post<SuccessResponse<string>>(`${URL}/approve`, body)
   }
 }
 

@@ -26,58 +26,55 @@ export default function EventPopoverInfo({ handleOpen, employeeShift }: Props) {
         </button>
       </div>
       <div className='flex w-[100%] h-[90%] justify-between my-2'>
-        <div className='w-[60%] p-2 bg-gray-100'>
-          <div className='flex w-full mt-5 mb-6'>
+        <div className='w-[60%] h-[100%] p-2 bg-gray-100'>
+          <div className='flex w-full mt-5 mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Id</div>
-            <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
+            <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md '>
               {employeeShift?.resource?.id}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Date</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {employeeShift?.resource?.dateOfWork}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Start</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {handleTimeClock(employeeShift?.start)}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>End</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {handleTimeClock(employeeShift?.end)}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
-            <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Staff</div>
-            <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              kakaka
-            </div>
-          </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Check In</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {handleTimeClock(employeeShift?.resource?.actual_CheckIn)}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Check Out</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {handleTimeClock(employeeShift?.resource?.actual_CheckOut)}
             </div>
           </div>
-          <div className='flex w-full mb-6'>
+          <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Note</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
               {employeeShift.resource?.note}
             </div>
           </div>
-          <div className='absolute bottom-[10%] flex justify-start items-center'>
-            <button type='submit' className='rounded-md py-3 px-4 w-[140px] bg-gray-300 mr-4 text-gray-500 mt-auto'>
-              Edit
+          <div className='ml-4 flex justify-start items-center h-[9%]'>
+            <button type='submit' className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-yellow-200 mr-4 text-gray-500 mt-auto'>
+              Lock
+            </button>
+            <button type='submit' className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-gray-500 mt-auto'>
+              Delete
             </button>
           </div>
         </div>

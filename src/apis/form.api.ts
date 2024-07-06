@@ -23,6 +23,9 @@ const formApi = {
   approveForm(body: { formID: string; isApprove: boolean; formResponse: string }) {
     return http.post<SuccessResponse<string>>(`${URL}/approve`, body)
   }
+  dayoffForm(body: { shiftID: string; reason: string; formType: number }) {
+    return http.post<SuccessResponse<string>>(URL, body)
+  },
 }
 
 export default formApi

@@ -16,12 +16,12 @@ type FormData = Pick<FormSchema, 'formResponse'> & {
   isApprove?: boolean
 }
 
+const schema = formSchema.pick(['formResponse'])
+
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const queryConfig = useQueryConfig10()
   const queryClient = useQueryClient()
   const [isApprove, setIsApprove] = useState<boolean | 'empty'>('empty')
-
-  console.log(isApprove)
 
   const {
     handleSubmit,
@@ -33,7 +33,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
       formResponse: '',
       formID: form?.id
     },
-    resolver: yupResolver(formSchema)
+    resolver: yupResolver(schema)
   })
 
   const approveFormMutation = useMutation({

@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useContext } from 'react'
 import { toast } from 'react-toastify'
 import employeeShiftApi from 'src/apis/employeeShift.api'
+import { AppContext } from 'src/context/app.context'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
 import { handleDate, handleTimeClock, toLocalISOString } from 'src/utils/utils'
 
@@ -12,27 +14,28 @@ interface Props {
 }
 
 export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMonth }: Props) {
+  const { user } = useContext(AppContext)
   const queryClient = useQueryClient()
 
   const lockShiftMutation = useMutation({
     mutationFn: employeeShiftApi.lockShift,
     onSuccess: () => {
-      toast.success('Locking Sucessfully!', { autoClose: 1000 })
+      toast.success('Locking Shift Sucessfully!', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['employeeshiftevent', date, isMonth] })
     },
     onError: (_error) => {
-      toast.error('Locking Fail!', { autoClose: 1000 })
+      toast.error('Locking Shift Fail!', { autoClose: 1000 })
     }
   })
 
   const deleteShiftMutation = useMutation({
     mutationFn: employeeShiftApi.deleteEmployeeShift,
     onSuccess: () => {
-      toast.success('Locking Sucessfully!', { autoClose: 1000 })
+      toast.success('Remove Shift Sucessfully!', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['employeeshiftevent', date, isMonth] })
     },
     onError: (_error) => {
-      toast.error('Locking Fail!', { autoClose: 1000 })
+      toast.error('Remove Shift Fail!', { autoClose: 1000 })
     }
   })
 
@@ -67,7 +70,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
         </button>
       </div>
       <div className='flex w-[100%] h-[90%] justify-between my-2'>
-        <div className='w-[60%] h-[100%] p-2 bg-gray-100'>
+        <div className='w-[60%] h-[100%] p-2 bg-gray-100 flex flex-col justify-center items-center'>
           <div className='flex w-full mt-5 mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Id</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md '>
@@ -110,22 +113,28 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
               {employeeShift.resource?.note}
             </div>
           </div>
-          <div className='ml-4 flex justify-start items-center h-[9%]'>
-            <button
-              type='button'
-              onClick={handleLock(!employeeShift.resource?.isLocked)}
-              className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-yellow-200 mr-4 text-gray-500 mt-auto outline-none'
-            >
-              {employeeShift.resource?.isLocked != null ? 'Lock' : employeeShift.resource?.isLocked ? 'UnLock' : 'Lock'}
-            </button>
-            <button
-              type='button'
-              onClick={handleDelete}
-              className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-gray-500 mt-auto outline-none'
-            >
-              Delete
-            </button>
-          </div>
+          {user?.RoleName != 'Employee' && (
+            <div className='ml-4 flex justify-start items-center h-[9%] w-full'>
+              <button
+                type='button'
+                onClick={handleLock(!employeeShift.resource?.isLocked)}
+                className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-slate-400 mr-4 text-white hover:bg-slate-400/80 text-lg mt-auto outline-none'
+              >
+                {employeeShift.resource?.isLocked != null
+                  ? 'Lock'
+                  : employeeShift.resource?.isLocked
+                    ? 'UnLock'
+                    : 'Lock'}
+              </button>
+              <button
+                type='button'
+                onClick={handleDelete}
+                className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-white text-lg hover:bg-red-300/80 mt-auto outline-none'
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
         <div className='w-[38%] p-4 px-5 bg-gray-100'>
           <div className='p-4 flex justify-center items-center mb-10'>

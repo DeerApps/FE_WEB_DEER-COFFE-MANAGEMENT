@@ -35,6 +35,9 @@ export default function ApproveAbsent() {
     staleTime: 3 * 60 * 1000
   })
 
+  console.log('hâhha')
+  console.log(formsData)
+
   const page = Number(queryConfig.pageNumber)
 
   const FormList = formsData?.data.data.data

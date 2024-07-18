@@ -35,10 +35,13 @@ export default function AbsentStatus() {
           FormList.data.map((data, index) => {
             const no = handleRenderNo(formsData?.data.data.pageNumber, formsData?.data.data.pageSize, index)
             return (
-              <div className='bg-gray-100/80 h-[46px] mb-3 px-4 grid grid-cols-12 text-center rounded-xl items-center'>
+              <div
+                key={data.id}
+                className='bg-gray-100/80 h-[46px] mb-1 px-1 grid grid-cols-12 text-center rounded-xl items-center'
+              >
                 <div className='col-span-1'>{no}</div>
                 <div className='col-span-3'>{data.shiftId}</div>
-                <div className='col-span-2'>{data.response}</div>
+                <div className='col-span-2'>{data.reason}</div>
                 <div className='col-span-2'>{data.formType}</div>
                 <div className='col-span-2'>{handleTimeClock(data.date)}</div>
                 <div className='col-span-2'>{data.isApproved ? 'Approve' : 'Reject'}</div>

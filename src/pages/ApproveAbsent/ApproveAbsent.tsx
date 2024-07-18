@@ -13,8 +13,8 @@ import ApproveAbsentForm from './ApproveAbsentForm'
 
 const formTypeConfig: Record<string, string> = {
   '1': 'Apply',
-  '2': 'DAY_OFF_UNWANTED_SHIFT',
-  '3': 'DAY_OFF_EMMERGENCY',
+  '2': 'UNWANTED',
+  '3': 'EMMERGENCY',
   '4': 'Accept'
 }
 
@@ -89,7 +89,7 @@ export default function ApproveAbsent() {
           ) : (
             <Link
               to={{
-                pathname: path.approval,
+                pathname: path.approveAbsent,
                 search: createSearchParams({
                   ...queryConfig,
                   pageNumber: (page - 1).toString()
@@ -125,7 +125,7 @@ export default function ApproveAbsent() {
           ) : (
             <Link
               to={{
-                pathname: path.approval,
+                pathname: path.approveAbsent,
                 search: createSearchParams({
                   ...queryConfig,
                   pageNumber: (page + 1).toString()

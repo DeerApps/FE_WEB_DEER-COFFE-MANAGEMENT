@@ -13,18 +13,18 @@ import { useState } from 'react'
 import { parseDate } from '@internationalized/date'
 import { handleDate } from 'src/utils/utils'
 
-type FormData = Pick<FormSchema, 'formResponse'> & {
+type FormData = Pick<FormSchema, 'response'> & {
   formID?: string
   isApprove?: boolean
 }
 
-const schema = formSchema.pick(['formResponse'])
+const schema = formSchema.pick(['response'])
 
 export default function ApprovalForm({ form }: { form: Form | undefined }) {
   const queryConfig = useQueryConfig10()
   const queryClient = useQueryClient()
   const [isApprove, setIsApprove] = useState<boolean | 'empty'>('empty')
-  console.log(form)
+
   const {
     handleSubmit,
     register,
@@ -32,7 +32,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
     setValue
   } = useForm<FormData>({
     defaultValues: {
-      formResponse: '',
+      response: '',
       formID: form?.id
     },
     resolver: yupResolver(schema)
@@ -42,7 +42,7 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
     mutationFn: formApi.approveForm,
     onSuccess: () => {
       toast.success('Submit Form Successfully!', { autoClose: 1000 })
-      queryClient.invalidateQueries({ queryKey: ['formAbsents', queryConfig], exact: true })
+      queryClient.invalidateQueries({ queryKey: ['formAbsents', queryConfig] })
       setIsApprove('empty')
     },
     onError: (_error) => {
@@ -54,7 +54,9 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
     handleSubmit((data) => {
       setIsApprove(isApprove)
       setValue('isApprove', isApprove)
-      approveFormMutation.mutate(data as { formID: string; isApprove: boolean; formResponse: string })
+      setValue('formID', form?.id)
+      console.log(data)
+      approveFormMutation.mutate(data as { formID: string; isApprove: boolean; response: string })
     })
 
   return (
@@ -92,9 +94,9 @@ export default function ApprovalForm({ form }: { form: Form | undefined }) {
               <div className='w-[83%]'>
                 <Input
                   register={register}
-                  name='formResponse'
+                  name='response'
                   placeholder='Form Response'
-                  errorMessage={errors.formResponse?.message}
+                  errorMessage={errors.response?.message}
                 />
               </div>
             </div>

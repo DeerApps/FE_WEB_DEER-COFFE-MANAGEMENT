@@ -38,7 +38,7 @@ export const restaurantSchema = yup.object({
 })
 
 export const formSchema = yup.object({
-  formResponse: yup.string().required('Can not be Empty !').max(250, 'Maximum 20 characters !'),
+  response: yup.string().required('Can not be Empty !').max(250, 'Maximum 20 characters !'),
   reason: yup.string().required('Can not be Empty !').max(2500, 'Maximum 2500 characters !'),
   formType: yup.number().required('Can not be Empty !')
 })

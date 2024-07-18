@@ -3,11 +3,17 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import path from 'src/constant/path'
 import { useNewQueryConfig } from 'src/hooks/useQueryConfig'
 import Pagination from 'src/pages/Dashboard/Pagination'
-import { EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import { EmployeeShiftEventList, EmployeeShiftListConfig, Status } from 'src/types/employeeShift.type'
 import { handleRenderNo, handleTimeClock } from 'src/utils/utils'
 
 export type EmployeeShiftQueryConfig = {
   [key in keyof EmployeeShiftListConfig]: string
+}
+
+const StatusConfig: Record<string, string> = {
+  '1': 'On Time',
+  '2': 'Late',
+  '3': 'Early Leave'
 }
 
 export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
@@ -23,8 +29,6 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
   })
 
   const employeeShiftList = employeeShiftData?.data.data as EmployeeShiftEventList
-  console.log("1",employeeShiftData)
-  console.log("2",employeeShiftList)
 
   return (
     <div className='min-h-[425px]'>
@@ -64,7 +68,7 @@ export default function EmployeeData({ shiftDate }: { shiftDate: string }) {
                     <span className='px-2'>-</span>
                     {handleTimeClock(item.resource?.actual_CheckOut)}
                   </div>
-                  <div className='col-span-2'>{item.resource?.status}</div>
+                  <div className='col-span-2'>{StatusConfig[item.resource?.status as Status]}</div>
                 </div>
               ))}
             </div>

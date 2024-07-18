@@ -39,17 +39,19 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
     }
   })
 
-  const handleLock = (isLock: boolean) => () => {
+  const handleLock = (isLock: boolean) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     lockShiftMutation.mutate({
       dateOfWork: employeeShift.resource?.dateOfWork as string,
       start: toLocalISOString(employeeShift.start),
       end: toLocalISOString(employeeShift.end),
       isLocked: isLock
     })
+    handleOpen(e)
   }
 
-  const handleDelete = () => {
+  const handleDelete = () => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     deleteShiftMutation.mutate({ shiftID: employeeShift.resource?.id as string })
+    handleOpen(e)
   }
 
   return (
@@ -117,18 +119,14 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
             <div className='ml-4 flex justify-start items-center h-[9%] w-full'>
               <button
                 type='button'
-                onClick={handleLock(!employeeShift.resource?.isLocked)}
+                onClick={handleLock(!(employeeShift.resource?.isLocked != 'False'))}
                 className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-slate-400 mr-4 text-white hover:bg-slate-400/80 text-lg mt-auto outline-none'
               >
-                {employeeShift.resource?.isLocked != null
-                  ? 'Lock'
-                  : employeeShift.resource?.isLocked
-                    ? 'UnLock'
-                    : 'Lock'}
+                {employeeShift.resource?.isLocked == 'False' ? 'UnLock' : 'Lock'}
               </button>
               <button
                 type='button'
-                onClick={handleDelete}
+                onClick={handleDelete()}
                 className='rounded-md py-3 px-4 w-[140px] h-[100%] bg-red-300 mr-4 text-white text-lg hover:bg-red-300/80 mt-auto outline-none'
               >
                 Delete
@@ -148,21 +146,27 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Id</div>
-            <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource?.employee.id}
-            </div>
+            <input
+              readOnly
+              value={employeeShift.resource?.employee.id}
+              className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'
+            />
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Name</div>
-            <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource?.employee.fullName}
-            </div>
+            <input
+              readOnly
+              value={employeeShift.resource?.employee.fullName}
+              className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'
+            />
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Email</div>
-            <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
-              {employeeShift.resource?.employee.email}
-            </div>
+            <input
+              readOnly
+              value={employeeShift.resource?.employee.email}
+              className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'
+            />
           </div>
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Employee Phone</div>
@@ -170,11 +174,34 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
               {employeeShift.resource?.employee.phoneNumber}
             </div>
           </div>
-
           <div className='flex w-full h-[7%] items-center mb-5'>
             <div className='w-[40%]'>Joined</div>
             <div className='w-[60%] bg-white h-full border border-gray-300 flex items-center pl-3'>
               {handleDate(employeeShift.resource?.employee.dateJoined)}
+            </div>
+          </div>
+          <div className='flex w-full h-[26%] justify-around items-center mb-5'>
+            <div className='w-[48%] border shadow-md h-full'>
+              {employeeShift.resource?.checkInUrl == null ? (
+                <div className='w-full h-full flex justify-center items-center'>NotYet</div>
+              ) : (
+                <img
+                  className='w-full h-full border border-black/25'
+                  alt='img_checkin'
+                  src={employeeShift.resource?.checkInUrl}
+                />
+              )}
+            </div>
+            <div className='w-[48%] border shadow-md h-full'>
+              {employeeShift.resource?.checkOutUrl == null ? (
+                <div className='w-full h-full flex justify-center items-center'>NotYet</div>
+              ) : (
+                <img
+                  className='w-full h-full border border-black/25'
+                  alt='img_checkout'
+                  src={employeeShift.resource?.checkOutUrl}
+                />
+              )}
             </div>
           </div>
         </div>

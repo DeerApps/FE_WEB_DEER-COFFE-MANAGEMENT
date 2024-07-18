@@ -1,6 +1,11 @@
 import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
-import { EmployeeShiftEvent, EmployeeShiftEventList, EmployeeShiftListConfig } from 'src/types/employeeShift.type'
+import {
+  EmployeeShiftDayList,
+  EmployeeShiftEvent,
+  EmployeeShiftEventList,
+  EmployeeShiftListConfig
+} from 'src/types/employeeShift.type'
 
 const URL = 'employeeshift'
 const employeeShiftApi = {
@@ -14,8 +19,16 @@ const employeeShiftApi = {
       params
     })
   },
+  getEmployeeShiftByReview(params: EmployeeShiftListConfig) {
+    return http.get<SuccessResponse<EmployeeShiftDayList>>(`${URL}/review`, {
+      params
+    })
+  },
   assignShift(body: { dateOfWork: string; checkIn: string; checkOut: string }) {
     return http.post<SuccessResponse<string>>(URL, body)
+  },
+  assignAdditionShift(body: { employeeShiftID: string; checkIn: string; checkOut: string }) {
+    return http.post<SuccessResponse<string>>(`${URL}/assgin`, body)
   },
   lockShift(body: { dateOfWork: string; start: string; end: string; isLocked: boolean }) {
     return http.post<SuccessResponse<string>>(`${URL}/lockday`, body)

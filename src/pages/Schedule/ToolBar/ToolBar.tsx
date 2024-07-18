@@ -1,6 +1,8 @@
+import { useContext } from 'react'
 import { ToolbarProps } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { toast } from 'react-toastify'
+import { AppContext } from 'src/context/app.context'
 
 interface MyToolBar {
   handleBackWeek?: () => void
@@ -27,6 +29,8 @@ export default function ToolBar({
   handleNextMonth,
   handleShiftAddition
 }: ToolbarProps & MyToolBar) {
+  const { user } = useContext(AppContext)
+
   const handleBack = () => {
     onNavigate('PREV')
     if (view == 'week' && handleBackWeek) {
@@ -99,13 +103,16 @@ export default function ToolBar({
       </span>
       <span className='text-2xl w-[40%] flex justify-center'>{label}</span>
       <span className='flex justify-end w-[30%]'>
-        <button
-          onClick={handleShiftAddition}
-          className='px-4 py-2 border border-slate-300 mr-2 ml-2 hover:bg-sky-300 hover:text-white'
-          type='button'
-        >
-          Shift Addition
-        </button>
+        {user?.RoleName == 'Manager' && (
+          <button
+            onClick={handleShiftAddition}
+            className='px-4 py-2 border border-slate-300 mr-2 ml-2 hover:bg-sky-300 hover:text-white'
+            type='button'
+          >
+            Shift Addition
+          </button>
+        )}
+
         <button
           onClick={handleWeek}
           className='px-4 py-2 border border-slate-300 mr-2 ml-2 hover:bg-sky-300 hover:text-white'

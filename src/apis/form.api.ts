@@ -20,7 +20,7 @@ const formApi = {
       params
     })
   },
-  approveForm(body: { formID: string; isApprove: boolean; formResponse: string }) {
+  approveForm(body: { formID: string; isApprove: boolean; response: string }) {
     return http.post<SuccessResponse<string>>(`${URL}/approve`, body)
   },
   createAbsentForm(body: { shiftID: string; reason: string; formType: number }) {

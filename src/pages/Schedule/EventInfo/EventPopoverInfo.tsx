@@ -112,7 +112,9 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
           <div className='flex w-full mb-[4%] h-[8%]'>
             <div className='w-[20%] text-lg capitalize pt-2 pl-5'>Note</div>
             <div className='w-[80%] ml-2 mr-10 bg-white outline-none border border-gray-300 rounded-sm pl-5 pt-2 text-md'>
-              {employeeShift.resource?.note}
+              {(employeeShift.resource?.employeeNote as number) > 0
+                ? `Early leave ${Math.abs(employeeShift.resource?.employeeNote as number)} minutes`
+                : `Late present ${Math.abs(employeeShift.resource?.employeeNote as number)} minutes`}
             </div>
           </div>
           {user?.RoleName != 'Employee' && (

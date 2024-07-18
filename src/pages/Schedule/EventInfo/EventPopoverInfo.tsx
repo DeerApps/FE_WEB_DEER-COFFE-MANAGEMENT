@@ -184,7 +184,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
           </div>
           <div className='flex w-full h-[26%] justify-around items-center mb-5'>
             <div className='w-[48%] border shadow-md h-full'>
-              {Boolean(employeeShift.resource?.checkInUrl) ? (
+              {Boolean(employeeShift.resource?.checkInUrl) == false ? (
                 <div className='w-full h-full flex justify-center items-center'>NotYet</div>
               ) : (
                 <img
@@ -195,7 +195,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
               )}
             </div>
             <div className='w-[48%] border shadow-md h-full'>
-              {Boolean(employeeShift.resource?.checkOutUrl) ? (
+              {Boolean(employeeShift.resource?.checkOutUrl) == false ? (
                 <div className='w-full h-full flex justify-center items-center'>NotYet</div>
               ) : (
                 <img

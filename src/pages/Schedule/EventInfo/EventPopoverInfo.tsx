@@ -5,7 +5,6 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import { AppContext } from 'src/context/app.context'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
 import { handleDate, handleTimeClock, toLocalISOString } from 'src/utils/utils'
-import { boolean } from 'yup'
 
 interface Props {
   employeeShift: EmployeeShiftEvent

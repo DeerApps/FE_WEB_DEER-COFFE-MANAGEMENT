@@ -5,6 +5,7 @@ import employeeShiftApi from 'src/apis/employeeShift.api'
 import { AppContext } from 'src/context/app.context'
 import { EmployeeShiftEvent } from 'src/types/employeeShift.type'
 import { handleDate, handleTimeClock, toLocalISOString } from 'src/utils/utils'
+import { boolean } from 'yup'
 
 interface Props {
   employeeShift: EmployeeShiftEvent
@@ -184,7 +185,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
           </div>
           <div className='flex w-full h-[26%] justify-around items-center mb-5'>
             <div className='w-[48%] border shadow-md h-full'>
-              {employeeShift.resource?.checkInUrl == null ? (
+              {Boolean(employeeShift.resource?.checkInUrl) ? (
                 <div className='w-full h-full flex justify-center items-center'>NotYet</div>
               ) : (
                 <img
@@ -195,7 +196,7 @@ export default function EventPopoverInfo({ handleOpen, employeeShift, date, isMo
               )}
             </div>
             <div className='w-[48%] border shadow-md h-full'>
-              {employeeShift.resource?.checkOutUrl == null ? (
+              {Boolean(employeeShift.resource?.checkOutUrl) ? (
                 <div className='w-full h-full flex justify-center items-center'>NotYet</div>
               ) : (
                 <img

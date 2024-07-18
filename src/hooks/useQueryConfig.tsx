@@ -48,3 +48,15 @@ export function useNewQueryConfig() {
   )
   return newQueryConfig
 }
+
+export function useNewQueryConfig10() {
+  const queryParams = useNewQueryParams()
+  const newQueryConfig: EmployeeShiftQueryConfig = omitBy(
+    {
+      pageNo: queryParams.pageNo || '1',
+      pageSize: Number(queryParams.pageSize) > 12 ? '12' : queryParams.pageSize || '12'
+    },
+    isUndefined
+  )
+  return newQueryConfig
+}

@@ -12,6 +12,7 @@ import ToolBar from 'src/pages/Schedule/ToolBar'
 import { handleDate, handleDateNet, plusDays, subtractDays, toLocalISOString } from 'src/utils/utils'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
+import ShiftAddition from 'src/pages/Schedule/ShiftAddition'
 
 const DragAndDropCalendar = withDragAndDrop<EmployeeShiftEvent>(Calendar)
 
@@ -21,6 +22,7 @@ export default function Schedule() {
   const [date, setDate] = useState<Date>(new Date())
   const [isMonth, setIsMonth] = useState<boolean>(false)
   const [isEdit, setIsEdit] = useState<EmployeeShiftEvent | null>(null)
+  const [isAddition, setIsAddtion] = useState<boolean>(false)
 
   const { data: employeeShiftData, refetch } = useQuery({
     queryKey: ['employeeshiftevent', date, isMonth],
@@ -161,21 +163,32 @@ export default function Schedule() {
     setDate(new Date())
   }
 
+  const handleAddtionView = () => {
+    setIsAddtion(true)
+  }
+
+  const handleCloseAddtionView = (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setIsAddtion(false)
+  }
+
+  const renderNodePoper = () => {
+    if (Boolean(isEdit)) {
+      console.log('1')
+      return (
+        <EventPopoverInfo
+          employeeShift={isEdit as EmployeeShiftEvent}
+          handleOpen={handleClose}
+          date={date}
+          isMonth={isMonth}
+        />
+      )
+    } else if (isAddition) {
+      return <ShiftAddition handleOpen={handleCloseAddtionView} scheduleDate={date} scheduleIsMonth={isMonth} />
+    }
+  }
+
   return (
-    <Popover
-      className='h-full'
-      initialOpen={Boolean(isEdit)}
-      renderPopover={
-        Boolean(isEdit) && (
-          <EventPopoverInfo
-            employeeShift={isEdit as EmployeeShiftEvent}
-            handleOpen={handleClose}
-            date={date}
-            isMonth={isMonth}
-          />
-        )
-      }
-    >
+    <Popover className='h-full' initialOpen={Boolean(isEdit) || isAddition} renderPopover={renderNodePoper()}>
       <div className='mb-[40px]'></div>
       <div
         className={classNames('border rounded-md bg-white mt-10 p-4 h-[700px] max-h-[700px] min-w-[80%]', {
@@ -209,6 +222,7 @@ export default function Schedule() {
                 handleBackMonth={handleActionMonth('subtract')}
                 handleNextMonth={handleActionMonth('plus')}
                 handleGoNow={handleGoNow}
+                handleShiftAddition={handleAddtionView}
                 {...props}
               />
             )

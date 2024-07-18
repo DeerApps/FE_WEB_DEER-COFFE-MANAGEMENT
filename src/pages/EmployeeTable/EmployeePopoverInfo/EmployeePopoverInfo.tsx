@@ -2,7 +2,8 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import InputFile from 'src/components/InputFile'
 import { Employee, RoleId } from 'src/types/employee.type'
-import { handleDate, isAxiosUnprocessableEntityError } from 'src/utils/utils'
+// import { handleDate, isAxiosUnprocessableEntityError } from 'src/utils/utils'
+import { handleDate } from 'src/utils/utils'
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
 import Input from 'src/components/Input'
 import { Select, SelectItem } from '@nextui-org/react'
@@ -10,7 +11,7 @@ import { omit } from 'lodash'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import employeeApi from 'src/apis/employee.api'
 import { toast } from 'react-toastify'
-import { ErrorResponse } from 'src/types/utils.type'
+// import { ErrorResponse } from 'src/types/utils.type'
 import { useQueryConfig } from 'src/hooks/useQueryConfig'
 
 interface Props {
@@ -42,8 +43,8 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-    control,
-    setError
+    control
+    // setError
   } = useForm<FormData>({
     defaultValues: {
       employeeID: employee.id,
@@ -66,19 +67,20 @@ export default function EmployeePopoverInfo({ employee, handleOpen }: Props) {
       toast('Update Successfully !', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['employee', queryConfig] })
     },
-    onError: (error) => {
-      if (isAxiosUnprocessableEntityError<ErrorResponse<EmployeeSchema>>(error)) {
-        const formError = error.response?.data.data
-        console.log(formError)
-        if (formError) {
-          Object.keys(formError).forEach((key) => {
-            setError(key as keyof EmployeeSchema, {
-              message: formError[key as keyof EmployeeSchema] as string,
-              type: 'Server'
-            })
-          })
-        }
-      }
+    onError: (_error) => {
+      // if (isAxiosUnprocessableEntityError<ErrorResponse<EmployeeSchema>>(error)) {
+      //   const formError = error.response?.data.data
+      //   console.log(formError)
+      //   if (formError) {
+      //     Object.keys(formError).forEach((key) => {
+      //       setError(key as keyof EmployeeSchema, {
+      //         message: formError[key as keyof EmployeeSchema] as string,
+      //         type: 'Server'
+      //       })
+      //     })
+      //   }
+      // }
+      toast.error('Update Fail !', { autoClose: 1000 })
     }
   })
 

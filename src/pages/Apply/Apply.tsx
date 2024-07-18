@@ -10,9 +10,9 @@ import { useState } from 'react'
 import employeeApi from 'src/apis/employee.api'
 import path from 'src/constant/path'
 
-import { ErrorResponse } from 'src/types/utils.type'
+// import { ErrorResponse } from 'src/types/utils.type'
 import { EmployeeSchema, employeeSchema } from 'src/utils/rules'
-import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
+// import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
 const { Title } = Typography
 
@@ -27,7 +27,7 @@ export default function Apply() {
     handleSubmit,
     formState: { errors },
     control,
-    setError,
+    // setError,
     reset
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -47,20 +47,21 @@ export default function Apply() {
       setIsLoading(false)
       reset()
     },
-    onError: (error) => {
+    onError: (_error) => {
       setIsLoading(false)
-      if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
-        const formError = error.response?.data.data
-        if (formError) {
-          Object.keys(formError).forEach((key) => {
-            setError(key as keyof FormData, {
-              message: formError[key as keyof FormData] as string,
-              type: 'Server'
-            })
-          })
-        }
-      } else {
-      }
+      // if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
+      //   const formError = error.response?.data.data
+      //   if (formError) {
+      //     Object.keys(formError).forEach((key) => {
+      //       setError(key as keyof FormData, {
+      //         message: formError[key as keyof FormData] as string,
+      //         type: 'Server'
+      //       })
+      //     })
+      //   }
+      // } else {
+      // }
+      toast.error('Error in Apply !', { autoClose: 1000 })
     }
   })
 

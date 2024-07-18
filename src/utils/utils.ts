@@ -119,3 +119,9 @@ export const toLocalISOString = (date: Date) => {
   const localDate = new Date(date.getTime() - offset * 60 * 1000)
   return localDate.toISOString() // Remove the 'Z'
 }
+
+export const rederDate = (date: Date) => {
+  const offset = date.getTimezoneOffset()
+  const localDate = new Date(date.getTime() - offset * 40 * 1000)
+  return localDate
+}

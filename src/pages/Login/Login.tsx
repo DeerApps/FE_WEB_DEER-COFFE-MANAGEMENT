@@ -8,11 +8,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import authApi from 'src/apis/authenticate.api'
 import path from 'src/constant/path'
 import { AppContext } from 'src/context/app.context'
-import { ErrorResponse } from 'src/types/utils.type'
+// import { ErrorResponse } from 'src/types/utils.type'
 import { LoginSchema, loginSchema } from 'src/utils/rules'
-import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
+// import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { jwtDecode, type JwtPayload } from 'jwt-decode'
 import { Role } from 'src/types/employee.type'
+import { toast } from 'react-toastify'
 
 export interface CustomJwtPayload extends JwtPayload {
   RoleName?: Role
@@ -29,7 +30,7 @@ export default function Login() {
   const {
     handleSubmit,
     control,
-    setError,
+    // setError,
     formState: { errors }
   } = useForm<LoginSchema>({
     defaultValues: {
@@ -64,19 +65,20 @@ export default function Login() {
           navigate(path.schedule)
         }
       },
-      onError: (error) => {
+      onError: (_error) => {
         setIsLoading(false) // Reset loading state on error
-        if (isAxiosUnprocessableEntityError<ErrorResponse<LoginSchema>>(error)) {
-          const formError = error.response?.data.data
-          if (formError) {
-            Object.keys(formError).forEach((key) => {
-              setError(key as keyof LoginSchema, {
-                message: formError[key as keyof LoginSchema],
-                type: 'Server'
-              })
-            })
-          }
-        }
+        // if (isAxiosUnprocessableEntityError<ErrorResponse<LoginSchema>>(error)) {
+        //   const formError = error.response?.data.data
+        //   if (formError) {
+        //     Object.keys(formError).forEach((key) => {
+        //       setError(key as keyof LoginSchema, {
+        //         message: formError[key as keyof LoginSchema],
+        //         type: 'Server'
+        //       })
+        //     })
+        //   }
+        // }
+        toast.error('Login Fail !', { autoClose: 1000 })
       }
     })
   })

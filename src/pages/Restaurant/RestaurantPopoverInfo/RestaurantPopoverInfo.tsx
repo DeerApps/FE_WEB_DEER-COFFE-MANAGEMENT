@@ -1,49 +1,40 @@
-import { yupResolver } from "@hookform/resolvers/yup"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { omit } from "lodash"
-import { useForm } from "react-hook-form"
-import { toast } from "react-toastify"
-import restaurantApi from "src/apis/restaurant.api"
-import Input from "src/components/Input"
-import { useQueryConfig } from "src/hooks/useQueryConfig"
-import { Restaurant } from "src/types/restaurant.type"
-import { ErrorResponse } from "src/types/utils.type"
-import { RestaurantSchema, restaurantSchema } from "src/utils/rules"
-import { isAxiosUnprocessableEntityError } from "src/utils/utils"
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { omit } from 'lodash'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import restaurantApi from 'src/apis/restaurant.api'
+import Input from 'src/components/Input'
+import { useQueryConfig } from 'src/hooks/useQueryConfig'
+import { Restaurant } from 'src/types/restaurant.type'
+// import { ErrorResponse } from 'src/types/utils.type'
+import { RestaurantSchema, restaurantSchema } from 'src/utils/rules'
+// import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
 interface Props {
   restaurant: Restaurant
   handleOpen: (_: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-type FormData = Pick<
-  RestaurantSchema,
-  'resID' | 'manageID' | 'resAddress' | 'resChainID' | 'resName'
->
+type FormData = Pick<RestaurantSchema, 'resID' | 'manageID' | 'resAddress' | 'resChainID' | 'resName'>
 
-const schema = restaurantSchema.pick([
-  'resID',
-  'manageID',
-  'resAddress',
-  'resChainID',
-  'resName'
-])
+const schema = restaurantSchema.pick(['resID', 'manageID', 'resAddress', 'resChainID', 'resName'])
 
-export default function RestaurantPopoverInfo({restaurant, handleOpen}:Props) {
+export default function RestaurantPopoverInfo({ restaurant, handleOpen }: Props) {
   const queryClient = useQueryClient()
   const queryConfig = useQueryConfig()
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setError
+    formState: { errors }
+    // setError
   } = useForm<FormData>({
     defaultValues: {
       resID: restaurant.id,
-      manageID:restaurant.manager.id,
-      resAddress:restaurant.restaurantAddress,
-      resChainID:restaurant.restaurantChainID,
-      resName:restaurant.restaurantName
+      manageID: restaurant.manager.id,
+      resAddress: restaurant.restaurantAddress,
+      resChainID: restaurant.restaurantChainID,
+      resName: restaurant.restaurantName
     },
     resolver: yupResolver(schema)
   })
@@ -55,19 +46,20 @@ export default function RestaurantPopoverInfo({restaurant, handleOpen}:Props) {
       toast('Update Successfully !', { autoClose: 1000 })
       queryClient.invalidateQueries({ queryKey: ['restaurant', queryConfig] })
     },
-    onError: (error) => {
-      if (isAxiosUnprocessableEntityError<ErrorResponse<RestaurantSchema>>(error)) {
-        const formError = error.response?.data.data
-        console.log(formError)
-        if (formError) {
-          Object.keys(formError).forEach((key) => {
-            setError(key as keyof RestaurantSchema, {
-              message: formError[key as keyof RestaurantSchema] as string,
-              type: 'Server'
-            })
-          })
-        }
-      }
+    onError: (_error) => {
+      // if (isAxiosUnprocessableEntityError<ErrorResponse<RestaurantSchema>>(error)) {
+      //   const formError = error.response?.data.data
+      //   console.log(formError)
+      //   if (formError) {
+      //     Object.keys(formError).forEach((key) => {
+      //       setError(key as keyof RestaurantSchema, {
+      //         message: formError[key as keyof RestaurantSchema] as string,
+      //         type: 'Server'
+      //       })
+      //     })
+      //   }
+      // }
+      toast.error('Update Fail !', { autoClose: 1000 })
     }
   })
 
@@ -173,5 +165,4 @@ export default function RestaurantPopoverInfo({restaurant, handleOpen}:Props) {
       </div>
     </div>
   )
-  
-};
+}

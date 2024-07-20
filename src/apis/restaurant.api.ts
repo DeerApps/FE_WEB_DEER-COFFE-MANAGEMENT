@@ -10,6 +10,9 @@ const restaurantApi = {
       params
     })
   },
+  getSummary(){
+    return http.get(`${URL}/summary`)
+  },
   deleteRestaurant(params: { ID: string }) {
     return http.delete<SuccessResponse<String>>(URL, {
       params

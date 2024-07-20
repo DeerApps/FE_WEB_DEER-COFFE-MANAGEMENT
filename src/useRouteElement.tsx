@@ -47,6 +47,11 @@ const Profile = lazy(() => import('src/pages/Profile'))
 const AbsentForm = lazy(() => import('./pages/Apply/ApplyAbsentForm'))
 const Restaurant = lazy(() => import('src/pages/Restaurant'))
 const ApproveAbsent = lazy(() => import('src/pages/ApproveAbsent/ApproveAbsent'))
+const EmployeeReport = lazy(() => import('src/pages/Report/EmployeeReport'))
+const ManagerReport = lazy(() => import('src/pages/Report/ManagerReport'))
+const Total = lazy(() => import('src/pages/Report/TotalReport'))
+
+
 
 export default function useRouteElements() {
   const routeElements = useRoutes([
@@ -76,6 +81,26 @@ export default function useRouteElements() {
             <SideBarLayout>
               <Suspense>
                 <Schedule />
+              </Suspense>
+            </SideBarLayout>
+          )
+        },
+        {
+          path: path.managerReport,
+          element: (
+            <SideBarLayout>
+              <Suspense>
+                <ManagerReport/>
+              </Suspense>
+            </SideBarLayout>
+          )
+        },
+        {
+          path: path.totalRport,
+          element: (
+            <SideBarLayout>
+              <Suspense>
+                <Total/>
               </Suspense>
             </SideBarLayout>
           )
@@ -148,6 +173,16 @@ export default function useRouteElements() {
             <SideBarLayout>
               <Suspense>
                 <ApproveAbsent />
+              </Suspense>
+            </SideBarLayout>
+          )
+        },
+        {
+          path: path.employeeReport,
+          element: (
+            <SideBarLayout>
+              <Suspense>
+                <EmployeeReport/>
               </Suspense>
             </SideBarLayout>
           )

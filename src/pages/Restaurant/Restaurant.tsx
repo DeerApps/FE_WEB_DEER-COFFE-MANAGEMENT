@@ -13,6 +13,7 @@ import RestaurantPopoverInfo from './RestaurantPopoverInfo/RestaurantPopoverInfo
 import CreateRestaurant from './CreateRestaurant'
 import { Modal } from 'antd'
 import Popover from 'src/components/Popover'
+import * as XLSX from 'xlsx'
 
 export default function Restaurant() {
   const queryConfig = useQueryConfig()
@@ -62,38 +63,57 @@ export default function Restaurant() {
     setIsCreateOpen(false)
   }
 
+  const handleExport = () => {
+    const dataToExport = restaurantData?.data?.data?.data.map(restaurant => ({
+      ...restaurant,
+      managerName: restaurant.manager.fullName,
+      managerPhone: restaurant.manager.phoneNumber,
+    })) || []
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport, { header: ['id', 'restaurantName', 'managerName', 'managerPhone'] })
+
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Restaurants')
+    XLSX.writeFile(workbook, 'restaurants.xlsx')
+  }
+
+  
+
   return (
     <div className='bg-white h-full border border-gray-300 rounded-md'>
       <div className='p-5 pt-7 flex justify-between items-center'>
-  <div className='flex items-center'>
-    <form className='flex'>
-      <div className='border border-gray-300 py-2 px-4 rounded-lg flex items-center'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth={1.5}
-          stroke='currentColor'
-          className='h-6 w-6'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'
-          />
-        </svg>
-        <input className='outline-none px-3' type='text' placeholder='Search by name...' />
+        <div className='flex items-center'>
+          <form className='flex'>
+            <div className='border border-gray-300 py-2 px-4 rounded-lg flex items-center'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={1.5}
+                stroke='currentColor'
+                className='h-6 w-6'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z'
+                />
+              </svg>
+              <input className='outline-none px-3' type='text' placeholder='Search by name...' />
+            </div>
+            <button
+              aria-label='search_bar'
+              className='text-gray-500 bg-gray-200 hover:bg-gray-300 ml-4 px-10 py-3 text-md font-medium rounded-lg'
+            >
+              Search
+            </button>
+          </form>
+        </div>
+        <div>
+          <Button onClick={handleCreateOpen}>Create new</Button>
+          <Button onClick={handleExport} className='ml-2'>Export to Excel</Button>
+        </div>
       </div>
-      <button
-        aria-label='search_bar'
-        className='text-gray-500 bg-gray-200 hover:bg-gray-300 ml-4 px-10 py-3 text-md font-medium rounded-lg'
-      >
-        Search
-      </button>
-    </form>
-  </div>
-  <Button onClick={handleCreateOpen}>Create new</Button>
-</div>
 
       <Modal title='Create New Restaurant' visible={isCreateOpen} onCancel={handleCreateClose} footer={null}>
         <CreateRestaurant />

@@ -12,7 +12,10 @@ const path = {
   logout: '/logout',
   user: '/user',
   profile: '/profile',
-  absentForm: '/absent'
+  absentForm: '/absent',
+  employeeReport:'/empReport',
+  managerReport:'/mngReport',
+  totalRport:'/totalReport'
 } as const
 
 export default path

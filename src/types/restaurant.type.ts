@@ -23,3 +23,13 @@ export interface RestaurantListConfig {
   // restaurantName?: string
   // restaurantAddress?: string
 }
+
+export interface RestaurantSummary {
+  totalEmployee:number
+  totalShift:number
+  totalWorkHour:number
+  totalLateShift:number
+  totalOnTimeShift:number
+  totalAbsentShift:number
+  totalEarlyShift:number
+}

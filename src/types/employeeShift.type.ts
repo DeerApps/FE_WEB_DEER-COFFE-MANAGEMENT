@@ -38,6 +38,8 @@ export interface EmployeeShift {
   checkInUrl: string
   checkOutUrl: string
   isLocked: string
+  workHour:number
+  fullName: string
 }
 
 export interface EmployeeShiftDayList {
@@ -67,6 +69,7 @@ export interface EmployeeShiftEvent {
 
 export interface EmployeeShiftListConfig {
   pageNo?: number | string
+  pageNumber?: number | string
   pageSize?: number | string
   dateOfWork?: string
   restaurantId?: string
@@ -78,4 +81,11 @@ export interface EmployeeShiftListConfig {
   // price_min?: number | string
   // name?: string
   // category?: string
+}
+
+export interface EmployeeReportConfig{
+  EmployeeID: string
+  RestaurantID:string
+  Option: number
+  DateOfWork: string
 }

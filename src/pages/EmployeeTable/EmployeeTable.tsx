@@ -12,6 +12,7 @@ import { Key } from 'node_modules/@react-types/shared/src/key'
 import Pagination from 'src/components/Pagination'
 import path from 'src/constant/path'
 import { useQueryConfig } from 'src/hooks/useQueryConfig'
+import * as XLSX from 'xlsx' // Import the XLSX library
 
 export type QueryConfig = {
   [key in keyof EmployeeListConfig]: string
@@ -61,6 +62,21 @@ export default function EmployeeTable() {
     }
   }
 
+  const handleExport = () => {
+    const dataToExport = employeesData?.data?.data?.data.map(employee => ({
+      id: employee.id,
+      fullName: employee.fullName,
+      phoneNumber: employee.phoneNumber,
+      roleName: employee.roleName,
+      isActive: employee.isActive ? 'Active' : 'Paused'
+    })) || []
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Employees')
+    XLSX.writeFile(workbook, 'employees.xlsx')
+  }
+
   return (
     <div className='bg-white h-full border border-gray-300 rounded-md'>
       <div className='pt-7 px-4 flex justify-between items-center'>
@@ -89,6 +105,7 @@ export default function EmployeeTable() {
             Search
           </button>
         </form>
+        <Button onClick={handleExport} className='ml-2'>Export to Excel</Button>
       </div>
       <div className='min-h-[700px]'>
         {employeeList && (

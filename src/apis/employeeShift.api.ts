@@ -1,6 +1,7 @@
 import http from 'src/utils/http'
 import { SuccessResponse } from 'src/types/utils.type'
 import {
+  EmployeeReportConfig,
   EmployeeShiftDayList,
   EmployeeShiftEvent,
   EmployeeShiftEventList,
@@ -33,14 +34,27 @@ const employeeShiftApi = {
   lockShift(body: { dateOfWork: string; start: string; end: string; isLocked: boolean }) {
     return http.post<SuccessResponse<string>>(`${URL}/lockday`, body)
   },
+  getEmployeeWorkHour(params: EmployeeShiftListConfig) {
+    return http.get<SuccessResponse<EmployeeShiftDayList>>(`${URL}/work-hour`, {
+      params
+    })
+  },
+  getEmployeeRecord(params: EmployeeReportConfig) {
+    return http.get<SuccessResponse<EmployeeShiftDayList>>(`${URL}/record-option`, {
+      params
+    })
+  },
   deleteEmployeeShift(body: { shiftID: string }) {
     return http.delete<SuccessResponse<String>>(URL, {
       data: body
     })
   }
+  
   // updateEmployeeShift(body: {
   //   employee: Employee
   //   restaurant: Restaurant
 }
+
+
 
 export default employeeShiftApi
